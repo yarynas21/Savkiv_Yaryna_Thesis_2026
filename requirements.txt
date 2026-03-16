@@ -1,0 +1,24 @@
+# ── Core LangChain / LangGraph ──────────────────────────────────────────────
+langchain>=0.3.0
+langchain-core>=0.3.0
+langgraph>=0.2.50
+langgraph-checkpoint>=2.0.0
+
+# ── LLM Providers (install the one(s) you need) ─────────────────────────────
+langchain-openai>=0.2.0          # OpenAI GPT-4o
+langchain-anthropic>=0.3.0       # Anthropic Claude
+langchain-google-genai>=2.0.0    # Google Gemini
+
+# ── Streamlit UI ─────────────────────────────────────────────────────────────
+streamlit>=1.40.0
+
+# ── Excel generation ─────────────────────────────────────────────────────────
+openpyxl>=3.1.0
+
+# ── Utilities ────────────────────────────────────────────────────────────────
+python-dotenv>=1.0.0
+pandas>=2.0.0
+typing-extensions>=4.9.0
+
+# ── Graph Visualization (optional) ──────────────────────────────────────────
+graphviz>=0.20.0
