@@ -2,13 +2,16 @@
 LangGraph Workflow
 ==================
 Assembles all agents into a StateGraph with:
-- Sequential flow: ClientInterface → Technologist → Validation → Generation
+- Sequential flow: ConversationalAgent → Technologist → Validation → Generation
 - Conditional edge at Validation: "needs_human" → interrupt → back to Validation
 - Human-in-the-Loop via langgraph interrupt mechanism
 
+Кожен агент підключений як підграф (див. graph/agent_subgraphs.py); ідентифікатори
+вузлів узгоджені з agents.registry.
+
 Graph topology:
   START
-    └─► client_interface ──► technologist ──► validation
+    └─► conversational_agent ──► technologist ──► validation
                                                   │
                                ┌──── needs_human ─┘
                                │         ▲
@@ -25,35 +28,24 @@ from typing import Literal
 from langgraph.checkpoint.memory import MemorySaver
 from langgraph.graph import END, START, StateGraph
 
-from agents.client_interface import client_interface_node
-from agents.generation import generation_node
-from agents.technologist import technologist_node
-from agents.validation import validation_node
+from agents.registry import (
+    NODE_CONVERSATIONAL_AGENT,
+    NODE_GENERATION,
+    NODE_HUMAN_REVIEW,
+    NODE_TECHNOLOGIST,
+    NODE_VALIDATION,
+)
+from graph.agent_subgraphs import (
+    build_conversational_agent_subgraph,
+    build_generation_subgraph,
+    build_human_review_subgraph,
+    build_technologist_subgraph,
+    build_validation_subgraph,
+)
 from graph.state import ProductionState
 from utils.logger import get_logger
 
 logger = get_logger(__name__)
-
-
-# ---------------------------------------------------------------------------
-# Human-in-the-Loop node
-# ---------------------------------------------------------------------------
-def human_review_node(state: ProductionState) -> dict:
-    """
-    Reads expert feedback that was injected into state by the Streamlit app.
-    The graph is paused BEFORE this node via interrupt_before=["human_review"].
-    The Streamlit app updates state with human_feedback, then resumes.
-    No interrupt() call needed here — interrupt_before already handled the pause.
-    """
-    expert_answer = state.get("human_feedback") or ""
-    ambiguities = state.get("ambiguities", [])
-    logger.info("HumanReviewNode: Incorporating expert feedback into workflow")
-    logger.info(f"Expert feedback ({len(ambiguities)} ambiguities resolved): {expert_answer[:120]}...")
-
-    return {
-        "current_agent": "HumanExpert",
-        # human_feedback is already in state; we don't need to re-set it
-    }
 
 
 # ---------------------------------------------------------------------------
@@ -117,52 +109,46 @@ def compile_workflow(checkpointer=None):
     graph = StateGraph(ProductionState)
     logger.debug("StateGraph created")
 
-    # ── Nodes ──────────────────────────────────────────────────────────────
-    graph.add_node("client_interface", client_interface_node)
-    graph.add_node("technologist", technologist_node)
-    graph.add_node("validation", validation_node)
-    graph.add_node("human_review", human_review_node)
-    graph.add_node("generation", generation_node)
+    # ── Nodes (кожен — підграф MAS) ─────────────────────────────────────────
+    graph.add_node(NODE_CONVERSATIONAL_AGENT, build_conversational_agent_subgraph())
+    graph.add_node(NODE_TECHNOLOGIST, build_technologist_subgraph())
+    graph.add_node(NODE_VALIDATION, build_validation_subgraph())
+    graph.add_node(NODE_HUMAN_REVIEW, build_human_review_subgraph())
+    graph.add_node(NODE_GENERATION, build_generation_subgraph())
 
     # ── Edges ──────────────────────────────────────────────────────────────
 
-    # Entry point
-    graph.add_edge(START, "client_interface")
+    graph.add_edge(START, NODE_CONVERSATIONAL_AGENT)
 
-    # After client_interface: go to technologist if complete, else END and wait for user
     graph.add_conditional_edges(
-        "client_interface",
+        NODE_CONVERSATIONAL_AGENT,
         _route_after_client,
         {
-            "technologist": "technologist",
+            "technologist": NODE_TECHNOLOGIST,
             "__end__": END,
         },
     )
 
-    # Technologist always proceeds to validation
-    graph.add_edge("technologist", "validation")
+    graph.add_edge(NODE_TECHNOLOGIST, NODE_VALIDATION)
 
-    # Validation: conditional routing
     graph.add_conditional_edges(
-        "validation",
+        NODE_VALIDATION,
         _route_after_validation,
         {
-            "human_review": "human_review",
-            "generation": "generation",
+            "human_review": NODE_HUMAN_REVIEW,
+            "generation": NODE_GENERATION,
         },
     )
 
-    # After human review → re-validate
-    graph.add_edge("human_review", "validation")
+    graph.add_edge(NODE_HUMAN_REVIEW, NODE_VALIDATION)
 
-    # Generation → end
-    graph.add_edge("generation", END)
+    graph.add_edge(NODE_GENERATION, END)
 
     # ── Compile ────────────────────────────────────────────────────────────
     logger.info("Compiling graph with checkpointer and interrupts...")
     compiled = graph.compile(
         checkpointer=checkpointer,
-        interrupt_before=["human_review"],
+        interrupt_before=[NODE_HUMAN_REVIEW],
     )
     logger.info("Workflow compiled successfully")
     return compiled

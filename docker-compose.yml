@@ -1,0 +1,52 @@
+services:
+
+  # ── PostgreSQL ──────────────────────────────────────────────────────────────
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/db/001_schema.sql:/docker-entrypoint-initdb.d/001_schema.sql
+      - ./backend/db/002_seed.sql:/docker-entrypoint-initdb.d/002_seed.sql
+      - ./backend/db/003_users.sql:/docker-entrypoint-initdb.d/003_users.sql
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # ── FastAPI backend ─────────────────────────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+    ports:
+      - "8000:8000"
+
+  # ── Streamlit frontend ──────────────────────────────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - backend
+    env_file: .env
+    environment:
+      # Override API_BASE_URL to use the internal Docker network hostname
+      API_BASE_URL: http://backend:8000
+    ports:
+      - "8501:8501"
+
+volumes:
+  postgres_data:

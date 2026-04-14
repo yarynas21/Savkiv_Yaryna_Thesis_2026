@@ -14,25 +14,23 @@ Responsibilities:
 from __future__ import annotations
 
 import json
-from pathlib import Path
 from typing import Any
 
-from langchain_core.messages import AIMessage, SystemMessage
+from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
 from langchain_core.prompts import ChatPromptTemplate
 
 from agents.json_parser import RobustJsonOutputParser
-from agents.llm_factory import get_llm
+from agents.llm_factory import get_llm_for_agent
 from graph.state import ProductionState
 from utils.logger import get_logger
 
 logger = get_logger(__name__)
 
-_KB_DIR = Path(__file__).parent.parent / "knowledge_base"
+from db.repository import get_kb_machines
 
 
 def _load_constraints() -> dict:
-    with open(_KB_DIR / "machines.json", encoding="utf-8") as f:
-        return json.load(f).get("constraints", {})
+    return get_kb_machines().get("constraints", {})
 
 
 _CONSTRAINTS = _load_constraints()
@@ -123,7 +121,7 @@ def validation_node(state: ProductionState) -> dict[str, Any]:
             ],
         }
 
-    llm = get_llm()
+    llm = get_llm_for_agent("validation")
 
     # Safety cap — after 3 validation loops, force approval
     if iteration >= 3:
@@ -146,6 +144,10 @@ def validation_node(state: ProductionState) -> dict[str, Any]:
             requirements=json.dumps(requirements, ensure_ascii=False, indent=2),
             constraints=json.dumps(_CONSTRAINTS, ensure_ascii=False, indent=2),
             human_feedback=human_feedback,
+        )),
+        HumanMessage(content=(
+            "Перевір маршрути та поверни результат суворо у JSON згідно інструкції. "
+            "Без markdown, лише JSON."
         )),
     ])
 

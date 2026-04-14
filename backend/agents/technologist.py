@@ -14,34 +14,30 @@ Responsibilities:
 from __future__ import annotations
 
 import json
-import os
-from pathlib import Path
 from typing import Any
 
-from langchain_core.messages import AIMessage, SystemMessage
+from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
 from langchain_core.prompts import ChatPromptTemplate
 
 from agents.json_parser import RobustJsonOutputParser
-from agents.llm_factory import get_llm
+from agents.llm_factory import get_llm_for_agent
 from graph.state import ProductionState
 from utils.logger import get_logger
 
 logger = get_logger(__name__)
 
 # ---------------------------------------------------------------------------
-# Load knowledge base once at module level
+# Load knowledge base from PostgreSQL
 # ---------------------------------------------------------------------------
-_KB_DIR = Path(__file__).parent.parent / "knowledge_base"
+from db.repository import get_kb_machines, get_kb_materials, get_kb_operations
 
 
 def _load_kb() -> dict:
-    with open(_KB_DIR / "materials.json", encoding="utf-8") as f:
-        materials = json.load(f)
-    with open(_KB_DIR / "operations.json", encoding="utf-8") as f:
-        operations = json.load(f)
-    with open(_KB_DIR / "machines.json", encoding="utf-8") as f:
-        machines = json.load(f)
-    return {"materials": materials, "operations": operations, "machines": machines}
+    return {
+        "materials": get_kb_materials(),
+        "operations": get_kb_operations(),
+        "machines": get_kb_machines(),
+    }
 
 
 _KB = _load_kb()
@@ -119,7 +115,7 @@ def technologist_node(state: ProductionState) -> dict[str, Any]:
     logger.info(f"Processing {len(components)} components")
     logger.debug(f"Components: {[c.get('name', c.get('id')) for c in components]}")
     
-    llm = get_llm()
+    llm = get_llm_for_agent("technologist")
 
     # Trim KB to avoid huge prompts — send only relevant sections
     kb_summary = {
@@ -140,6 +136,10 @@ def technologist_node(state: ProductionState) -> dict[str, Any]:
             knowledge_base=json.dumps(kb_summary, ensure_ascii=False, indent=2),
             components=json.dumps(components, ensure_ascii=False, indent=2),
             requirements=json.dumps(requirements, ensure_ascii=False, indent=2),
+        )),
+        HumanMessage(content=(
+            "Згенеруй технологічні маршрути у форматі JSON згідно інструкції. "
+            "Виведи лише валідний JSON без markdown."
         )),
     ])
 

@@ -15,11 +15,11 @@ from __future__ import annotations
 import json
 from typing import Any
 
-from langchain_core.messages import AIMessage, SystemMessage
+from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
 from langchain_core.prompts import ChatPromptTemplate
 
 from agents.json_parser import RobustJsonOutputParser
-from agents.llm_factory import get_llm
+from agents.llm_factory import get_llm_for_agent
 from graph.state import ProductionState
 from tools.excel_generator import generate_work_order_excel
 from tools.cost_calculator import calculate_costs
@@ -86,12 +86,16 @@ def generation_node(state: ProductionState) -> dict[str, Any]:
     requirements = state.get("client_requirements", {})
     logger.info(f"Generating work order for {len(routes)} routes")
     
-    llm = get_llm()
+    llm = get_llm_for_agent("generation")
 
     prompt = ChatPromptTemplate.from_messages([
         SystemMessage(content=_SYSTEM_PROMPT.format(
             routes=json.dumps(routes, ensure_ascii=False, indent=2),
             requirements=json.dumps(requirements, ensure_ascii=False, indent=2),
+        )),
+        HumanMessage(content=(
+            "Сформуй структуру технічного завдання у JSON згідно інструкції. "
+            "Без markdown, лише JSON."
         )),
     ])
 
