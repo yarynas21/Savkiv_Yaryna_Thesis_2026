@@ -77,9 +77,7 @@ def _route_after_client(
     The Streamlit app will re-invoke the graph with the next user message,
     which gets appended to the conversation history via add_messages reducer.
     """
-    components = state.get("product_components", [])
-    requirements = state.get("client_requirements", {})
-    if components and requirements:
+    if state.get("requirements_complete") is True:
         logger.info("Client requirements complete, routing to technologist")
         return "technologist"
     logger.info("Client requirements incomplete, pausing workflow (→ END)")

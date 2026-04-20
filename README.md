@@ -10,7 +10,7 @@
 
 ### Основні можливості
 
-- 🤖 **4 спеціалізовані агенти** працюють послідовно для обробки замовлення
+- 🤖 **4 LLM-агенти + Human-in-the-Loop вузол** у LangGraph workflow
 - 💬 **Інтерактивний діалог** з клієнтом для витягування вимог
 - 🔧 **Автоматична генерація маршрутів** на основі бази знань
 - 👤 **Human-in-the-Loop** механізм для вирішення неоднозначностей
@@ -35,6 +35,8 @@
                                           │  POST  /api/sessions           │
                                           │  POST  /api/sessions/{id}/...  │
                                           │  GET   /api/sessions/{id}/excel│
+                                          │  GET   /api/sessions/{id}/metrics
+                                          │  GET   /api/metrics/overview   │
                                           │  port 8000                     │
                                           └──────────────┬─────────────────┘
                                                          │ SQLAlchemy
@@ -48,10 +50,11 @@
 
 ### Агенти
 
-1. **Client Interface Agent** — веде діалог, витягує вимоги
+1. **Conversational Agent** — веде діалог, витягує та структурує вимоги
 2. **Technologist Agent** — будує маршрут із бази знань PostgreSQL
-3. **Validation Agent** — перевіряє повноту, запускає Human-in-the-Loop
+3. **Validation Agent** — перевіряє повноту, за потреби запускає Human-in-the-Loop
 4. **Generation Agent** — генерує Excel Work Order і калькуляцію
+5. **Human Review (pause node)** — точка втручання експерта у графі
 
 ---
 
@@ -67,7 +70,7 @@ cd Savkiv_Yaryna_Thesis_2025
 ### 2. Налаштування `.env`
 
 ```bash
-cp env.example .env
+cp .env.example .env
 ```
 
 Відкрийте `.env` і заповніть:
@@ -83,21 +86,25 @@ OPENAI_API_KEY=sk-your-key-here
 # LLM_PROVIDER=google
 # GOOGLE_API_KEY=...
 
+# API URL для frontend (у Docker замінюється на http://backend:8000)
+API_BASE_URL=http://localhost:8000
+
 # JWT (згенеруйте новий ключ для продакшену!)
-JWT_SECRET_KEY=5035067f3fe79f75af76cd0670abcfbff9ad1dad4d4767ae076c000d5bbb765a
+JWT_SECRET_KEY=change-me-generate-with-secrets-token-hex-32
 JWT_ACCESS_TOKEN_EXPIRE_MINUTES=60
 
-# PostgreSQL (див. env.example — паролі тільки в .env, не в git)
+# PostgreSQL (див. .env.example — паролі тільки в .env, не в git)
 POSTGRES_DB=dyzart
 POSTGRES_USER=dyzart_app
-POSTGRES_PASSWORD=...
+POSTGRES_PASSWORD=change-me-StrongDbPass-1
 POSTGRES_READONLY_USER=dyzart_ro
-POSTGRES_READONLY_PASSWORD=...
+POSTGRES_READONLY_PASSWORD=change-me-ReadOnly-2
+
+# Для локального запуску backend поза Docker
+DATABASE_URL=postgresql://dyzart_app:change-me-StrongDbPass-1@localhost:5432/dyzart
 ```
 
-> ⚠️ **`API_BASE_URL`** у Docker підставляється автоматично. **`DATABASE_URL`** для бекенда в контейнері збирається з `POSTGRES_*` у `.env`. Для **Rocket Admin / DBeaver** використовуй ті самі `POSTGRES_*` (або read-only користувача) — повна інструкція: [`backend/db/README.md`](backend/db/README.md).
-
-Перед першим запуском (якщо використовуєш read-only роль): `chmod +x backend/db/004_readonly_role.sh`.
+> ⚠️ У Docker `API_BASE_URL` для frontend підставляється автоматично (`http://backend:8000`). Для підключення через DBeaver/Rocket Admin використовуйте `POSTGRES_*` з `.env`.
 
 ### 3. Запуск
 
@@ -146,7 +153,7 @@ curl -X POST http://localhost:8000/auth/register \
 curl -X POST http://localhost:8000/auth/token \
   -H "Content-Type: application/json" \
   -d '{"username":"admin","password":"admin123"}'
-# → {"access_token": "eyJ...", "token_type": "bearer"}
+# → {"access_token":"eyJ...","token_type":"bearer","expires_in":3600}
 ```
 
 ### Захищені ендпоінти
@@ -186,28 +193,43 @@ Savkiv_Yaryna_Thesis_2025/
 │   │   └── schemas.py                # Pydantic-моделі
 │   ├── auth/
 │   │   ├── routes.py                 # /auth/register, /auth/token, /auth/me
-│   │   ├── schemas.py                # UserCreate, Token, UserOut
+│   │   ├── schemas.py                # UserRegister, UserLogin, TokenResponse, UserPublic
 │   │   ├── utils.py                  # bcrypt + JWT (python-jose)
 │   │   └── dependencies.py          # get_current_user, require_role
 │   ├── db/
-│   │   ├── 001_schema.sql            # DDL: всі таблиці
-│   │   ├── 002_seed.sql              # Seed: база знань (матеріали, операції, машини)
-│   │   ├── 003_users.sql             # DDL users + дефолтні акаунти
+│   │   ├── schema.sql                # DDL: всі таблиці + тригер users_updated_at
+│   │   ├── seeds/                    # Сиди тематично розбиті, виконуються по порядку
+│   │   │   ├── 01_machines.sql
+│   │   │   ├── 02_machine_constraints.sql
+│   │   │   ├── 03_papers.sql
+│   │   │   ├── 04_stock_items.sql
+│   │   │   ├── 05_finishes.sql
+│   │   │   ├── 06_adhesives.sql
+│   │   │   ├── 07_operations.sql
+│   │   │   ├── 08_product_type_routes.sql
+│   │   │   ├── 09_game_components.sql
+│   │   │   ├── 10_cost_rates.sql
+│   │   │   └── 11_users.sql
 │   │   ├── connection.py             # SQLAlchemy engine
 │   │   ├── models.py                 # Table-об'єкти
-│   │   └── repository.py            # get_kb_machines / materials / operations
+│   │   └── repository.py             # get_kb_machines / materials / operations
 │   ├── agents/
+│   │   ├── registry.py
 │   │   ├── llm_factory.py
-│   │   ├── client_interface.py
-│   │   ├── technologist.py
-│   │   ├── validation.py
-│   │   └── generation.py
+│   │   ├── json_parser.py
+│   │   ├── conversational/
+│   │   ├── technologist/
+│   │   ├── validation/
+│   │   └── generation/
 │   ├── graph/
 │   │   ├── state.py
+│   │   ├── agent_subgraphs.py
+│   │   ├── human_review.py
 │   │   └── workflow.py
 │   ├── tools/
 │   │   ├── excel_generator.py
-│   │   └── cost_calculator.py
+│   │   ├── cost_calculator.py
+│   │   └── llm_eval_metrics.py
 │   └── utils/
 │       └── logger.py
 ├── frontend/                         # Streamlit UI (порт 8501)
@@ -216,7 +238,7 @@ Savkiv_Yaryna_Thesis_2025/
 │   └── Dockerfile
 ├── docker-compose.yml                # PostgreSQL + backend + frontend
 ├── .env                              # Конфігурація (не комітити!)
-├── env.example                       # Шаблон
+├── .env.example                      # Шаблон
 └── README.md
 ```
 
@@ -231,7 +253,7 @@ Savkiv_Yaryna_Thesis_2025/
 | **Frontend UI** | Streamlit |
 | **База даних** | PostgreSQL 16 |
 | **ORM / SQL** | SQLAlchemy Core |
-| **Автентифікація** | JWT (python-jose) + bcrypt (passlib) |
+| **Автентифікація** | JWT (python-jose) + passlib[bcrypt] |
 | **HTTP клієнт** | httpx |
 | **Excel генерація** | openpyxl |
 | **Контейнеризація** | Docker + Docker Compose |
@@ -276,7 +298,7 @@ curl -H "Authorization: Bearer $TOKEN" http://localhost:8000/auth/me
 
 ### Додавання матеріалів / операцій
 
-Відредагуйте `backend/db/002_seed.sql` і перезапустіть зі скиданням volume:
+Відредагуйте відповідний файл у `backend/db/seeds/` (наприклад `03_papers.sql` — для паперів, `07_operations.sql` — для операцій) і перезапустіть зі скиданням volume:
 
 ```bash
 docker compose down -v && docker compose up --build
@@ -296,6 +318,13 @@ ANTHROPIC_API_KEY=sk-ant-...
 ```bash
 docker compose down && docker compose up
 ```
+
+### LLM метрики (оцінка latency/cost)
+
+Після діалогу доступні API-ендпоінти:
+
+- `GET /api/sessions/{thread_id}/metrics` — метрики поточної сесії
+- `GET /api/metrics/overview` — агреговані метрики по всіх відомих сесіях
 
 ### Візуалізація LangGraph workflow
 

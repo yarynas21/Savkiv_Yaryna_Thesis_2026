@@ -68,6 +68,17 @@ papers = Table(
     Column("thickness_mm", Numeric(5, 3)),
 )
 
+stock_items = Table(
+    "stock_items",
+    metadata,
+    Column("stock_no", Integer, primary_key=True),
+    Column("name", Text, nullable=False),
+    Column("for_use", Text),
+    Column("supply_form", String(16)),
+    Column("notes", Text),
+    Column("paper_id", String),
+)
+
 # ---------------------------------------------------------------------------
 # Materials — finishes
 # ---------------------------------------------------------------------------
@@ -124,4 +135,33 @@ product_type_routes = Table(
     Column("product_type", String, primary_key=True),
     Column("sort_order", Integer, primary_key=True),
     Column("operation_id", String, nullable=False),
+)
+
+# ---------------------------------------------------------------------------
+# Game components — purchasable board-game parts with prices (UAH)
+# ---------------------------------------------------------------------------
+
+game_components = Table(
+    "game_components",
+    metadata,
+    Column("id", String(32), primary_key=True),
+    Column("name", Text, nullable=False),
+    Column("category", String(32), nullable=False),
+    Column("unit", String(32), nullable=False),
+    Column("price_uah", Numeric(10, 2), nullable=False),
+    Column("notes", Text),
+)
+
+# ---------------------------------------------------------------------------
+# Cost calculator — numeric tariffs (merged with Python fallbacks in code)
+# ---------------------------------------------------------------------------
+
+cost_rates = Table(
+    "cost_rates",
+    metadata,
+    Column("category", String(64), primary_key=True),
+    Column("rate_key", String(128), primary_key=True),
+    Column("value_numeric", Numeric(18, 6), nullable=False),
+    Column("unit", String(32)),
+    Column("notes", Text),
 )

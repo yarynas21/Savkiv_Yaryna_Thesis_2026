@@ -6,8 +6,15 @@
 from __future__ import annotations
 
 from langgraph.graph import END, START, StateGraph
+from langgraph.prebuilt import ToolNode
 
-from agents.conversational_agent import conversational_agent_node
+from agents.conversational import (
+    conversational_agent_node,
+    conversational_tool_response_node,
+    game_components_catalog_tool,
+    greeting_tool,
+    route_after_conversational_manager,
+)
 from agents.generation import generation_node
 from agents.technologist import technologist_node
 from agents.validation import validation_node
@@ -24,7 +31,22 @@ def _single_agent_subgraph(node_fn):
 
 
 def build_conversational_agent_subgraph():
-    return _single_agent_subgraph(conversational_agent_node)
+    g = StateGraph(ProductionState)
+    g.add_node("run", conversational_agent_node)
+    g.add_node("tools", ToolNode([greeting_tool, game_components_catalog_tool]))
+    g.add_node("tool_response", conversational_tool_response_node)
+    g.add_edge(START, "run")
+    g.add_conditional_edges(
+        "run",
+        route_after_conversational_manager,
+        {
+            "tools": "tools",
+            "__end__": END,
+        },
+    )
+    g.add_edge("tools", "tool_response")
+    g.add_edge("tool_response", END)
+    return g.compile()
 
 
 def build_technologist_subgraph():

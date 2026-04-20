@@ -12,13 +12,10 @@ Usage:
 """
 
 import logging
+import os
 import sys
 from pathlib import Path
 from typing import Optional
-
-# ── Log directory ────────────────────────────────────────────────────────────
-LOG_DIR = Path(__file__).parent.parent / "logs"
-LOG_DIR.mkdir(exist_ok=True)
 
 # ── Log format ────────────────────────────────────────────────────────────────
 LOG_FORMAT = "%(asctime)s | %(name)s | %(levelname)s | %(message)s"
@@ -30,7 +27,7 @@ FILE_FORMAT = "%(asctime)s | %(name)s | %(levelname)s | %(funcName)s:%(lineno)d 
 
 def setup_logging(
     level: int = logging.INFO,
-    log_to_file: bool = True,
+    log_to_file: Optional[bool] = None,
     log_file: Optional[str] = None,
 ) -> None:
     """
@@ -39,9 +36,12 @@ def setup_logging(
     Parameters
     ----------
     level       : logging level (default: INFO)
-    log_to_file : whether to write logs to file (default: True)
+    log_to_file : whether to write logs to file (default: env LOG_TO_FILE=false)
     log_file    : custom log file path (default: logs/mas.log)
     """
+    if log_to_file is None:
+        log_to_file = os.getenv("LOG_TO_FILE", "false").lower() in {"1", "true", "yes", "on"}
+
     root_logger = logging.getLogger()
     root_logger.setLevel(level)
 
@@ -58,7 +58,9 @@ def setup_logging(
     # ── File handler ─────────────────────────────────────────────────────────
     if log_to_file:
         if log_file is None:
-            log_file = LOG_DIR / "mas.log"
+            log_dir = Path(__file__).parent.parent / "logs"
+            log_dir.mkdir(exist_ok=True)
+            log_file = log_dir / "mas.log"
         else:
             log_file = Path(log_file)
 

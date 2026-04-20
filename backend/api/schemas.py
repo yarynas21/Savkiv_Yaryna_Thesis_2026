@@ -33,3 +33,23 @@ class SessionState(BaseModel):
     finished: bool
     current_agent: str
     excel_ready: bool
+
+
+class SessionMetrics(BaseModel):
+    thread_id: str
+    call_count: int
+    estimated: bool
+    core: dict[str, float]
+    latency: dict[str, float]
+    cost: dict[str, float]
+    rows: list[dict]
+
+
+class MetricsOverview(BaseModel):
+    sessions_total: int
+    calls_total: int
+    estimated: bool
+    core: dict[str, float]
+    latency: dict[str, float]
+    cost: dict[str, float]
+    per_session_cost: list[dict]

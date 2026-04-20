@@ -1,15 +1,3 @@
-"""
-Generation Agent
-================
-Final stage of the workflow.
-
-Responsibilities:
-- Receives validated production routes
-- Calls the Excel generator to produce the Technical Work Order
-- Calls the cost calculator to produce price estimates
-- Returns `work_order` and `cost_estimates` in state
-"""
-
 from __future__ import annotations
 
 import json
@@ -18,6 +6,7 @@ from typing import Any
 from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
 from langchain_core.prompts import ChatPromptTemplate
 
+from agents.generation.prompt import _SYSTEM_PROMPT
 from agents.json_parser import RobustJsonOutputParser
 from agents.llm_factory import get_llm_for_agent
 from graph.state import ProductionState
@@ -29,50 +18,6 @@ logger = get_logger(__name__)
 
 
 # ---------------------------------------------------------------------------
-# System prompt — used to enrich the work order with human-readable summaries
-# ---------------------------------------------------------------------------
-_SYSTEM_PROMPT = """Ти — агент-генератор документів поліграфічного підприємства Dyz-Art.
-
-На основі затверджених маршрутів сформуй структуру Технічного Завдання:
-
-МАРШРУТИ:
-{routes}
-
-ВИМОГИ ЗАМОВНИКА:
-{requirements}
-
-Поверни ТІЛЬКИ JSON (без markdown):
-{{
-  "order_number": "DYZ-2025-001",
-  "client": "...",
-  "product": "...",
-  "quantity": 1000,
-  "components": [
-    {{
-      "component_id": "rigid_box",
-      "component_name": "Жорстка коробка",
-      "material_summary": "Покривний аркуш: крейд. 350 г/м² + soft touch; Основа: сірий картон 2000 г/м²",
-      "operations_summary": [
-        "1. Допечатна підготовка",
-        "2. Офсетний друк (Heidelberg SM74, 4+0)",
-        "3. Soft Touch ламінація",
-        "4. Гаряче тиснення фольгою",
-        "5. Висічка (BOBST SP 76)",
-        "6. Обклейка чіпборда",
-        "7. Складання коробки",
-        "8. Контроль якості",
-        "9. Пакування"
-      ],
-      "estimated_duration_hours": 6.5
-    }}
-  ],
-  "total_estimated_hours": 12.0,
-  "special_notes": "Замовити кліше для фольги за 5 днів до виробництва."
-}}
-"""
-
-
-# ---------------------------------------------------------------------------
 # Node function
 # ---------------------------------------------------------------------------
 def generation_node(state: ProductionState) -> dict[str, Any]:
@@ -81,11 +26,11 @@ def generation_node(state: ProductionState) -> dict[str, Any]:
     Compiles the Technical Work Order (Excel) and cost estimates.
     """
     logger.info("GenerationAgent: Starting document generation")
-    
+
     routes = state.get("production_routes", [])
     requirements = state.get("client_requirements", {})
     logger.info(f"Generating work order for {len(routes)} routes")
-    
+
     llm = get_llm_for_agent("generation")
 
     prompt = ChatPromptTemplate.from_messages([
@@ -101,7 +46,7 @@ def generation_node(state: ProductionState) -> dict[str, Any]:
 
     chain = prompt | llm | RobustJsonOutputParser()
     logger.debug("Invoking LLM for work order structure...")
-    
+
     try:
         work_order: dict = chain.invoke({})
         logger.info("Work order structure generated")
@@ -115,20 +60,32 @@ def generation_node(state: ProductionState) -> dict[str, Any]:
     logger.info(f"Excel file generated: {len(excel_bytes)} bytes")
 
     # Calculate cost estimates
-    quantity = requirements.get("quantity", 1000)
+    quantity   = requirements.get("quantity", 1000)
+    components = state.get("product_components", [])
     logger.info(f"Calculating costs for quantity: {quantity}")
-    cost_estimates = calculate_costs(routes, quantity)
+    cost_estimates = calculate_costs(
+        routes,
+        quantity,
+        components=components,
+        client_requirements=requirements,
+    )
     logger.info("Cost estimates calculated")
 
     work_order["excel_bytes"] = excel_bytes
 
     summary_lines = [
-        f"📄 **Технічне завдання сформовано** — замовлення {work_order.get('order_number', 'N/A')}",
+        f"**Технічне завдання сформовано** — замовлення {work_order.get('order_number', 'N/A')}",
         f"Клієнт: {work_order.get('client', '—')}",
         f"Продукт: {work_order.get('product', '—')}",
         f"Тираж: {quantity} шт.",
         "",
-        "💰 **Орієнтовна вартість:**",
+        f"**Собівартість усього:** {cost_estimates.get('total_cost', 0):,.0f} грн",
+        f"**Собівартість за одиницю:** {cost_estimates.get('cost_per_unit', 0):.2f} грн",
+        f"**До оплати за одиницю (+{int((cost_estimates.get('margin',1.1)-1)*100)}%):** "
+        f"{cost_estimates.get('price_per_unit', 0):.2f} грн",
+        f"**Сума до оплати:** {cost_estimates.get('total_payment', 0):,.0f} грн",
+        "",
+        "**Орієнтовна вартість для інших тиражів:**",
     ]
     for tier, price in cost_estimates.get("tiers", {}).items():
         summary_lines.append(f"  • {tier}: {price:,.0f} грн")

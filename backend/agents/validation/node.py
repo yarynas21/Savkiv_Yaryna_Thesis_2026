@@ -1,16 +1,3 @@
-"""
-Validation Agent
-================
-Implements the "Human-in-the-Loop" mechanism.
-
-Responsibilities:
-- Checks completeness and technical feasibility of production routes
-- Identifies ambiguities (missing glue type, incompatible material, etc.)
-- If ambiguities are found → sets status "needs_human" and lists them
-- If everything is OK → sets status "validated"
-- After human feedback is injected → re-validates and approves
-"""
-
 from __future__ import annotations
 
 import json
@@ -21,6 +8,7 @@ from langchain_core.prompts import ChatPromptTemplate
 
 from agents.json_parser import RobustJsonOutputParser
 from agents.llm_factory import get_llm_for_agent
+from agents.validation.prompt import _SYSTEM_PROMPT
 from graph.state import ProductionState
 from utils.logger import get_logger
 
@@ -35,51 +23,6 @@ def _load_constraints() -> dict:
 
 _CONSTRAINTS = _load_constraints()
 
-# ---------------------------------------------------------------------------
-# System prompt
-# ---------------------------------------------------------------------------
-_SYSTEM_PROMPT = """Ти — технолог-валідатор поліграфічного підприємства Dyz-Art.
-Твоя задача — перевірити технологічні маршрути на повноту та технічну можливість.
-
-МАРШРУТИ ДЛЯ ПЕРЕВІРКИ:
-{routes}
-
-ВИМОГИ ЗАМОВНИКА:
-{requirements}
-
-ОБМЕЖЕННЯ ОБЛАДНАННЯ:
-{constraints}
-
-ЗВОРОТНІЙ ЗВ'ЯЗОК ЕКСПЕРТА (якщо є):
-{human_feedback}
-
-Перевір:
-1. Чи всі обов'язкові операції присутні для кожного типу продукту.
-2. Чи вибрані матеріали сумісні між собою.
-3. Чи правильно обраний тип друку залежно від тиражу.
-4. Чи вказаний клей для склеювання.
-5. Чи враховані всі спецефекти (фольга, рельєф).
-
-Поверни ТІЛЬКИ JSON (без markdown):
-{{
-  "validation_status": "validated",
-  "ambiguities": [],
-  "corrected_routes": null,
-  "summary": "Маршрути пройшли перевірку."
-}}
-
-АБО якщо є проблеми:
-{{
-  "validation_status": "needs_human",
-  "ambiguities": [
-    "Для компонента 'card_deck' не вказано тип клею між шарами карт.",
-    "Матеріал 'coated_250' несумісний з soft touch ламінацією за специфікацією машини."
-  ],
-  "corrected_routes": null,
-  "summary": "Потрібне уточнення від експерта."
-}}
-"""
-
 
 # ---------------------------------------------------------------------------
 # Node function
@@ -90,17 +33,16 @@ def validation_node(state: ProductionState) -> dict[str, Any]:
     Validates routes and triggers Human-in-the-Loop if needed.
     """
     logger.info("ValidationAgent: Starting route validation")
-    
+
     routes = state.get("production_routes", [])
     requirements = state.get("client_requirements", {})
     human_feedback = state.get("human_feedback") or "Відсутній"
     iteration = state.get("iteration", 0)
-    
+
     logger.info(f"Validating {len(routes)} routes, iteration {iteration}")
     logger.debug(f"Human feedback present: {bool(state.get('human_feedback'))}")
 
     # ── If expert feedback was provided → trust it and mark as validated ──────
-    # The human expert has already resolved all ambiguities; no LLM re-check needed.
     if human_feedback and human_feedback not in ("Відсутній", "None", ""):
         logger.info("Human expert feedback received — marking routes as validated without LLM re-check")
         return {
@@ -108,11 +50,11 @@ def validation_node(state: ProductionState) -> dict[str, Any]:
             "ambiguities": [],
             "current_agent": "ValidationAgent",
             "iteration": iteration + 1,
-            "human_feedback": None,  # consume feedback
+            "human_feedback": None,
             "messages": [
                 AIMessage(
                     content=(
-                        "✅ Технологічні маршрути перевірено з урахуванням відповіді експерта.\n"
+                        "Технологічні маршрути перевірено з урахуванням відповіді експерта.\n"
                         f"Рішення експерта: {human_feedback[:200]}\n"
                         "Передаю на генерацію документів."
                     ),
@@ -130,9 +72,11 @@ def validation_node(state: ProductionState) -> dict[str, Any]:
             "validation_status": "validated",
             "ambiguities": [],
             "current_agent": "ValidationAgent",
+            "iteration": iteration + 1,
+            "human_feedback": None,
             "messages": [
                 AIMessage(
-                    content="✅ Валідацію завершено (досягнуто ліміт ітерацій). Передаю на генерацію.",
+                    content="Валідацію завершено (досягнуто ліміт ітерацій). Передаю на генерацію.",
                     name="ValidationAgent",
                 )
             ],
@@ -153,7 +97,7 @@ def validation_node(state: ProductionState) -> dict[str, Any]:
 
     chain = prompt | llm | RobustJsonOutputParser()
     logger.debug("Invoking LLM for validation...")
-    
+
     try:
         result: dict = chain.invoke({})
         logger.info("LLM validation response received")
@@ -164,7 +108,7 @@ def validation_node(state: ProductionState) -> dict[str, Any]:
     status = result.get("validation_status", "needs_human")
     ambiguities = result.get("ambiguities", [])
     corrected = result.get("corrected_routes")
-    
+
     logger.info(f"Validation status: {status}, ambiguities: {len(ambiguities)}")
 
     updates: dict[str, Any] = {
@@ -172,16 +116,24 @@ def validation_node(state: ProductionState) -> dict[str, Any]:
         "ambiguities": ambiguities,
         "current_agent": "ValidationAgent",
         "iteration": iteration + 1,
-        "human_feedback": None,  # reset after processing
+        "human_feedback": None,
     }
 
     if corrected:
-        updates["production_routes"] = corrected
+        # Validate that corrected routes are a non-empty list of dicts with required fields
+        if (
+            isinstance(corrected, list)
+            and corrected
+            and all(isinstance(r, dict) and "component_id" in r and "operations" in r for r in corrected)
+        ):
+            updates["production_routes"] = corrected
+        else:
+            logger.warning("ValidationAgent: corrected_routes from LLM has invalid schema — ignoring")
 
     if status == "validated":
         updates["messages"] = [
             AIMessage(
-                content="✅ Технологічні маршрути перевірено. Передаю на генерацію документів.",
+                content="Технологічні маршрути перевірено. Передаю на генерацію документів.",
                 name="ValidationAgent",
             )
         ]
@@ -190,7 +142,7 @@ def validation_node(state: ProductionState) -> dict[str, Any]:
         updates["messages"] = [
             AIMessage(
                 content=(
-                    "⚠️ Знайдено неоднозначності. Потрібна консультація експерта:\n"
+                    "Знайдено неоднозначності. Потрібна консультація експерта:\n"
                     + questions
                 ),
                 name="ValidationAgent",

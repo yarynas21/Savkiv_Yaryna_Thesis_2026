@@ -7,9 +7,18 @@ services:
     env_file: .env
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./backend/db/001_schema.sql:/docker-entrypoint-initdb.d/001_schema.sql
-      - ./backend/db/002_seed.sql:/docker-entrypoint-initdb.d/002_seed.sql
-      - ./backend/db/003_users.sql:/docker-entrypoint-initdb.d/003_users.sql
+      - ./backend/db/schema.sql:/docker-entrypoint-initdb.d/00_schema.sql
+      - ./backend/db/seeds/01_machines.sql:/docker-entrypoint-initdb.d/01_machines.sql
+      - ./backend/db/seeds/02_machine_constraints.sql:/docker-entrypoint-initdb.d/02_machine_constraints.sql
+      - ./backend/db/seeds/03_papers.sql:/docker-entrypoint-initdb.d/03_papers.sql
+      - ./backend/db/seeds/04_stock_items.sql:/docker-entrypoint-initdb.d/04_stock_items.sql
+      - ./backend/db/seeds/05_finishes.sql:/docker-entrypoint-initdb.d/05_finishes.sql
+      - ./backend/db/seeds/06_adhesives.sql:/docker-entrypoint-initdb.d/06_adhesives.sql
+      - ./backend/db/seeds/07_operations.sql:/docker-entrypoint-initdb.d/07_operations.sql
+      - ./backend/db/seeds/08_product_type_routes.sql:/docker-entrypoint-initdb.d/08_product_type_routes.sql
+      - ./backend/db/seeds/09_game_components.sql:/docker-entrypoint-initdb.d/09_game_components.sql
+      - ./backend/db/seeds/10_cost_rates.sql:/docker-entrypoint-initdb.d/10_cost_rates.sql
+      - ./backend/db/seeds/11_users.sql:/docker-entrypoint-initdb.d/11_users.sql
     ports:
       - "5432:5432"
     healthcheck:

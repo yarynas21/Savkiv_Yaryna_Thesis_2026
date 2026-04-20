@@ -1,0 +1,183 @@
+-- =============================================================================
+-- Seed: papers — канонічні типи паперу/картону для MAS
+-- У назвах — приклади зі складу Dyz-Art (див. dyz_art_stock.csv, stock_items).
+-- typical_use: rigid_box_cover — обкладинка/друк під обклейку коробки;
+--   game_board_print — друк на поле; rulebook / info_leaflet / playing_cards;
+--   chipboard_base — палітурна основа; corrugated_liner — лайнери гофри;
+--   kraft_packaging — крафт-вкладки та внутрішня тара; insert_pages — текстові вкладки.
+-- =============================================================================
+
+INSERT INTO papers (id, name, type, weight_gsm, compatible_with, typical_use, thickness_mm)
+VALUES
+    ('coated_90',
+     'Крейдований папір ~90 г/м² (напр. PRIMA BULKY gloss 90) — легкі обкладинки, вкладки',
+     'paper', 90,
+     ARRAY['offset_printing','digital_printing','gloss_lamination','matte_lamination'],
+     ARRAY['insert_pages','rulebook','rigid_box_cover','game_board_print'],
+     0.080),
+
+    ('coated_115',
+     'Крейдований папір ~115 г/м² (напр. Peony C2S) — інструкції з глянцем',
+     'paper', 115,
+     ARRAY['offset_printing','digital_printing','uv_varnish','gloss_lamination','matte_lamination'],
+     ARRAY['rulebook','info_leaflet','insert_pages'],
+     0.110),
+
+    ('coated_130',
+     'Крейдований папір ~130 г/м² (PRIMA BULKY gloss 130) — коробка, інструкція, поле',
+     'paper', 130,
+     ARRAY['offset_printing','digital_printing','gloss_lamination','matte_lamination'],
+     ARRAY['rigid_box_cover','game_board_print','rulebook','insert_pages'],
+     0.100),
+
+    ('coated_150',
+     'Крейдований папір ~150 г/м² (PRIMA BULKY gloss 150) — коробка, інструкція, поле',
+     'paper', 150,
+     ARRAY['offset_printing','digital_printing','uv_varnish','gloss_lamination','matte_lamination'],
+     ARRAY['rigid_box_cover','game_board_print','rulebook','info_leaflet'],
+     0.120),
+
+    ('coated_160',
+     'Целюлозний картон ~160 г/м² C1S (напр. SBB160) — обклейка коробки, друк + кашир',
+     'cardboard', 160,
+     ARRAY['offset_printing','digital_printing','uv_varnish','gloss_lamination','matte_lamination'],
+     ARRAY['rigid_box_cover','game_board_print'],
+     0.210),
+
+    ('coated_170',
+     'Крейдований папір/картон ~170 г/м² (напр. CTD Глос, PRIMA BULKY) — коробка, поле, тонкі обкладинки',
+     'paper', 170,
+     ARRAY['offset_printing','digital_printing','uv_varnish','gloss_lamination','matte_lamination'],
+     ARRAY['rigid_box_cover','game_board_print','info_leaflet'],
+     0.180),
+
+    ('coated_250',
+     'Крейдований картон/папір ~250 г/м² (Hi-Kote, PRIMA BULKY, Allyking Cream GC2 215) — карти, коробка, поле',
+     'cardboard', 250,
+     ARRAY['offset_printing','digital_printing','uv_varnish',
+           'gloss_lamination','matte_lamination'],
+     ARRAY['playing_cards','rigid_box_cover','game_board_print','info_leaflet','box_cover'],
+     0.320),
+
+    ('coated_300',
+     'Крейдований картон ~300 г/м² (Euca Pro C2S, Hi-Kote, PRIMA) — преміум-обкладинки, карти',
+     'cardboard', 300,
+     ARRAY['offset_printing','digital_printing','uv_varnish',
+           'gloss_lamination','matte_lamination','soft_touch_lamination'],
+     ARRAY['rigid_box_cover','game_board_print','playing_cards','premium_packaging'],
+     0.400),
+
+    ('coated_320',
+     'Крейдований картон ~320 г/м² (Euca Pro High Bulk C2S) — обкладинки, поле',
+     'cardboard', 320,
+     ARRAY['offset_printing','digital_printing','uv_varnish',
+           'gloss_lamination','matte_lamination','soft_touch_lamination'],
+     ARRAY['rigid_box_cover','game_board_print','playing_cards','premium_packaging'],
+     0.420),
+
+    ('coated_350',
+     'Крейдований картон ~350 г/м² (CTD Сілк, Hi-Kote) — щільні обкладинки, карти',
+     'cardboard', 350,
+     ARRAY['offset_printing','uv_varnish',
+           'gloss_lamination','matte_lamination','soft_touch_lamination'],
+     ARRAY['heavy_rigid_box','premium_game_box','playing_cards','game_board_print'],
+     0.500),
+
+    ('coated_400',
+     'Крейдований папір ~400 г/м² (CTD Глос) — дуже щільні обкладинки',
+     'paper', 400,
+     ARRAY['offset_printing','digital_printing','uv_varnish',
+           'gloss_lamination','matte_lamination','soft_touch_lamination'],
+     ARRAY['rigid_box_cover','heavy_rigid_box','game_board_print'],
+     0.550),
+
+    ('grey_chipboard_1500',
+     'Сірий палітурний картон ~1500 г/м² (чіпборд; на складі Smurfit 1.25–1.5 мм, 790–945 г/м²) — основа коробки та поля',
+     'chipboard', 1500,
+     ARRAY['lamination_cover','wrapping'],
+     ARRAY['rigid_box_inner','game_board_base','chipboard_base'],
+     1.800),
+
+    ('grey_chipboard_2000',
+     'Сірий палітурний картон ~2000 г/м² (товстіший чіпборд; Smurfit 2–3 мм, Solid Black pasted) — важкі коробки',
+     'chipboard', 2000,
+     ARRAY['lamination_cover','wrapping'],
+     ARRAY['rigid_box_heavy','book_cover_base','chipboard_base','game_board_base'],
+     2.500),
+
+    ('playing_card_310',
+     'Картон для карт ~300–350 г/м² (Hi-Kote, PRIMA BULKY) — колоди, блакитний/щільний оборот',
+     'playing_card_stock', 310,
+     ARRAY['offset_printing','digital_printing','uv_varnish','aqueous_coating'],
+     ARRAY['playing_cards','tarot_cards','info_leaflet'],
+     0.300),
+
+    ('offset_90',
+     'Офсетний папір 90 г/м² (базовий текст; на складі може бути інший номінал під замовлення)',
+     'paper', 90,
+     ARRAY['offset_printing','digital_printing'],
+     ARRAY['rulebook','insert_pages'],
+     0.100),
+
+    ('offset_120',
+     'Офсетний папір 120 г/м² (Ilim, IQ Print — інструкції, брошури)',
+     'paper', 120,
+     ARRAY['offset_printing','digital_printing'],
+     ARRAY['rulebook','rulebook_premium','insert_pages','thick_insert'],
+     0.130),
+
+    ('offset_250',
+     'Щільний офсет ~250 г/м² (IQ Print) — товстіші правила/вкладки без крейди',
+     'paper', 250,
+     ARRAY['offset_printing','digital_printing'],
+     ARRAY['rulebook_thick','insert_pages','thick_insert'],
+     0.250),
+
+    ('kraft_white_280',
+     'Білий крафт-картон ~280 г/м² (Kraft board) — вкладки, внутрішня упаковка',
+     'cardboard', 280,
+     ARRAY['offset_printing','digital_printing'],
+     ARRAY['kraft_packaging','insert_pages','folding_box_inner'],
+     0.280),
+
+    ('kraftliner_brown_170',
+     'Бурий крафтлайнер ~170 г/м² (Kraftliner Brown) — проміжні шари, гофрооснова',
+     'paper', 170,
+     ARRAY['offset_printing'],
+     ARRAY['kraft_packaging','corrugated_component'],
+     0.170),
+
+    ('liner_white_130',
+     'Білий лайнер / testliner ~130 г/м² (white top) — верхній шар гофрокартону',
+     'paper', 130,
+     ARRAY['offset_printing'],
+     ARRAY['corrugated_liner','folding_box_raw'],
+     0.130),
+
+    ('liner_topliner_100',
+     'Topliner C1S ~100 г/м² — папір для гофрування / лайнер',
+     'paper', 100,
+     ARRAY['offset_printing'],
+     ARRAY['corrugated_liner','folding_box_raw'],
+     0.100),
+
+    ('liner_topliner_135',
+     'Topliner C1S ~135 г/м² — лайнер / целюлозний шар',
+     'cardboard', 135,
+     ARRAY['offset_printing'],
+     ARRAY['corrugated_liner','folding_box_raw'],
+     0.135),
+
+    ('liner_topliner_160',
+     'Topliner C1S ~160 г/м² — лайнер / целюлозний картон',
+     'cardboard', 160,
+     ARRAY['offset_printing'],
+     ARRAY['corrugated_liner','folding_box_raw'],
+     0.160),
+
+    ('liner_topliner_200',
+     'Topliner C1S ~200 г/м² — щільний лайнер',
+     'cardboard', 200,
+     ARRAY['offset_printing'],
+     ARRAY['corrugated_liner','folding_box_raw'],
+     0.200);

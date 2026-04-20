@@ -14,13 +14,26 @@ from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.responses import Response
 from langchain_core.messages import AIMessage, HumanMessage
 
-from api.schemas import MessageRequest, ReviewRequest, SessionCreated, SessionState
+from tools.llm_eval_metrics import (
+    calculate_cost_from_rows,
+    calculate_latency_metrics,
+    gpt_4o_pricing,
+)
+from api.schemas import (
+    MessageRequest,
+    MetricsOverview,
+    ReviewRequest,
+    SessionCreated,
+    SessionMetrics,
+    SessionState,
+)
 from auth.dependencies import get_current_user
 from utils.logger import get_logger
 
 logger = get_logger(__name__)
 
 router = APIRouter()
+_KNOWN_THREAD_IDS: set[str] = set()
 
 
 # ---------------------------------------------------------------------------
@@ -66,6 +79,10 @@ def _build_state(wf: Any, config: dict, thread_id: str) -> SessionState:
     messages: list[dict] = []
     for msg in values.get("messages", []):
         if isinstance(msg, AIMessage):
+            has_tool_calls = bool(getattr(msg, "tool_calls", None))
+            content = msg.content if isinstance(msg.content, str) else str(msg.content)
+            if has_tool_calls and not content.strip():
+                continue
             messages.append(
                 {
                     "role": "agent",
@@ -102,6 +119,24 @@ def _build_state(wf: Any, config: dict, thread_id: str) -> SessionState:
     )
 
 
+def _session_metrics_from_snapshot(values: dict, thread_id: str) -> SessionMetrics:
+    llm_eval = values.get("llm_eval") or {}
+    rows = llm_eval.get("rows", [])
+    latency_values = [float(r.get("latency_ms", 0.0)) for r in rows]
+    latency = calculate_latency_metrics(latency_values, scope="conversation")
+    cost = calculate_cost_from_rows(rows, gpt_4o_pricing(), scope="conversation")
+    estimated = any(bool(r.get("estimated", False)) for r in rows)
+    return SessionMetrics(
+        thread_id=thread_id,
+        call_count=int(llm_eval.get("session_call_count", len(rows))),
+        estimated=estimated,
+        core={},
+        latency=latency,
+        cost=cost,
+        rows=rows,
+    )
+
+
 # ---------------------------------------------------------------------------
 # Endpoints
 # ---------------------------------------------------------------------------
@@ -112,6 +147,7 @@ def create_session(
 ) -> SessionCreated:
     """Create a new session and return a unique thread_id."""
     thread_id = str(uuid.uuid4())
+    _KNOWN_THREAD_IDS.add(thread_id)
     logger.info(f"New session created: {thread_id}")
     return SessionCreated(thread_id=thread_id)
 
@@ -144,6 +180,7 @@ def send_message(
             "human_feedback": None,
             "work_order": None,
             "cost_estimates": None,
+            "llm_eval": {"rows": [], "session_call_count": 0},
             "current_agent": "",
             "iteration": 0,
         }
@@ -158,6 +195,62 @@ def send_message(
         raise HTTPException(status_code=500, detail=str(exc))
 
     return _build_state(wf, config, thread_id)
+
+
+@router.get("/sessions/{thread_id}/metrics", response_model=SessionMetrics)
+def get_session_metrics(
+    thread_id: str,
+    request: Request,
+    _: dict = Depends(get_current_user),
+) -> SessionMetrics:
+    wf = _get_wf(request)
+    config = {"configurable": {"thread_id": thread_id}}
+    try:
+        snapshot = wf.get_state(config)
+        values: dict = snapshot.values if isinstance(snapshot.values, dict) else {}
+    except Exception as exc:
+        logger.error(f"[{thread_id}] Failed to read metrics snapshot: {exc}", exc_info=True)
+        raise HTTPException(status_code=500, detail=str(exc))
+    return _session_metrics_from_snapshot(values, thread_id)
+
+
+@router.get("/metrics/overview", response_model=MetricsOverview)
+def get_metrics_overview(
+    request: Request,
+    _: dict = Depends(get_current_user),
+) -> MetricsOverview:
+    wf = _get_wf(request)
+    all_rows: list[dict[str, Any]] = []
+    per_session_cost: list[dict[str, float | str]] = []
+    sessions_total = 0
+
+    for thread_id in sorted(_KNOWN_THREAD_IDS):
+        config = {"configurable": {"thread_id": thread_id}}
+        with_context = True
+        try:
+            snapshot = wf.get_state(config)
+            values = snapshot.values if isinstance(snapshot.values, dict) else {}
+        except Exception:
+            with_context = False
+            values = {}
+        if not with_context:
+            continue
+        sessions_total += 1
+        metrics = _session_metrics_from_snapshot(values, thread_id)
+        all_rows.extend(metrics.rows)
+        per_session_cost.append({"thread_id": thread_id, "total_cost_usd": metrics.cost["total_cost_usd"]})
+
+    latency = calculate_latency_metrics([float(r.get("latency_ms", 0.0)) for r in all_rows])
+    cost = calculate_cost_from_rows(all_rows, gpt_4o_pricing())
+    return MetricsOverview(
+        sessions_total=sessions_total,
+        calls_total=len(all_rows),
+        estimated=any(bool(r.get("estimated", False)) for r in all_rows),
+        core={},
+        latency=latency,
+        cost=cost,
+        per_session_cost=per_session_cost,
+    )
 
 
 @router.post("/sessions/{thread_id}/review", response_model=SessionState)

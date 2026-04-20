@@ -1,4 +1,4 @@
-from agents.conversational_agent import conversational_agent_node
+from agents.conversational import conversational_agent_node
 from agents.generation import generation_node
 from agents.registry import AGENTS, AgentInfo, AgentLLMRole
 from agents.technologist import technologist_node
