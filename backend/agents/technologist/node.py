@@ -14,9 +14,6 @@ from utils.logger import get_logger
 
 logger = get_logger(__name__)
 
-# ---------------------------------------------------------------------------
-# Load knowledge base from PostgreSQL
-# ---------------------------------------------------------------------------
 from db.repository import get_kb_machines, get_kb_materials, get_kb_operations
 
 
@@ -31,9 +28,6 @@ def _load_kb() -> dict:
 _KB = _load_kb()
 
 
-# ---------------------------------------------------------------------------
-# Node function
-# ---------------------------------------------------------------------------
 def technologist_node(state: ProductionState) -> dict[str, Any]:
     """
     LangGraph node: Technologist Agent.

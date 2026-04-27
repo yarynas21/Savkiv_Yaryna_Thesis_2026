@@ -17,9 +17,6 @@ from utils.logger import get_logger
 logger = get_logger(__name__)
 
 
-# ---------------------------------------------------------------------------
-# Node function
-# ---------------------------------------------------------------------------
 def generation_node(state: ProductionState) -> dict[str, Any]:
     """
     LangGraph node: Generation Agent.

@@ -24,9 +24,6 @@ def _load_constraints() -> dict:
 _CONSTRAINTS = _load_constraints()
 
 
-# ---------------------------------------------------------------------------
-# Node function
-# ---------------------------------------------------------------------------
 def validation_node(state: ProductionState) -> dict[str, Any]:
     """
     LangGraph node: Validation Agent.
@@ -42,7 +39,6 @@ def validation_node(state: ProductionState) -> dict[str, Any]:
     logger.info(f"Validating {len(routes)} routes, iteration {iteration}")
     logger.debug(f"Human feedback present: {bool(state.get('human_feedback'))}")
 
-    # ── If expert feedback was provided → trust it and mark as validated ──────
     if human_feedback and human_feedback not in ("Відсутній", "None", ""):
         logger.info("Human expert feedback received — marking routes as validated without LLM re-check")
         return {
@@ -120,7 +116,6 @@ def validation_node(state: ProductionState) -> dict[str, Any]:
     }
 
     if corrected:
-        # Validate that corrected routes are a non-empty list of dicts with required fields
         if (
             isinstance(corrected, list)
             and corrected

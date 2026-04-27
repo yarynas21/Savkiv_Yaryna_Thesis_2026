@@ -85,6 +85,4 @@ def calculate_cost_from_rows(
 
 
 def gpt_4o_pricing() -> ModelPricing:
-    # OpenAI GPT-4o pricing used in your previous estimate.
     return {"input_per_1m_usd": 5.0, "output_per_1m_usd": 15.0}
-

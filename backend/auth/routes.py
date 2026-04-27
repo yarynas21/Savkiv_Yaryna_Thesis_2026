@@ -1,10 +1,4 @@
-"""
-Authentication endpoints.
-
-POST /auth/register  — create a new user account
-POST /auth/token     — login and receive a JWT access token
-GET  /auth/me        — return the current user's profile (requires token)
-"""
+"""Authentication endpoints."""
 
 from __future__ import annotations
 
@@ -22,9 +16,6 @@ logger = get_logger(__name__)
 router = APIRouter(tags=["auth"])
 
 
-# ---------------------------------------------------------------------------
-# Register
-# ---------------------------------------------------------------------------
 
 @router.post("/register", response_model=UserPublic, status_code=status.HTTP_201_CREATED)
 def register(body: UserRegister) -> UserPublic:
@@ -67,9 +58,6 @@ def register(body: UserRegister) -> UserPublic:
     )
 
 
-# ---------------------------------------------------------------------------
-# Login
-# ---------------------------------------------------------------------------
 
 @router.post("/token", response_model=TokenResponse)
 def login(body: UserLogin) -> TokenResponse:
@@ -115,9 +103,6 @@ def login(body: UserLogin) -> TokenResponse:
     return TokenResponse(access_token=token, expires_in=expires_in)
 
 
-# ---------------------------------------------------------------------------
-# Me
-# ---------------------------------------------------------------------------
 
 @router.get("/me", response_model=UserPublic)
 def get_me(current_user: dict = Depends(get_current_user)) -> UserPublic:

@@ -1,17 +1,4 @@
-"""
-Dyz-Art MAS — FastAPI Backend
-==============================
-Exposes the LangGraph multi-agent workflow as a REST API.
-
-Endpoints:
-  POST /api/sessions                        → create session
-  POST /api/sessions/{thread_id}/messages   → send user message
-  POST /api/sessions/{thread_id}/review     → submit expert feedback
-  GET  /api/sessions/{thread_id}/excel      → download Excel work order
-
-Run:
-  uvicorn main:app --reload --host 0.0.0.0 --port 8000
-"""
+"""FastAPI backend for the Dyz-Art multi-agent system."""
 
 from __future__ import annotations
 
@@ -29,7 +16,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 load_dotenv(Path(__file__).parent.parent / ".env")
 
-from api.routes import router
+from api.routers import build_api_router
 from auth.routes import router as auth_router
 from utils.logger import get_logger
 
@@ -38,12 +25,12 @@ logger = get_logger(__name__)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Compile the LangGraph workflow once on startup and store it in app.state."""
-    logger.info("Starting up — compiling LangGraph workflow...")
-    from graph.workflow import compile_workflow
+    """Compile all LangGraph workflows and preload them on startup."""
+    logger.info("Starting up — compiling LangGraph workflows...")
+    from graph.registry import preload_all
 
-    app.state.workflow = compile_workflow()
-    logger.info("Workflow ready.")
+    preload_all()
+    logger.info("Workflows ready.")
     yield
     logger.info("Shutting down.")
 
@@ -67,7 +54,7 @@ app.add_middleware(
 )
 
 app.include_router(auth_router, prefix="/auth")
-app.include_router(router, prefix="/api")
+app.include_router(build_api_router(), prefix="/api")
 
 
 if __name__ == "__main__":

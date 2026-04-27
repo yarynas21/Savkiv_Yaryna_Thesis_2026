@@ -211,3 +211,21 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Generated images (run visualize_graph.py or notebooks to regenerate)
+visualizations/*.png
+visualizations/*.drawio
+*.png
+
+# Test eval — generated charts and partial run artifacts
+tests/eval/reports/*.png
+tests/eval/reports/*.partial.json
+
+# Executed notebooks (keep source, ignore versions with embedded cell output)
+tests/eval/deepeval_analysis_executed.ipynb
+
+# DeepEval telemetry
+.deepeval/
+
+# system_architecture_clean.xml (local diagram scratch file)
+system_architecture_clean.xml

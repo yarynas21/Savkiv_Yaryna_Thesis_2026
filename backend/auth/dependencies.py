@@ -1,15 +1,4 @@
-"""
-FastAPI dependencies for authentication.
-
-Usage:
-    @router.post("/endpoint")
-    def my_endpoint(current_user: dict = Depends(get_current_user)):
-        ...
-
-    # Require specific role:
-    def my_admin_endpoint(current_user: dict = Depends(require_role("admin"))):
-        ...
-"""
+"""FastAPI dependencies for authentication."""
 
 from __future__ import annotations
 
@@ -27,10 +16,7 @@ _bearer = HTTPBearer(auto_error=True)
 def get_current_user(
     credentials: HTTPAuthorizationCredentials = Depends(_bearer),
 ) -> dict:
-    """
-    Validate the Bearer JWT and return the decoded payload dict.
-    Raises 401 if missing, malformed, or expired.
-    """
+    """Validate the Bearer JWT and return the decoded payload."""
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -48,13 +34,7 @@ def get_current_user(
 
 
 def require_role(*roles: str):
-    """
-    Dependency factory — raises 403 if the authenticated user's role
-    is not in the allowed set.
-
-    Example:
-        Depends(require_role("admin", "expert"))
-    """
+    """Dependency factory — raises 403 if the user's role is not in the allowed set."""
     def _check(current_user: dict = Depends(get_current_user)) -> dict:
         if current_user.get("role") not in roles:
             raise HTTPException(

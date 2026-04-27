@@ -36,9 +36,6 @@ router = APIRouter()
 _KNOWN_THREAD_IDS: set[str] = set()
 
 
-# ---------------------------------------------------------------------------
-# Helpers
-# ---------------------------------------------------------------------------
 
 def _get_wf(request: Request):
     return request.app.state.workflow
@@ -136,10 +133,6 @@ def _session_metrics_from_snapshot(values: dict, thread_id: str) -> SessionMetri
         rows=rows,
     )
 
-
-# ---------------------------------------------------------------------------
-# Endpoints
-# ---------------------------------------------------------------------------
 
 @router.post("/sessions", response_model=SessionCreated, status_code=201)
 def create_session(

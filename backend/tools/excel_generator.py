@@ -27,9 +27,7 @@ from openpyxl.styles import (
 from openpyxl.utils import get_column_letter
 
 
-# ---------------------------------------------------------------------------
 # Colour palette
-# ---------------------------------------------------------------------------
 _HEADER_FILL = PatternFill(start_color="1F4E79", end_color="1F4E79", fill_type="solid")
 _SUBHEADER_FILL = PatternFill(start_color="2E75B6", end_color="2E75B6", fill_type="solid")
 _ALT_FILL = PatternFill(start_color="D6E4F0", end_color="D6E4F0", fill_type="solid")
@@ -83,7 +81,7 @@ def generate_work_order_excel(
     logger.info("Generating Excel work order")
     logger.debug(f"Work order keys: {list(work_order.keys())}")
     logger.debug(f"Routes count: {len(routes)}")
-    
+
     wb = openpyxl.Workbook()
 
     # -----------------------------------------------------------------------

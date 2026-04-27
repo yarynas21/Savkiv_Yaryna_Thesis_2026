@@ -48,17 +48,9 @@ from utils.logger import get_logger
 logger = get_logger(__name__)
 
 
-# ---------------------------------------------------------------------------
-# Conditional edge router
-# ---------------------------------------------------------------------------
 def _route_after_validation(
     state: ProductionState,
 ) -> Literal["human_review", "generation"]:
-    """
-    Decides next node after validation:
-    - needs_human → pause for expert
-    - validated   → proceed to generation
-    """
     status = state.get("validation_status", "needs_human")
     logger.debug(f"Routing after validation: status={status}")
     if status == "validated":
@@ -71,12 +63,6 @@ def _route_after_validation(
 def _route_after_client(
     state: ProductionState,
 ) -> Literal["technologist", "__end__"]:
-    """
-    If client requirements are complete → proceed to technologist.
-    If incomplete → stop graph (END) and wait for next user message.
-    The Streamlit app will re-invoke the graph with the next user message,
-    which gets appended to the conversation history via add_messages reducer.
-    """
     if state.get("requirements_complete") is True:
         logger.info("Client requirements complete, routing to technologist")
         return "technologist"
@@ -84,21 +70,8 @@ def _route_after_client(
     return "__end__"
 
 
-# ---------------------------------------------------------------------------
-# Graph assembly
-# ---------------------------------------------------------------------------
 def compile_workflow(checkpointer=None):
-    """
-    Build and compile the LangGraph StateGraph.
-
-    Parameters
-    ----------
-    checkpointer : optional LangGraph checkpointer (default: MemorySaver)
-
-    Returns
-    -------
-    Compiled graph ready for invocation.
-    """
+    """Build and compile the LangGraph StateGraph."""
     logger.info("Compiling LangGraph workflow...")
     if checkpointer is None:
         checkpointer = MemorySaver()
@@ -107,14 +80,11 @@ def compile_workflow(checkpointer=None):
     graph = StateGraph(ProductionState)
     logger.debug("StateGraph created")
 
-    # ── Nodes (кожен — підграф MAS) ─────────────────────────────────────────
     graph.add_node(NODE_CONVERSATIONAL_AGENT, build_conversational_agent_subgraph())
     graph.add_node(NODE_TECHNOLOGIST, build_technologist_subgraph())
     graph.add_node(NODE_VALIDATION, build_validation_subgraph())
     graph.add_node(NODE_HUMAN_REVIEW, build_human_review_subgraph())
     graph.add_node(NODE_GENERATION, build_generation_subgraph())
-
-    # ── Edges ──────────────────────────────────────────────────────────────
 
     graph.add_edge(START, NODE_CONVERSATIONAL_AGENT)
 
@@ -139,10 +109,8 @@ def compile_workflow(checkpointer=None):
     )
 
     graph.add_edge(NODE_HUMAN_REVIEW, NODE_VALIDATION)
-
     graph.add_edge(NODE_GENERATION, END)
 
-    # ── Compile ────────────────────────────────────────────────────────────
     logger.info("Compiling graph with checkpointer and interrupts...")
     compiled = graph.compile(
         checkpointer=checkpointer,

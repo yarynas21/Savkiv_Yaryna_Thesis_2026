@@ -26,7 +26,6 @@ logger = get_logger(__name__)
 
 _TEMPERATURE = 0.2
 
-# Суфікс змінної середовища для ролі (OPENAI_MODEL_<SUFFIX>)
 _ROLE_ENV_SUFFIX: dict[AgentLLMRole, str] = {
     "client_interface": "CLIENT_INTERFACE",
     "technologist": "TECHNOLOGIST",

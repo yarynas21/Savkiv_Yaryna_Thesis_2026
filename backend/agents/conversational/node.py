@@ -20,7 +20,7 @@ from graph.state import ProductionState
 from utils.logger import get_logger
 
 logger = get_logger(__name__)
-AGENT_NAME = "ConversationalAgent"
+AGENT_NAME = "Conversational Agent"
 _GREETING_MESSAGES = {
     "привіт",
     "привіт!",
@@ -60,12 +60,6 @@ def _append_eval_row(
 
 
 def _build_tool_call(tool_name: str, prefix: str, args: dict[str, Any] | None = None) -> AIMessage:
-    """Create an AIMessage that carries a single tool call with a unique id.
-
-    Args:
-        tool_name: The name of the tool to invoke.
-        prefix: A human-readable prefix prepended to the UUID-based call id.
-    """
     return AIMessage(
         content="",
         name=AGENT_NAME,
@@ -249,7 +243,6 @@ def _known_data_system_message(
     ]
 
     return SystemMessage(content="\n".join(lines))
-
 
 
 def conversational_agent_node(state: ProductionState) -> dict[str, Any]:

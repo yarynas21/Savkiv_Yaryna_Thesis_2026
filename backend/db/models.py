@@ -21,9 +21,7 @@ from sqlalchemy.dialects.postgresql import JSONB
 
 metadata = MetaData()
 
-# ---------------------------------------------------------------------------
 # Machines
-# ---------------------------------------------------------------------------
 
 machines = Table(
     "machines",
@@ -52,9 +50,7 @@ machine_constraints = Table(
     Column("value", Text, nullable=False),
 )
 
-# ---------------------------------------------------------------------------
 # Materials — papers
-# ---------------------------------------------------------------------------
 
 papers = Table(
     "papers",
@@ -79,9 +75,7 @@ stock_items = Table(
     Column("paper_id", String),
 )
 
-# ---------------------------------------------------------------------------
 # Materials — finishes
-# ---------------------------------------------------------------------------
 
 finishes = Table(
     "finishes",
@@ -93,9 +87,7 @@ finishes = Table(
     Column("notes", Text),
 )
 
-# ---------------------------------------------------------------------------
 # Materials — adhesives
-# ---------------------------------------------------------------------------
 
 adhesives = Table(
     "adhesives",
@@ -106,9 +98,7 @@ adhesives = Table(
     Column("use_case", Text),
 )
 
-# ---------------------------------------------------------------------------
 # Operations
-# ---------------------------------------------------------------------------
 
 operations = Table(
     "operations",
@@ -125,9 +115,7 @@ operations = Table(
     Column("max_run", Integer),
 )
 
-# ---------------------------------------------------------------------------
 # Product type routes (ordered list of operations per product type)
-# ---------------------------------------------------------------------------
 
 product_type_routes = Table(
     "product_type_routes",
@@ -137,9 +125,7 @@ product_type_routes = Table(
     Column("operation_id", String, nullable=False),
 )
 
-# ---------------------------------------------------------------------------
 # Game components — purchasable board-game parts with prices (UAH)
-# ---------------------------------------------------------------------------
 
 game_components = Table(
     "game_components",
@@ -152,9 +138,7 @@ game_components = Table(
     Column("notes", Text),
 )
 
-# ---------------------------------------------------------------------------
 # Cost calculator — numeric tariffs (merged with Python fallbacks in code)
-# ---------------------------------------------------------------------------
 
 cost_rates = Table(
     "cost_rates",

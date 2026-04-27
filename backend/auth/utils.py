@@ -17,10 +17,6 @@ from utils.logger import get_logger
 
 logger = get_logger(__name__)
 
-# ---------------------------------------------------------------------------
-# Configuration (read from environment)
-# ---------------------------------------------------------------------------
-
 SECRET_KEY: str = os.environ.get("JWT_SECRET_KEY", "")
 ALGORITHM: str = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES: int = int(
@@ -33,10 +29,6 @@ if not SECRET_KEY:
         "generate with: python -c \"import secrets; print(secrets.token_hex(32))\""
     )
 
-# ---------------------------------------------------------------------------
-# Password hashing (bcrypt, work factor 12)
-# ---------------------------------------------------------------------------
-
 _pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto", bcrypt__rounds=12)
 
 
@@ -48,15 +40,8 @@ def verify_password(plain: str, hashed: str) -> bool:
     return _pwd_context.verify(plain, hashed)
 
 
-# ---------------------------------------------------------------------------
-# JWT
-# ---------------------------------------------------------------------------
-
 def create_access_token(subject: str, role: str) -> tuple[str, int]:
-    """
-    Returns (encoded_jwt, expires_in_seconds).
-    `subject` is the user's username.
-    """
+    """Returns (encoded_jwt, expires_in_seconds)."""
     expire = datetime.now(timezone.utc) + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     payload = {
         "sub": subject,
@@ -70,8 +55,5 @@ def create_access_token(subject: str, role: str) -> tuple[str, int]:
 
 
 def decode_access_token(token: str) -> dict:
-    """
-    Decode and verify a JWT.
-    Raises jose.JWTError on invalid / expired tokens.
-    """
+    """Decode and verify a JWT. Raises jose.JWTError on invalid/expired tokens."""
     return jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])

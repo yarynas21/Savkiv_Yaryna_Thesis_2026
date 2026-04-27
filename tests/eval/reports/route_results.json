@@ -1,0 +1,338 @@
+{
+  "total": 66,
+  "passed": 66,
+  "failed": 0,
+  "pass_rate_pct": 100.0,
+  "results": [
+    {
+      "test_id": "test_standard_box_base_pk [  1%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_standard_box_lid_pk [  3%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_standard_box_coated_knife [  4%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_all_knife_dimensions_positive [  6%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_lid_larger_than_base [  7%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_large_box_correct_formula [  9%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_standard_poker_card_knife [ 10%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_mini_card_knife [ 12%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_standard_card_pcs_per_sheet_minimum [ 13%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_mini_card_pcs_per_sheet [ 15%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_a5_rulebook_knife [ 16%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_rulebook_unfolded_mm_present [ 18%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_rigid_box_coated_lid_fits_sheet [ 19%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_rigid_box_coated_base_fits_sheet [ 21%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_large_box_lid_fits_sheet [ 22%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_card_deck_fits_sheet [ 24%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_rulebook_layout_returned [ 25%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_pcs_per_sheet_positive [ 27%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_prepress_is_first [ 28%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_sheet_format_cutting_before_printing [ 30%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_has_printing_operation [ 31%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_has_lamination [ 33%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_has_chipboard_laminating [ 34%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_has_die_cutting [ 36%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_die_cutting_has_nickel_dimensions [ 37%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_has_assembly_or_stripping [ 39%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_has_box_assembly [ 40%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_packing_is_last_or_second_last [ 42%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_lamination_before_die_cutting [ 43%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_has_prepress [ 45%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_has_card_cutting [ 46%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_card_cutting_nickel_dimensions [ 48%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_large_run_uses_offset [ 50%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_small_run_uses_digital [ 51%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_cut_before_printing [ 53%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_has_prepress [ 54%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_has_printing [ 56%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_has_two_sheet_format_cuttings [ 57%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_packing_present [ 59%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_all_four_components_present [ 60%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_box_has_game_kit_assembly [ 62%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_each_route_starts_with_prepress [ 63%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_each_route_ends_with_packing [ 65%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_rigid_box_cover_gsm_valid [ 66%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_rigid_box_cover_gsm_too_thin [ 68%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_rigid_box_base_must_be_chipboard [ 69%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_card_deck_not_chipboard [ 71%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_card_deck_playing_card_material_valid [ 72%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_rulebook_gsm_range [ 74%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_kraft_not_compatible_with_lamination [ 75%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_coated_compatible_with_lamination [ 77%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_valid_rigid_box_passes [ 78%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_valid_card_deck_passes [ 80%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_valid_rulebook_passes [ 81%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_missing_lamination_needs_human [ 83%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_missing_die_cutting_needs_human [ 84%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_missing_card_cutting_needs_human [ 86%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_offset_for_small_run_needs_human [ 87%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_digital_for_large_run_needs_human [ 89%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_no_printing_needs_human [ 90%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_die_cutting_missing_nickel_needs_human [ 92%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_valid_route_completes_without_pause [ 93%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_invalid_route_pauses_graph [ 95%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_expert_feedback_resumes_graph [ 96%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_graph_stores_expert_feedback [ 98%]",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "test_iteration_cap_prevents_infinite_loop [100%]Running teardown with pytest sessionfinish...",
+      "passed": true,
+      "details": {}
+    }
+  ]
+}

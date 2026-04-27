@@ -7,9 +7,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Literal, Mapping
 
-# Ідентифікатори вузлів у LangGraph (узгоджені з graph/workflow.py)
 NODE_CONVERSATIONAL_AGENT = "conversational_agent"
-# Backward-compatible alias (старі імпорти ще можуть використовувати цю назву)
 NODE_CLIENT_INTERFACE = NODE_CONVERSATIONAL_AGENT
 NODE_TECHNOLOGIST = "technologist"
 NODE_VALIDATION = "validation"
@@ -47,7 +45,7 @@ class AgentInfo:
 AGENTS: Mapping[str, AgentInfo] = {
     NODE_CONVERSATIONAL_AGENT: AgentInfo(
         graph_node_id=NODE_CONVERSATIONAL_AGENT,
-        display_name_uk="ConversationalAgent",
+        display_name_uk="Conversational Agent",
         role_description_uk=(
             "Веде діалог, збирає та структурує вимоги до замовлення "
             "і перелік компонентів продукту."

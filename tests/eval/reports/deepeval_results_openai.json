@@ -1,0 +1,398 @@
+[
+  {
+    "id": "fq_first_message_general_fields",
+    "metric": "followup_quality",
+    "score": 1.0,
+    "passed": true,
+    "reason": "The Actual Output asks only about the missing fields (назва гри, ім'я, дедлайн, комплектуючі, додаткові елементи) and does not repeat already known data (тираж 1000). The questions are presented in a single, clear Markdown bulleted list, in Ukrainian, and the tone is friendly and professional. The content and intent fully match the Expected Output, and all evaluation steps are satisfied.",
+    "provider": "openai",
+    "threshold": 0.7
+  },
+  {
+    "id": "fq_box_details_block",
+    "metric": "followup_quality",
+    "score": 0.9038,
+    "passed": true,
+    "reason": "The response does not repeat the already provided box size and only asks for genuinely missing fields, aligning with the evaluation steps. The questions are grouped in a single, clear block and written in Ukrainian with a friendly, professional tone. The only minor shortcoming is the slight over-formatting (section header and bolding), but this does not detract from clarity or conciseness. All required details—construction, print, material, thickness, lamination, UV varnish, and shrink wrap—are covered.",
+    "provider": "openai",
+    "threshold": 0.7
+  },
+  {
+    "id": "fq_rulebook_details",
+    "metric": "followup_quality",
+    "score": 0.1712,
+    "passed": false,
+    "reason": "The response does not ask for any of the missing fields (size, pages, binding) required for the rulebook, instead confirming receipt and forwarding to a technologist. It fails to match the expected output in content and intent, and does not prompt for the necessary information. The tone is friendly and professional, and the language is Ukrainian, but the main requirement—to ask for the three missing fields in a single block—is not met.",
+    "provider": "openai",
+    "threshold": 0.7
+  },
+  {
+    "id": "fq_no_repeat_question",
+    "metric": "followup_quality",
+    "score": 0.7354,
+    "passed": true,
+    "reason": "The response is in Ukrainian, maintains a friendly and professional tone, and asks only about print colors and shrink wrap, which are the missing details. However, it repeats already known information by restating the card size, gsm, and lamination, which the Expected Output specifically says should not be duplicated. The questions are clear and grouped together, but the unnecessary repetition of known data reduces alignment with the evaluation steps.",
+    "provider": "openai",
+    "threshold": 0.7
+  },
+  {
+    "id": "fq_game_components_catalog_hint",
+    "metric": "followup_quality",
+    "score": 0.8142,
+    "passed": true,
+    "reason": "The Actual Output is written in Ukrainian, maintains a friendly and professional tone, and concisely asks for clarification about the type and quantity of dice needed, aligning with the Expected Output. It does not repeat known data and does not move to box details prematurely. However, it redundantly restates that dice are needed, which is already known from the Input and Context, slightly reducing conciseness and alignment with step 1.",
+    "provider": "openai",
+    "threshold": 0.7
+  },
+  {
+    "id": "fq_progress_confirmation",
+    "metric": "followup_quality",
+    "score": 0.8512,
+    "passed": true,
+    "reason": "The response confirms the absence of components and additional elements, then proceeds directly to a clear, concise block of questions about the box and cards, as required. It does not repeat known data such as quantity, product name, client name, or deadline, aligning with the evaluation steps. The tone is friendly and professional, and the output is in Ukrainian. The only minor shortcoming is that it includes both box and card questions, while the context suggests the next block should focus on the box details first, but this does not significantly detract from the overall alignment.",
+    "provider": "openai",
+    "threshold": 0.7
+  },
+  {
+    "id": "fq2_game_board_details_block",
+    "metric": "followup_quality",
+    "score": 0.9011,
+    "passed": true,
+    "reason": "The response accurately asks for all genuinely missing fields related to the game board, without repeating known data. It is written in Ukrainian, maintains a friendly and professional tone, and presents all questions in a single, clear block. The only minor shortcoming is a slight separation between the confirmation of the game board and the block of questions, but this does not break the single-message requirement. Overall, the content and intent closely match the expected output.",
+    "provider": "openai",
+    "threshold": 0.7
+  },
+  {
+    "id": "fq2_leaflet_details_block",
+    "metric": "followup_quality",
+    "score": 0.9363,
+    "passed": true,
+    "reason": "The response correctly asks for all three missing fields (розмір, колірність друку, біговка) in a single, clear block, aligning with the expected output and context. The tone is friendly and professional, and the language is Ukrainian. However, the introductory lines ('Чудово, зафіксовано...') and the closing question ('Уточнимо ці деталі?') add slight verbosity, making it marginally less concise than ideal.",
+    "provider": "openai",
+    "threshold": 0.7
+  },
+  {
+    "id": "fq2_default_thickness_proposal",
+    "metric": "followup_quality",
+    "score": 0.3341,
+    "passed": false,
+    "reason": "The response is in Ukrainian and maintains a friendly, professional tone, and it asks for missing details in a clear, concise block. However, it incorrectly states that the standard thickness of 1.75 mm has already been fixed without first confirming with the client, which contradicts both the Expected Output and Context. The Expected Output requires the agent to propose 1.75 mm and explicitly ask for confirmation, not to record it as decided. This is a significant shortcoming, though the rest of the questions are handled appropriately.",
+    "provider": "openai",
+    "threshold": 0.7
+  },
+  {
+    "id": "fq2_matte_lamination_proposal",
+    "metric": "followup_quality",
+    "score": 0.7324,
+    "passed": true,
+    "reason": "The Actual Output correctly asks for all missing general information (назва гри, ім'я, тираж, дедлайн, комплектуючі, додаткові елементи) in a single, clear, and friendly block in Ukrainian, aligning with the tone and conciseness requirements. However, it does not mention or record the lamination as 'matte', which is a key requirement from the Expected Output and context. This omission prevents full alignment with the evaluation steps.",
+    "provider": "openai",
+    "threshold": 0.7
+  },
+  {
+    "id": "fq2_one_block_at_a_time",
+    "metric": "followup_quality",
+    "score": 0.9423,
+    "passed": true,
+    "reason": "The Actual Output correctly asks only for the general fields (назва гри, ім'я, дедлайн, комплектуючі, додаткові елементи) and does not mix in details about the box or cards, aligning with the required order and structure. The tone is friendly and professional, and the questions are concise and grouped in a single block. The only minor shortcoming is the inclusion of a closing phrase ('Уточнимо решту деталей?'), which is not strictly necessary but does not detract significantly from the requirements.",
+    "provider": "openai",
+    "threshold": 0.7
+  },
+  {
+    "id": "fq2_cards_print_colors_followup",
+    "metric": "followup_quality",
+    "score": 0.8829,
+    "passed": true,
+    "reason": "The Actual Output does not repeat known data such as розмір карт, кількість, or граматуру, and only requests missing information: колірність друку, покриття, and термопакування. The tone is friendly and professional, and the message is in Ukrainian. The questions are grouped in a single clear block. However, the output slightly generalizes the 'покриття' field instead of explicitly separating front and back finishes as in the Expected Output, which is a minor shortcoming.",
+    "provider": "openai",
+    "threshold": 0.7
+  },
+  {
+    "id": "fq2_greeting_welcoming",
+    "metric": "followup_quality",
+    "score": 0.7996,
+    "passed": true,
+    "reason": "The Actual Output is written in Ukrainian, maintains a friendly and professional tone, and introduces Dyz-Art as a specialist in premium packaging for board games, aligning with the Expected Output. However, it is slightly longer than necessary and asks for details about the order, which could be interpreted as inviting more information than just a general description. It does not repeat known data or ask for specifics like print run or sizes, but could be more concise as per the context.",
+    "provider": "openai",
+    "threshold": 0.7
+  },
+  {
+    "id": "fq2_completion_announcement",
+    "metric": "followup_quality",
+    "score": 0.9009,
+    "passed": true,
+    "reason": "The Actual Output is in Ukrainian, maintains a friendly and professional tone, and does not repeat known data or ask unnecessary questions. It matches the Expected Output in confirming that all requirements are recorded and that the order is being passed to the technologist. However, it could be slightly improved by briefly confirming the main order parameters as suggested in the Expected Output, which is missing here.",
+    "provider": "openai",
+    "threshold": 0.7
+  },
+  {
+    "id": "gr_off_topic_polite_redirect",
+    "metric": "guardrail_quality",
+    "score": 1.0,
+    "passed": true,
+    "reason": "The Actual Output correctly identifies the request for banners as out-of-scope, politely explains Dyz-Art's specialization in premium packaging and related products for board games, and invites the customer to discuss orders within this area. It does not promise to fulfill the banner order and maintains a polite tone, fully aligning with the evaluation steps and the Expected Output.",
+    "provider": "openai",
+    "threshold": 0.7
+  },
+  {
+    "id": "gr_mixed_request_game_plus_off",
+    "metric": "guardrail_quality",
+    "score": 1.0,
+    "passed": true,
+    "reason": "The Actual Output correctly identifies that the request for a board game box is in-scope and gathers detailed information about it, while politely declining the out-of-scope office booklet request and explaining Dyz-Art's specialization. This matches the Expected Output and fully aligns with all evaluation steps.",
+    "provider": "openai",
+    "threshold": 0.7
+  },
+  {
+    "id": "gr_maintains_scope_after_redirect",
+    "metric": "guardrail_quality",
+    "score": 1.0,
+    "passed": true,
+    "reason": "The Actual Output is fully aligned with the evaluation steps: the input is on-topic, focusing on ordering a board game box. The agent does not mention or promise any out-of-scope work (such as T-shirts), and instead begins collecting relevant details for the box order, as expected. The response matches the Expected Output and context, showing strong alignment.",
+    "provider": "openai",
+    "threshold": 0.7
+  },
+  {
+    "id": "gr2_tsyshky_refuse",
+    "metric": "guardrail_quality",
+    "score": 1.0,
+    "passed": true,
+    "reason": "The Actual Output correctly identifies that the request for branded pens is out-of-scope based on the context, politely declines without promising fulfillment, and clearly explains Dyz-Art's specialization in premium packaging and related products for board games. The response also invites the customer to discuss relevant services, aligning closely with the Expected Output and maintaining a polite, non-aggressive tone.",
+    "provider": "openai",
+    "threshold": 0.7
+  },
+  {
+    "id": "gr2_no_promise_fulfillment",
+    "metric": "guardrail_quality",
+    "score": 1.0,
+    "passed": true,
+    "reason": "The input requests an off-topic service (printing a magazine). The actual output politely declines, clearly states Dyz-Art's specialization in board-game packaging, and does not promise to fulfill the out-of-scope request. It offers to help within their specialization, aligning with the expected output and context. All evaluation steps are fully met.",
+    "provider": "openai",
+    "threshold": 0.7
+  },
+  {
+    "id": "gr2_packaging_but_not_game",
+    "metric": "guardrail_quality",
+    "score": 0.894,
+    "passed": true,
+    "reason": "The Actual Output correctly identifies that the request is outside Dyz-Art's specialization by emphasizing their focus on board-game packaging and politely redirects the customer. It does not accept the order or promise fulfillment, maintaining a polite tone. However, it does not explicitly mention that the request is for medical packaging, which would have demonstrated full understanding of the off-topic nature. Otherwise, it aligns well with the evaluation steps and expected output.",
+    "provider": "openai",
+    "threshold": 0.7
+  },
+  {
+    "id": "gr2_game_request_accepted",
+    "metric": "guardrail_quality",
+    "score": 1.0,
+    "passed": true,
+    "reason": "The Actual Output aligns perfectly with the evaluation steps: the request is in-scope, the agent does not decline or question the request, and immediately begins collecting relevant details in a friendly, businesslike manner. This matches the Expected Output and the context, which specify that Dyz-Art specializes in board-game packaging and that the agent should proceed without unnecessary clarifications.",
+    "provider": "openai",
+    "threshold": 0.7
+  },
+  {
+    "id": "gr2_partial_off_topic_only_game_processed",
+    "metric": "guardrail_quality",
+    "score": 0.8403,
+    "passed": true,
+    "reason": "The response correctly declines the off-topic request for office flyers, explaining Dyz-Art's specialization in board-game packaging, and does not promise to fulfill the out-of-scope part. It also begins collecting details for the in-scope board game box. However, it could be clearer in explicitly confirming acceptance of the box order, as the Expected Output suggests, and more directly stating that only the flyer part is declined. Overall, it aligns well with the evaluation steps but lacks a slightly more explicit confirmation for the in-scope request.",
+    "provider": "openai",
+    "threshold": 0.7
+  },
+  {
+    "id": "hal_no_size_invented",
+    "metric": "no_hallucination",
+    "score": 0.9123,
+    "passed": true,
+    "reason": "The Actual Output aligns well with the evaluation steps: all non-null fields are directly supported by the Input (product_name and quantity), and fields not mentioned (such as has_game_components, has_additional_elements, and size_mm) are left as null or absent. The structure matches expectations, and there is no inappropriate defaulting of size_mm. The only minor shortcoming is that the follow-up question does not explicitly ask for the box size, which is recommended in the Expected Output.",
+    "provider": "openai",
+    "threshold": 0.7
+  },
+  {
+    "id": "hal_no_lamination_invented",
+    "metric": "no_hallucination",
+    "score": 0.2342,
+    "passed": false,
+    "reason": "The Actual Output omits the required lamination field, which should be set to 'matte' by default according to the Context and Expected Output. This violates the explicit rule that lamination=null is an error and that 'matte' must always be recorded if not specified by the client. While other fields are handled correctly and no unsupported values are present, the critical omission of lamination significantly misaligns with the evaluation steps.",
+    "provider": "openai",
+    "threshold": 0.7
+  },
+  {
+    "id": "hal_no_pages_invented",
+    "metric": "no_hallucination",
+    "score": 1.0,
+    "passed": true,
+    "reason": "All non-null fields in the Actual Output are either directly stated in the Input (A5 → size_mm=[148,210]) or left unspecified as required by the Context (pages and binding are not present). The follow-up question correctly asks for missing details. There is no inappropriate defaulting (e.g., no lamination field). The Actual Output fully aligns with the Expected Output and evaluation steps.",
+    "provider": "openai",
+    "threshold": 0.7
+  },
+  {
+    "id": "hal_no_extra_components",
+    "metric": "no_hallucination",
+    "score": 1.0,
+    "passed": true,
+    "reason": "The Actual Output includes only the rigid_box in product_components, matching the explicit client request for 'лише коробка' and aligning with the Context that prohibits adding card_deck or rulebook without confirmation. No unspecified fields are filled, and no defaults (such as lamination) are set without user input. The follow-up questions appropriately seek clarification without assuming defaults. All evaluation steps are fully met.",
+    "provider": "openai",
+    "threshold": 0.7
+  },
+  {
+    "id": "hal_standalone_game_board_no_box",
+    "metric": "no_hallucination",
+    "score": 0.8472,
+    "passed": true,
+    "reason": "The Actual Output correctly includes only the game_board component with the specified size and matte lamination, matching the explicit user request and system defaults. The rigid_box is absent, as required by the context and expected output. All non-null fields are supported by the input or context, and no extra components are invented. The only minor shortcoming is the presence of 'has_additional_elements': true, which is not directly supported by the input or context, but this does not affect the main requirements.",
+    "provider": "openai",
+    "threshold": 0.7
+  },
+  {
+    "id": "hal2_no_binding_invented",
+    "metric": "no_hallucination",
+    "score": 1.0,
+    "passed": true,
+    "reason": "All non-null fields in the Actual Output (pages=8, size_mm=[148,210]) are directly supported by the Input and Context. The binding field is not present, aligning with the instruction not to invent it if not specified. The agent asks the client about binding, as required. The structure and field values match the Expected Output, and there are no issues with lamination defaults. All evaluation steps are fully satisfied.",
+    "provider": "openai",
+    "threshold": 0.7
+  },
+  {
+    "id": "hal2_no_construction_invented",
+    "metric": "no_hallucination",
+    "score": 0.9989,
+    "passed": true,
+    "reason": "All non-null fields in the Actual Output (size_mm=[300,200,60], quantity=500) are directly supported by the Input. The construction field is not set, aligning with the Context and Expected Output, and the agent asks about it in the follow-up questions. No unsupported fields are present, and the structure matches the Expected Output. The lamination exception is not relevant here as no default is proposed. The response fully aligns with all evaluation steps.",
+    "provider": "openai",
+    "threshold": 0.7
+  },
+  {
+    "id": "hal2_no_print_colors_invented",
+    "metric": "no_hallucination",
+    "score": 1.0,
+    "passed": true,
+    "reason": "All non-null fields in the Actual Output (card_size_mm, gsm, front_finish, back_finish) are explicitly stated in the Input. The print_colors field is absent, as required, since the user did not specify it and the context prohibits defaulting it. The follow_up_question correctly asks about print_colors, aligning with the context. There is no hallucination, and the output matches the Expected Output.",
+    "provider": "openai",
+    "threshold": 0.7
+  },
+  {
+    "id": "hal2_no_edge_finish_invented",
+    "metric": "no_hallucination",
+    "score": 0.9033,
+    "passed": true,
+    "reason": "The Actual Output correctly includes the specified size and lamination for the game board, both directly supported by the Input. The edge_finish field is absent, which aligns with the instruction to leave it null or ask the client if not specified. The follow-up question explicitly asks about edge finish, matching the Expected Output and Context. The only minor shortcoming is the presence of 'has_additional_elements': true, which is not supported by the Input or Context.",
+    "provider": "openai",
+    "threshold": 0.7
+  },
+  {
+    "id": "hal2_quantity_not_from_card_count",
+    "metric": "no_hallucination",
+    "score": 0.9947,
+    "passed": true,
+    "reason": "All non-null fields in the Actual Output are directly supported by the Input or Context: 'quantity' is set to 500 (тираж), and 'card_count' is set to 110 (карт у колоді), matching the Expected Output and respecting the distinction between these fields as emphasized in the Context. No extraneous fields are present, and there are no missing required fields. The output is fully aligned with the evaluation steps.",
+    "provider": "openai",
+    "threshold": 0.7
+  },
+  {
+    "id": "hal2_no_uv_invented",
+    "metric": "no_hallucination",
+    "score": 0.8573,
+    "passed": true,
+    "reason": "The Actual Output correctly includes all explicitly mentioned fields from the Input (size_mm, quantity, lamination=matte) and does not set uv_varnish, aligning with the Context that it should be null or queried if not mentioned. The structure matches the Expected Output, and the matte lamination exception is properly applied. The only minor shortcoming is that uv_varnish is not explicitly set to null or False, but it is also not set to True or included incorrectly, which is acceptable per the instructions.",
+    "provider": "openai",
+    "threshold": 0.7
+  },
+  {
+    "id": "hal2_no_deadline_invented",
+    "metric": "no_hallucination",
+    "score": 1.0,
+    "passed": true,
+    "reason": "All non-null fields in the Actual Output are directly supported by the Input: product name ('Факел'), quantity (1000), and card count (80). No extraneous fields are filled; deadline_days is correctly left null and a follow-up question about the deadline is included, as required by the Context. The output matches the Expected Output and adheres to all evaluation steps.",
+    "provider": "openai",
+    "threshold": 0.7
+  },
+  {
+    "id": "cv_full_box_card_flow",
+    "metric": "convo_coherence",
+    "score": 0.3341,
+    "passed": false,
+    "reason": "The response fails to extract all required details for the rulebook (missing pages=8 and binding=saddle_stitch), and the JSON status remains 'incomplete' despite all fields being provided. The assistant does not confirm that requirements are fixed or indicate handoff to the technologist, as expected. Instead, it repeats general clarifying questions, which is unnecessary at this stage. The output partially incorporates previous information but does not align with the expected finalization behavior.",
+    "provider": "openai",
+    "threshold": 0.5
+  },
+  {
+    "id": "cv_expert_phone_flow",
+    "metric": "convo_coherence",
+    "score": 0.916,
+    "passed": true,
+    "reason": "The response accurately extracts all key details from the input (client_name, product_name, quantity, box size, card count) and summarizes them in the JSON. It asks for missing general information (deadline, components, additional elements) and relevant box/card details, aligning with the expected behavior. The output does not repeat previously known information and incorporates context correctly. The only minor shortcoming is that it asks for some card details (size, grammage, color, coating) that, while reasonable, are not explicitly required in the expected output, but this does not detract significantly from alignment.",
+    "provider": "openai",
+    "threshold": 0.5
+  },
+  {
+    "id": "cv_correction_mid_conversation",
+    "metric": "convo_coherence",
+    "score": 1.0,
+    "passed": true,
+    "reason": "The response correctly updates the тираж to 800 as per the user's correction, confirms the change, and continues gathering details about the box and cards without restarting the conversation. The extracted JSON accurately reflects the updated quantity and maintains other parameters unchanged, aligning with the expected output and context.",
+    "provider": "openai",
+    "threshold": 0.5
+  },
+  {
+    "id": "cv_catalog_then_selection",
+    "metric": "convo_coherence",
+    "score": 0.8899,
+    "passed": true,
+    "reason": "The response correctly acknowledges and records the client's choice of 'кубики D6 пластикові — 500 штук' in both the message and the JSON (game_components_notes). It does not repeat the catalog, aligning with the context and expected behavior. The assistant moves on to next questions (name, deadline, extra components), which is appropriate. The only minor shortcoming is that the JSON includes 'quantity': 600 and 'product_name': 'Вогонь', which are not directly referenced in this user turn, but this does not significantly detract from the overall alignment.",
+    "provider": "openai",
+    "threshold": 0.5
+  },
+  {
+    "id": "cv2_quantity_preserved_all_turns",
+    "metric": "convo_coherence",
+    "score": 0.7243,
+    "passed": true,
+    "reason": "The Actual Output maintains the correct quantity (1200) and card_count (90) as required by the Context and Expected Output. The rigid_box fields are preserved, and the card_deck fields are mostly accurate (gsm=300, print_colors=4+4). However, the card_size_mm field is missing in the JSON, and front_finish (matte_lamination) is not included, which are both specified in the Expected Output. The response does not repeat previous information and asks relevant follow-up questions, but the JSON is incomplete regarding the latest card details.",
+    "provider": "openai",
+    "threshold": 0.5
+  },
+  {
+    "id": "cv2_client_confirms_standard",
+    "metric": "convo_coherence",
+    "score": 0.5306,
+    "passed": true,
+    "reason": "The response correctly confirms the thickness as 1.75 mm and records it, aligning with the context and expected behavior. However, it does not proceed to the next required field (e.g., lamination), instead asking a broad set of general questions, some of which are unrelated or already addressed. The JSON accurately reflects the thickness and box parameters, but the status remains 'incomplete' and does not show progression to the next specific field as expected.",
+    "provider": "openai",
+    "threshold": 0.5
+  },
+  {
+    "id": "cv2_expert_fills_client_name_as_company",
+    "metric": "convo_coherence",
+    "score": 0.837,
+    "passed": true,
+    "reason": "The response correctly extracts and records the client_name as 'ТОВ «Ігроленд»', product_name as 'Простір', and quantity as 800, aligning with the input and context. The follow-up questions cover deadline, components, and additional elements, as expected. However, it omits asking about box details, which is specified in the expected output. The JSON structure accurately reflects the input and context, and there is no repetition of previous questions. The only shortcoming is the missing inquiry about box details.",
+    "provider": "openai",
+    "threshold": 0.5
+  },
+  {
+    "id": "cv2_no_re_ask_after_confirmation",
+    "metric": "convo_coherence",
+    "score": 0.4169,
+    "passed": false,
+    "reason": "The response repeats general questions already addressed or irrelevant (e.g., about box, cards, and quantity), rather than focusing on the rulebook details just provided. The JSON omits key rulebook fields (pages=8, binding=saddle_stitch) that were in the latest input, and does not acknowledge that all required fields are now filled. The output does not announce completion as expected, missing alignment with the evaluation steps.",
+    "provider": "openai",
+    "threshold": 0.5
+  },
+  {
+    "id": "cv2_handles_ambiguous_game_component_choice",
+    "metric": "convo_coherence",
+    "score": 0.8508,
+    "passed": true,
+    "reason": "The response correctly identifies the ambiguity in the user's request for 'жетони', lists both relevant catalog options, and prompts for clarification, aligning well with the expected output and context. However, the extracted JSON contains a minor issue: the 'components_summary' includes only 'rigid_box', omitting the token options that are the focus of this exchange. This slightly reduces alignment with step 4, but overall the output is accurate and contextually appropriate.",
+    "provider": "openai",
+    "threshold": 0.5
+  },
+  {
+    "id": "cv2_game_board_standalone_no_box_question",
+    "metric": "convo_coherence",
+    "score": 0.8983,
+    "passed": true,
+    "reason": "The response correctly extracts and summarizes the provided details (size, lamination, quantity), does not ask about unrelated components (like box or cards), and only inquires about missing required fields (board thickness, print sides). The JSON reflects the input and context, but omits 'edge_finish' and 'fold_description', which are mentioned in the expected output. This minor omission prevents a perfect score.",
+    "provider": "openai",
+    "threshold": 0.5
+  }
+]

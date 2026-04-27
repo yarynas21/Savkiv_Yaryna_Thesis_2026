@@ -1,0 +1,7484 @@
+[
+  {
+    "id": "ext_quantity_cards_1000_110",
+    "description": "тираж 1000, 110 карт — не плутати quantity з card_count",
+    "category": "ext",
+    "asserted": 3,
+    "correct": 3,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 1000,
+        "actual": 1000
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 110,
+        "actual": 110
+      }
+    ]
+  },
+  {
+    "id": "ext_quantity_cards_500_54",
+    "description": "тираж 500, колода 54 карти",
+    "category": "ext",
+    "asserted": 3,
+    "correct": 3,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 500,
+        "actual": 500
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 54,
+        "actual": 54
+      }
+    ]
+  },
+  {
+    "id": "ext_quantity_cards_2000_78",
+    "description": "тираж 2000, 78 карт у колоді",
+    "category": "ext",
+    "asserted": 3,
+    "correct": 3,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 2000,
+        "actual": 2000
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 78,
+        "actual": 78
+      }
+    ]
+  },
+  {
+    "id": "ext_quantity_cards_300_110",
+    "description": "тираж 300 + «карти 110 штук» — ambiguous «штук»",
+    "category": "ext",
+    "asserted": 3,
+    "correct": 3,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 300,
+        "actual": 300
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 110,
+        "actual": 110
+      }
+    ]
+  },
+  {
+    "id": "ext_quantity_cards_750_36",
+    "description": "тираж 750, 36 карт (маленька колода)",
+    "category": "ext",
+    "asserted": 3,
+    "correct": 3,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 750,
+        "actual": 750
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 36,
+        "actual": 36
+      }
+    ]
+  },
+  {
+    "id": "ext_quantity_cards_1500_200",
+    "description": "тираж 1500, велика колода 200 карт",
+    "category": "ext",
+    "asserted": 3,
+    "correct": 3,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 1500,
+        "actual": 1500
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 200,
+        "actual": 200
+      }
+    ]
+  },
+  {
+    "id": "ext_product_name",
+    "description": "назва гри витягується з першого повідомлення",
+    "category": "ext",
+    "asserted": 2,
+    "correct": 2,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.product_name",
+        "ok": true,
+        "expected": "Замок Дракона",
+        "actual": "Замок Дракона"
+      },
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 600,
+        "actual": 600
+      }
+    ]
+  },
+  {
+    "id": "ext_premium_finish",
+    "description": "«преміальна» → premium_finish=True",
+    "category": "ext",
+    "asserted": 2,
+    "correct": 2,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.premium_finish",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 400,
+        "actual": 400
+      }
+    ]
+  },
+  {
+    "id": "ext_has_no_components",
+    "description": "«без комплектуючих» → has_game_components=False",
+    "category": "ext",
+    "asserted": 1,
+    "correct": 1,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.has_game_components",
+        "ok": true,
+        "expected": false,
+        "actual": false
+      }
+    ]
+  },
+  {
+    "id": "ext_customer_provides_components",
+    "description": "«кубики ми маємо свої» → customer_provides_components=True",
+    "category": "ext",
+    "asserted": 2,
+    "correct": 2,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.has_game_components",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "req.customer_provides_components",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      }
+    ]
+  },
+  {
+    "id": "ext_has_game_board",
+    "description": "«ігрове поле» → has_additional_elements=True, game_board у components",
+    "category": "ext",
+    "asserted": 2,
+    "correct": 2,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.has_additional_elements",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.game_board.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      }
+    ]
+  },
+  {
+    "id": "ext_has_info_leaflet",
+    "description": "«інформаційна листівка» → info_leaflet у components",
+    "category": "ext",
+    "asserted": 2,
+    "correct": 2,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.has_additional_elements",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.info_leaflet.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      }
+    ]
+  },
+  {
+    "id": "ext2_gloss_lamination_box",
+    "description": "«глянцева ламінація» коробки → lamination=gloss",
+    "category": "ext2",
+    "asserted": 5,
+    "correct": 5,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 600,
+        "actual": 600
+      },
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.size_mm",
+        "ok": true,
+        "expected": [
+          280,
+          180,
+          50
+        ],
+        "actual": [
+          280,
+          180,
+          50
+        ]
+      },
+      {
+        "field": "comp.rigid_box.construction",
+        "ok": true,
+        "expected": "lid_and_base",
+        "actual": "lid_and_base"
+      },
+      {
+        "field": "comp.rigid_box.lamination",
+        "ok": true,
+        "expected": "gloss",
+        "actual": "gloss"
+      }
+    ]
+  },
+  {
+    "id": "ext2_gloss_lamination_cards",
+    "description": "«глянцева ламінація» карт → front_finish=gloss_lamination",
+    "category": "ext2",
+    "asserted": 8,
+    "correct": 8,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 800,
+        "actual": 800
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": null,
+        "actual": null
+      },
+      {
+        "field": "comp.card_deck.card_size_mm",
+        "ok": true,
+        "expected": [
+          63,
+          88
+        ],
+        "actual": [
+          63,
+          88
+        ]
+      },
+      {
+        "field": "comp.card_deck.gsm",
+        "ok": true,
+        "expected": 300,
+        "actual": 300
+      },
+      {
+        "field": "comp.card_deck.print_colors",
+        "ok": true,
+        "expected": "4+4",
+        "actual": "4+4"
+      },
+      {
+        "field": "comp.card_deck.front_finish",
+        "ok": true,
+        "expected": "gloss_lamination",
+        "actual": "gloss_lamination"
+      },
+      {
+        "field": "comp.card_deck.back_finish",
+        "ok": true,
+        "expected": "gloss_lamination",
+        "actual": "gloss_lamination"
+      }
+    ]
+  },
+  {
+    "id": "ext2_construction_sleeve",
+    "description": "«дно і рукав» → construction=base_and_sleeve",
+    "category": "ext2",
+    "asserted": 5,
+    "correct": 5,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 400,
+        "actual": 400
+      },
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.size_mm",
+        "ok": true,
+        "expected": [
+          320,
+          220,
+          70
+        ],
+        "actual": [
+          320,
+          220,
+          70
+        ]
+      },
+      {
+        "field": "comp.rigid_box.construction",
+        "ok": true,
+        "expected": "base_and_sleeve",
+        "actual": "base_and_sleeve"
+      },
+      {
+        "field": "comp.rigid_box.lamination",
+        "ok": true,
+        "expected": "matte",
+        "actual": "matte"
+      }
+    ]
+  },
+  {
+    "id": "ext2_construction_self_assembly",
+    "description": "«самозбірна» коробка",
+    "category": "ext2",
+    "asserted": 5,
+    "correct": 5,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 1000,
+        "actual": 1000
+      },
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.construction",
+        "ok": true,
+        "expected": "self_assembly",
+        "actual": "self_assembly"
+      },
+      {
+        "field": "comp.rigid_box.board_thickness_mm",
+        "ok": true,
+        "expected": 1.5,
+        "actual": 1.5
+      },
+      {
+        "field": "comp.rigid_box.lamination",
+        "ok": true,
+        "expected": "matte",
+        "actual": "matte"
+      }
+    ]
+  },
+  {
+    "id": "ext2_print_inside_outside",
+    "description": "«друк зовні та всередині» → print_sides=outside_and_inside",
+    "category": "ext2",
+    "asserted": 3,
+    "correct": 3,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.print_sides",
+        "ok": true,
+        "expected": "outside_and_inside",
+        "actual": "outside_and_inside"
+      },
+      {
+        "field": "comp.rigid_box.lamination",
+        "ok": true,
+        "expected": "matte",
+        "actual": "matte"
+      }
+    ]
+  },
+  {
+    "id": "ext2_print_outside_only",
+    "description": "«лише зовні» → print_sides=outside_only",
+    "category": "ext2",
+    "asserted": 2,
+    "correct": 2,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.print_sides",
+        "ok": true,
+        "expected": "outside_only",
+        "actual": "outside_only"
+      }
+    ]
+  },
+  {
+    "id": "ext2_material_corrugated",
+    "description": "«гофра» як основа коробки",
+    "category": "ext2",
+    "asserted": 3,
+    "correct": 3,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.material",
+        "ok": true,
+        "expected": "corrugated",
+        "actual": "corrugated"
+      },
+      {
+        "field": "comp.rigid_box.lamination",
+        "ok": true,
+        "expected": "matte",
+        "actual": "matte"
+      }
+    ]
+  },
+  {
+    "id": "ext2_material_bookbinding",
+    "description": "«палітурний картон» як основа коробки",
+    "category": "ext2",
+    "asserted": 3,
+    "correct": 3,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.material",
+        "ok": true,
+        "expected": "bookbinding_board",
+        "actual": "bookbinding_board"
+      },
+      {
+        "field": "comp.rigid_box.board_thickness_mm",
+        "ok": true,
+        "expected": 2.0,
+        "actual": 2.0
+      }
+    ]
+  },
+  {
+    "id": "ext2_uv_varnish_full_coverage",
+    "description": "«УФ-лак по всій площі» → uv_varnish=True",
+    "category": "ext2",
+    "asserted": 3,
+    "correct": 3,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.uv_varnish",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.lamination",
+        "ok": true,
+        "expected": "matte",
+        "actual": "matte"
+      }
+    ]
+  },
+  {
+    "id": "ext2_no_uv_varnish",
+    "description": "«без УФ-лаку» → uv_varnish=False",
+    "category": "ext2",
+    "asserted": 3,
+    "correct": 3,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.uv_varnish",
+        "ok": true,
+        "expected": false,
+        "actual": false
+      },
+      {
+        "field": "comp.rigid_box.lamination",
+        "ok": true,
+        "expected": "matte",
+        "actual": "matte"
+      }
+    ]
+  },
+  {
+    "id": "ext2_shrink_wrap_cards",
+    "description": "«термопакування карт» → card_deck.shrink_wrap=True",
+    "category": "ext2",
+    "asserted": 3,
+    "correct": 3,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.shrink_wrap",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.front_finish",
+        "ok": true,
+        "expected": "matte_lamination",
+        "actual": "matte_lamination"
+      }
+    ]
+  },
+  {
+    "id": "ext2_deadline_days_explicit",
+    "description": "«дедлайн 45 днів» → deadline_days=45",
+    "category": "ext2",
+    "asserted": 5,
+    "correct": 5,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 500,
+        "actual": 500
+      },
+      {
+        "field": "req.deadline_days",
+        "ok": true,
+        "expected": 45,
+        "actual": 45
+      },
+      {
+        "field": "req.product_name",
+        "ok": true,
+        "expected": "Нептун",
+        "actual": "Нептун"
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 72,
+        "actual": 72
+      }
+    ]
+  },
+  {
+    "id": "ext2_deadline_date_format",
+    "description": "«до 1 червня» → агент має зафіксувати дедлайн у якомусь форматі",
+    "category": "ext2",
+    "asserted": 3,
+    "correct": 3,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 1000,
+        "actual": 1000
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 90,
+        "actual": 90
+      }
+    ]
+  },
+  {
+    "id": "ext2_client_name_extracted",
+    "description": "Ім'я клієнта витягується з повідомлення",
+    "category": "ext2",
+    "asserted": 3,
+    "correct": 3,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.client_name",
+        "ok": true,
+        "expected": "Олена",
+        "actual": "Олена"
+      },
+      {
+        "field": "req.product_name",
+        "ok": true,
+        "expected": "Дракон",
+        "actual": "Дракон"
+      },
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 300,
+        "actual": 300
+      }
+    ]
+  },
+  {
+    "id": "ext2_print_colors_asymmetric",
+    "description": "«лице 4 кольори, зворот 1 колір» → print_colors=4+1 (асиметричний)",
+    "category": "ext2",
+    "asserted": 2,
+    "correct": 2,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.print_colors",
+        "ok": true,
+        "expected": "4+1",
+        "actual": "4+1"
+      }
+    ]
+  },
+  {
+    "id": "ext2_rulebook_folding",
+    "description": "«фальцювання» → binding=folding",
+    "category": "ext2",
+    "asserted": 4,
+    "correct": 4,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.rulebook.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rulebook.size_mm",
+        "ok": true,
+        "expected": [
+          210,
+          297
+        ],
+        "actual": [
+          210,
+          297
+        ]
+      },
+      {
+        "field": "comp.rulebook.pages",
+        "ok": true,
+        "expected": 4,
+        "actual": 4
+      },
+      {
+        "field": "comp.rulebook.binding",
+        "ok": true,
+        "expected": "folding",
+        "actual": "folding"
+      }
+    ]
+  },
+  {
+    "id": "ext2_rulebook_saddle_stitch",
+    "description": "«на скобу / скорбу» → binding=saddle_stitch",
+    "category": "ext2",
+    "asserted": 3,
+    "correct": 3,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.rulebook.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rulebook.pages",
+        "ok": true,
+        "expected": 12,
+        "actual": 12
+      },
+      {
+        "field": "comp.rulebook.binding",
+        "ok": true,
+        "expected": "saddle_stitch",
+        "actual": "saddle_stitch"
+      }
+    ]
+  },
+  {
+    "id": "ext2_game_board_wrapped_edges",
+    "description": "«обклейка торців» → edge_finish=wrapped_edges",
+    "category": "ext2",
+    "asserted": 4,
+    "correct": 4,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.game_board.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.game_board.size_mm",
+        "ok": true,
+        "expected": [
+          594,
+          420
+        ],
+        "actual": [
+          594,
+          420
+        ]
+      },
+      {
+        "field": "comp.game_board.edge_finish",
+        "ok": true,
+        "expected": "wrapped_edges",
+        "actual": "wrapped_edges"
+      },
+      {
+        "field": "comp.game_board.lamination",
+        "ok": true,
+        "expected": "matte",
+        "actual": "matte"
+      }
+    ]
+  },
+  {
+    "id": "ext2_game_board_fold_twice",
+    "description": "поле складається в А5 (два згини) — розмір і fold_description витягуються",
+    "category": "ext2",
+    "asserted": 3,
+    "correct": 3,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 500,
+        "actual": 500
+      },
+      {
+        "field": "comp.game_board.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.game_board.size_mm",
+        "ok": true,
+        "expected": [
+          840,
+          594
+        ],
+        "actual": [
+          840,
+          594
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ext2_info_leaflet_no_crease",
+    "description": "«без біговки» → has_crease=False",
+    "category": "ext2",
+    "asserted": 4,
+    "correct": 4,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.info_leaflet.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.info_leaflet.size_mm",
+        "ok": true,
+        "expected": [
+          148,
+          210
+        ],
+        "actual": [
+          148,
+          210
+        ]
+      },
+      {
+        "field": "comp.info_leaflet.print_colors",
+        "ok": true,
+        "expected": "4+4",
+        "actual": "4+4"
+      },
+      {
+        "field": "comp.info_leaflet.has_crease",
+        "ok": true,
+        "expected": false,
+        "actual": false
+      }
+    ]
+  },
+  {
+    "id": "ext3_rulebook_a5_saddle_stitch",
+    "description": "Правила A5, 8 сторінок, на скобу — з першого повідомлення",
+    "category": "ext3",
+    "asserted": 7,
+    "correct": 7,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 500,
+        "actual": 500
+      },
+      {
+        "field": "comp.rulebook.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rulebook.size_mm",
+        "ok": true,
+        "expected": [
+          148,
+          210
+        ],
+        "actual": [
+          148,
+          210
+        ]
+      },
+      {
+        "field": "comp.rulebook.pages",
+        "ok": true,
+        "expected": 8,
+        "actual": 8
+      },
+      {
+        "field": "comp.rulebook.binding",
+        "ok": true,
+        "expected": "saddle_stitch",
+        "actual": "saddle_stitch"
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 60,
+        "actual": 60
+      }
+    ]
+  },
+  {
+    "id": "ext3_rulebook_a4_folding",
+    "description": "Правила A4, 4 сторінки, фальцювання",
+    "category": "ext3",
+    "asserted": 4,
+    "correct": 4,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.rulebook.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rulebook.size_mm",
+        "ok": true,
+        "expected": [
+          210,
+          297
+        ],
+        "actual": [
+          210,
+          297
+        ]
+      },
+      {
+        "field": "comp.rulebook.pages",
+        "ok": true,
+        "expected": 4,
+        "actual": 4
+      },
+      {
+        "field": "comp.rulebook.binding",
+        "ok": true,
+        "expected": "folding",
+        "actual": "folding"
+      }
+    ]
+  },
+  {
+    "id": "ext3_box_lid_and_base",
+    "description": "«кришка і дно» → construction=lid_and_base",
+    "category": "ext3",
+    "asserted": 5,
+    "correct": 5,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 1000,
+        "actual": 1000
+      },
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.size_mm",
+        "ok": true,
+        "expected": [
+          300,
+          200,
+          60
+        ],
+        "actual": [
+          300,
+          200,
+          60
+        ]
+      },
+      {
+        "field": "comp.rigid_box.construction",
+        "ok": true,
+        "expected": "lid_and_base",
+        "actual": "lid_and_base"
+      },
+      {
+        "field": "comp.rigid_box.lamination",
+        "ok": true,
+        "expected": "matte",
+        "actual": "matte"
+      }
+    ]
+  },
+  {
+    "id": "ext3_box_sleeve",
+    "description": "«дно і рукав» → construction=base_and_sleeve",
+    "category": "ext3",
+    "asserted": 3,
+    "correct": 3,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.construction",
+        "ok": true,
+        "expected": "base_and_sleeve",
+        "actual": "base_and_sleeve"
+      },
+      {
+        "field": "comp.rigid_box.board_thickness_mm",
+        "ok": true,
+        "expected": 1.75,
+        "actual": 1.75
+      }
+    ]
+  },
+  {
+    "id": "ext3_cards_gloss_lamination",
+    "description": "«глянцева ламінація» карт → front_finish і back_finish=gloss_lamination",
+    "category": "ext3",
+    "asserted": 5,
+    "correct": 5,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.gsm",
+        "ok": true,
+        "expected": 350,
+        "actual": 350
+      },
+      {
+        "field": "comp.card_deck.print_colors",
+        "ok": true,
+        "expected": "4+4",
+        "actual": "4+4"
+      },
+      {
+        "field": "comp.card_deck.front_finish",
+        "ok": true,
+        "expected": "gloss_lamination",
+        "actual": "gloss_lamination"
+      },
+      {
+        "field": "comp.card_deck.back_finish",
+        "ok": true,
+        "expected": "gloss_lamination",
+        "actual": "gloss_lamination"
+      }
+    ]
+  },
+  {
+    "id": "ext3_cards_matte_one_side",
+    "description": "«матова ламінація лише на лицьовій» → front_finish=matte, back_finish=none",
+    "category": "ext3",
+    "asserted": 4,
+    "correct": 3,
+    "passed": false,
+    "field_results": [
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.print_colors",
+        "ok": true,
+        "expected": "4+0",
+        "actual": "4+0"
+      },
+      {
+        "field": "comp.card_deck.front_finish",
+        "ok": true,
+        "expected": "matte_lamination",
+        "actual": "matte_lamination"
+      },
+      {
+        "field": "comp.card_deck.back_finish",
+        "ok": false,
+        "expected": "none",
+        "actual": null
+      }
+    ]
+  },
+  {
+    "id": "ext3_box_corrugated",
+    "description": "«гофра» як основа → material=corrugated",
+    "category": "ext3",
+    "asserted": 4,
+    "correct": 4,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.material",
+        "ok": true,
+        "expected": "corrugated",
+        "actual": "corrugated"
+      },
+      {
+        "field": "comp.rigid_box.size_mm",
+        "ok": true,
+        "expected": [
+          350,
+          250,
+          70
+        ],
+        "actual": [
+          350,
+          250,
+          70
+        ]
+      },
+      {
+        "field": "comp.rigid_box.lamination",
+        "ok": true,
+        "expected": "matte",
+        "actual": "matte"
+      }
+    ]
+  },
+  {
+    "id": "ext3_box_print_inside_outside",
+    "description": "«друк зовні та всередині» → print_sides=outside_and_inside",
+    "category": "ext3",
+    "asserted": 3,
+    "correct": 3,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.print_sides",
+        "ok": true,
+        "expected": "outside_and_inside",
+        "actual": "outside_and_inside"
+      },
+      {
+        "field": "comp.rigid_box.lamination",
+        "ok": true,
+        "expected": "matte",
+        "actual": "matte"
+      }
+    ]
+  },
+  {
+    "id": "ext3_deadline_weeks",
+    "description": "«через 3 тижні» → deadline_days=21",
+    "category": "ext3",
+    "asserted": 3,
+    "correct": 3,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 800,
+        "actual": 800
+      },
+      {
+        "field": "req.product_name",
+        "ok": true,
+        "expected": "Кіт",
+        "actual": "Кіт"
+      },
+      {
+        "field": "req.deadline_days",
+        "ok": true,
+        "expected": 21,
+        "actual": 21
+      }
+    ]
+  },
+  {
+    "id": "ext3_game_board_edge_wrapped",
+    "description": "«обклейка торців» → edge_finish=wrapped_edges",
+    "category": "ext3",
+    "asserted": 4,
+    "correct": 4,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.game_board.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.game_board.size_mm",
+        "ok": true,
+        "expected": [
+          594,
+          420
+        ],
+        "actual": [
+          594,
+          420
+        ]
+      },
+      {
+        "field": "comp.game_board.edge_finish",
+        "ok": true,
+        "expected": "wrapped_edges",
+        "actual": "wrapped_edges"
+      },
+      {
+        "field": "comp.game_board.lamination",
+        "ok": true,
+        "expected": "matte",
+        "actual": "matte"
+      }
+    ]
+  },
+  {
+    "id": "ext3_game_board_casherovane",
+    "description": "«кашероване» → edge_finish=visible_board_edge",
+    "category": "ext3",
+    "asserted": 4,
+    "correct": 4,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.game_board.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.game_board.size_mm",
+        "ok": true,
+        "expected": [
+          420,
+          297
+        ],
+        "actual": [
+          420,
+          297
+        ]
+      },
+      {
+        "field": "comp.game_board.edge_finish",
+        "ok": true,
+        "expected": "visible_board_edge",
+        "actual": "visible_board_edge"
+      },
+      {
+        "field": "comp.game_board.lamination",
+        "ok": true,
+        "expected": "gloss",
+        "actual": "gloss"
+      }
+    ]
+  },
+  {
+    "id": "ext3_info_leaflet_crease",
+    "description": "Листівка з біговкою → has_crease=True",
+    "category": "ext3",
+    "asserted": 4,
+    "correct": 4,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.info_leaflet.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.info_leaflet.size_mm",
+        "ok": true,
+        "expected": [
+          148,
+          105
+        ],
+        "actual": [
+          148,
+          105
+        ]
+      },
+      {
+        "field": "comp.info_leaflet.print_colors",
+        "ok": true,
+        "expected": "4+4",
+        "actual": "4+4"
+      },
+      {
+        "field": "comp.info_leaflet.has_crease",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      }
+    ]
+  },
+  {
+    "id": "ext3_product_name_quotes",
+    "description": "Назва гри у «лапках» витягується правильно",
+    "category": "ext3",
+    "asserted": 4,
+    "correct": 4,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.product_name",
+        "ok": true,
+        "expected": "Зоряний Шлях",
+        "actual": "Зоряний Шлях"
+      },
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 1500,
+        "actual": 1500
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 100,
+        "actual": 100
+      }
+    ]
+  },
+  {
+    "id": "ext3_print_colors_3_3",
+    "description": "«3+3» симетричний трифарбовий",
+    "category": "ext3",
+    "asserted": 3,
+    "correct": 3,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.print_colors",
+        "ok": true,
+        "expected": "3+3",
+        "actual": "3+3"
+      },
+      {
+        "field": "comp.card_deck.front_finish",
+        "ok": true,
+        "expected": "matte_lamination",
+        "actual": "matte_lamination"
+      }
+    ]
+  },
+  {
+    "id": "ext3_shrink_wrap_cards",
+    "description": "«термопакування карт» → card_deck.shrink_wrap=True",
+    "category": "ext3",
+    "asserted": 3,
+    "correct": 3,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.shrink_wrap",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.front_finish",
+        "ok": true,
+        "expected": "matte_lamination",
+        "actual": "matte_lamination"
+      }
+    ]
+  },
+  {
+    "id": "ext4_box_all_fields",
+    "description": "Коробка з усіма полями в одному повідомленні",
+    "category": "ext4",
+    "asserted": 9,
+    "correct": 9,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 800,
+        "actual": 800
+      },
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.size_mm",
+        "ok": true,
+        "expected": [
+          320,
+          220,
+          65
+        ],
+        "actual": [
+          320,
+          220,
+          65
+        ]
+      },
+      {
+        "field": "comp.rigid_box.construction",
+        "ok": true,
+        "expected": "lid_and_base",
+        "actual": "lid_and_base"
+      },
+      {
+        "field": "comp.rigid_box.print_sides",
+        "ok": true,
+        "expected": "outside_and_inside",
+        "actual": "outside_and_inside"
+      },
+      {
+        "field": "comp.rigid_box.board_thickness_mm",
+        "ok": true,
+        "expected": 1.75,
+        "actual": 1.75
+      },
+      {
+        "field": "comp.rigid_box.lamination",
+        "ok": true,
+        "expected": "matte",
+        "actual": "matte"
+      },
+      {
+        "field": "comp.rigid_box.uv_varnish",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.shrink_wrap",
+        "ok": true,
+        "expected": false,
+        "actual": false
+      }
+    ]
+  },
+  {
+    "id": "ext4_cards_all_fields",
+    "description": "Карти з усіма полями: розмір, gsm, друк, покриття, термопакування",
+    "category": "ext4",
+    "asserted": 9,
+    "correct": 9,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 500,
+        "actual": 500
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 54,
+        "actual": 54
+      },
+      {
+        "field": "comp.card_deck.card_size_mm",
+        "ok": true,
+        "expected": [
+          70,
+          120
+        ],
+        "actual": [
+          70,
+          120
+        ]
+      },
+      {
+        "field": "comp.card_deck.gsm",
+        "ok": true,
+        "expected": 350,
+        "actual": 350
+      },
+      {
+        "field": "comp.card_deck.print_colors",
+        "ok": true,
+        "expected": "4+4",
+        "actual": "4+4"
+      },
+      {
+        "field": "comp.card_deck.front_finish",
+        "ok": true,
+        "expected": "gloss_lamination",
+        "actual": "gloss_lamination"
+      },
+      {
+        "field": "comp.card_deck.back_finish",
+        "ok": true,
+        "expected": "matte_lamination",
+        "actual": "matte_lamination"
+      },
+      {
+        "field": "comp.card_deck.shrink_wrap",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      }
+    ]
+  },
+  {
+    "id": "ext4_rulebook_a6_folding",
+    "description": "Правила A6, 4 сторінки, фальцювання",
+    "category": "ext4",
+    "asserted": 4,
+    "correct": 4,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.rulebook.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rulebook.size_mm",
+        "ok": true,
+        "expected": [
+          105,
+          148
+        ],
+        "actual": [
+          105,
+          148
+        ]
+      },
+      {
+        "field": "comp.rulebook.pages",
+        "ok": true,
+        "expected": 4,
+        "actual": 4
+      },
+      {
+        "field": "comp.rulebook.binding",
+        "ok": true,
+        "expected": "folding",
+        "actual": "folding"
+      }
+    ]
+  },
+  {
+    "id": "ext4_soft_touch_lamination",
+    "description": "Soft-touch ламінація на коробці → lamination=soft_touch",
+    "category": "ext4",
+    "asserted": 6,
+    "correct": 5,
+    "passed": false,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 300,
+        "actual": 300
+      },
+      {
+        "field": "req.premium_finish",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.size_mm",
+        "ok": true,
+        "expected": [
+          350,
+          250,
+          80
+        ],
+        "actual": [
+          350,
+          250,
+          80
+        ]
+      },
+      {
+        "field": "comp.rigid_box.lamination",
+        "ok": false,
+        "expected": "soft_touch",
+        "actual": "matte"
+      },
+      {
+        "field": "comp.rigid_box.board_thickness_mm",
+        "ok": true,
+        "expected": 2.0,
+        "actual": 2.0
+      }
+    ]
+  },
+  {
+    "id": "ext4_info_leaflet_standalone",
+    "description": "Лише листівка без коробки і карт",
+    "category": "ext4",
+    "asserted": 5,
+    "correct": 5,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 2000,
+        "actual": 2000
+      },
+      {
+        "field": "comp.info_leaflet.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.info_leaflet.size_mm",
+        "ok": true,
+        "expected": [
+          148,
+          210
+        ],
+        "actual": [
+          148,
+          210
+        ]
+      },
+      {
+        "field": "comp.info_leaflet.print_colors",
+        "ok": true,
+        "expected": "4+4",
+        "actual": "4+4"
+      },
+      {
+        "field": "comp.info_leaflet.has_crease",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      }
+    ]
+  },
+  {
+    "id": "ext4_game_board_fold_once",
+    "description": "Ігрове поле складається вдвічі (один згин) — fold_description",
+    "category": "ext4",
+    "asserted": 5,
+    "correct": 5,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.game_board.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.game_board.size_mm",
+        "ok": true,
+        "expected": [
+          420,
+          297
+        ],
+        "actual": [
+          420,
+          297
+        ]
+      },
+      {
+        "field": "comp.game_board.board_thickness_mm",
+        "ok": true,
+        "expected": 1.75,
+        "actual": 1.75
+      },
+      {
+        "field": "comp.game_board.lamination",
+        "ok": true,
+        "expected": "matte",
+        "actual": "matte"
+      },
+      {
+        "field": "comp.game_board.edge_finish",
+        "ok": true,
+        "expected": "wrapped_edges",
+        "actual": "wrapped_edges"
+      }
+    ]
+  },
+  {
+    "id": "ext4_pantone_both_sides",
+    "description": "Pantone з обох сторін → print_colors 5+5",
+    "category": "ext4",
+    "asserted": 2,
+    "correct": 2,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.print_colors",
+        "ok": true,
+        "expected": "5+5",
+        "actual": "5+5"
+      }
+    ]
+  },
+  {
+    "id": "ext4_two_pantone_colors",
+    "description": "CMYK + 2 Pantone на лицьовій → print_colors 6+0",
+    "category": "ext4",
+    "asserted": 2,
+    "correct": 2,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.print_colors",
+        "ok": true,
+        "expected": "6+0",
+        "actual": "6+0"
+      }
+    ]
+  },
+  {
+    "id": "ext4_deadline_weeks_conversion",
+    "description": "«через 6 тижнів» → deadline_days=42",
+    "category": "ext4",
+    "asserted": 3,
+    "correct": 3,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 700,
+        "actual": 700
+      },
+      {
+        "field": "req.product_name",
+        "ok": true,
+        "expected": "Рубін",
+        "actual": "Рубін"
+      },
+      {
+        "field": "req.deadline_days",
+        "ok": true,
+        "expected": 42,
+        "actual": 42
+      }
+    ]
+  },
+  {
+    "id": "ext4_card_size_poker",
+    "description": "«покер-формат» карт → card_size_mm=[63,88]",
+    "category": "ext4",
+    "asserted": 4,
+    "correct": 4,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_size_mm",
+        "ok": true,
+        "expected": [
+          63,
+          88
+        ],
+        "actual": [
+          63,
+          88
+        ]
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 100,
+        "actual": 100
+      },
+      {
+        "field": "comp.card_deck.gsm",
+        "ok": true,
+        "expected": 300,
+        "actual": 300
+      }
+    ]
+  },
+  {
+    "id": "ext4_no_lamination_explicit",
+    "description": "«без ламінації» → lamination може бути none або агент питає підтвердження",
+    "category": "ext4",
+    "asserted": 4,
+    "correct": 4,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "status",
+        "ok": true,
+        "expected": "incomplete",
+        "actual": "incomplete"
+      },
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.size_mm",
+        "ok": true,
+        "expected": [
+          300,
+          200,
+          60
+        ],
+        "actual": [
+          300,
+          200,
+          60
+        ]
+      },
+      {
+        "field": "comp.rigid_box.construction",
+        "ok": true,
+        "expected": "lid_and_base",
+        "actual": "lid_and_base"
+      }
+    ]
+  },
+  {
+    "id": "ext4_box_sleeve_2mm",
+    "description": "Дно і рукав з 2 мм картоном",
+    "category": "ext4",
+    "asserted": 5,
+    "correct": 5,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.size_mm",
+        "ok": true,
+        "expected": [
+          280,
+          200,
+          55
+        ],
+        "actual": [
+          280,
+          200,
+          55
+        ]
+      },
+      {
+        "field": "comp.rigid_box.construction",
+        "ok": true,
+        "expected": "base_and_sleeve",
+        "actual": "base_and_sleeve"
+      },
+      {
+        "field": "comp.rigid_box.board_thickness_mm",
+        "ok": true,
+        "expected": 2.0,
+        "actual": 2.0
+      },
+      {
+        "field": "comp.rigid_box.lamination",
+        "ok": true,
+        "expected": "matte",
+        "actual": "matte"
+      }
+    ]
+  },
+  {
+    "id": "conf_box_size_vs_quantity",
+    "description": "розмір коробки 300×200×60 не плутати з тиражем 1000",
+    "category": "conf",
+    "asserted": 3,
+    "correct": 3,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 1000,
+        "actual": 1000
+      },
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.size_mm",
+        "ok": true,
+        "expected": [
+          300,
+          200,
+          60
+        ],
+        "actual": [
+          300,
+          200,
+          60
+        ]
+      }
+    ]
+  },
+  {
+    "id": "conf_box_size_big",
+    "description": "велика коробка 400×300×80 мм + тираж 500",
+    "category": "conf",
+    "asserted": 3,
+    "correct": 3,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 500,
+        "actual": 500
+      },
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.size_mm",
+        "ok": true,
+        "expected": [
+          400,
+          300,
+          80
+        ],
+        "actual": [
+          400,
+          300,
+          80
+        ]
+      }
+    ]
+  },
+  {
+    "id": "conf_card_size_vs_card_count",
+    "description": "розмір карти 63×88 мм не плутати з кількістю карт 120",
+    "category": "conf",
+    "asserted": 4,
+    "correct": 4,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 1000,
+        "actual": 1000
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 120,
+        "actual": 120
+      },
+      {
+        "field": "comp.card_deck.card_size_mm",
+        "ok": true,
+        "expected": [
+          63,
+          88
+        ],
+        "actual": [
+          63,
+          88
+        ]
+      }
+    ]
+  },
+  {
+    "id": "conf_card_size_tarot",
+    "description": "Tarot-формат 70×120 мм, 78 карт, тираж 300",
+    "category": "conf",
+    "asserted": 4,
+    "correct": 4,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 300,
+        "actual": 300
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 78,
+        "actual": 78
+      },
+      {
+        "field": "comp.card_deck.card_size_mm",
+        "ok": true,
+        "expected": [
+          70,
+          120
+        ],
+        "actual": [
+          70,
+          120
+        ]
+      }
+    ]
+  },
+  {
+    "id": "conf_rulebook_pages_vs_size",
+    "description": "правила A5 (148×210 мм), 16 сторінок — не плутати pages з мм",
+    "category": "conf",
+    "asserted": 4,
+    "correct": 4,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.rulebook.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rulebook.size_mm",
+        "ok": true,
+        "expected": [
+          148,
+          210
+        ],
+        "actual": [
+          148,
+          210
+        ]
+      },
+      {
+        "field": "comp.rulebook.pages",
+        "ok": true,
+        "expected": 16,
+        "actual": 16
+      },
+      {
+        "field": "comp.rulebook.binding",
+        "ok": true,
+        "expected": "saddle_stitch",
+        "actual": "saddle_stitch"
+      }
+    ]
+  },
+  {
+    "id": "conf_rulebook_a4_8pages",
+    "description": "правила A4, 8 сторінок — два різних числа",
+    "category": "conf",
+    "asserted": 4,
+    "correct": 4,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.rulebook.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rulebook.size_mm",
+        "ok": true,
+        "expected": [
+          210,
+          297
+        ],
+        "actual": [
+          210,
+          297
+        ]
+      },
+      {
+        "field": "comp.rulebook.pages",
+        "ok": true,
+        "expected": 8,
+        "actual": 8
+      },
+      {
+        "field": "comp.rulebook.binding",
+        "ok": true,
+        "expected": "folding",
+        "actual": "folding"
+      }
+    ]
+  },
+  {
+    "id": "conf_board_thickness_vs_size",
+    "description": "товщина картону 1.75 мм не плутати з розміром 420×297 мм",
+    "category": "conf",
+    "asserted": 4,
+    "correct": 4,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.game_board.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.game_board.size_mm",
+        "ok": true,
+        "expected": [
+          420,
+          297
+        ],
+        "actual": [
+          420,
+          297
+        ]
+      },
+      {
+        "field": "comp.game_board.board_thickness_mm",
+        "ok": true,
+        "expected": 1.75,
+        "actual": 1.75
+      },
+      {
+        "field": "comp.game_board.lamination",
+        "ok": true,
+        "expected": "matte",
+        "actual": "matte"
+      }
+    ]
+  },
+  {
+    "id": "conf_board_thickness_2mm",
+    "description": "товщина 2.0 мм, поле 600×600 мм",
+    "category": "conf",
+    "asserted": 4,
+    "correct": 4,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.game_board.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.game_board.size_mm",
+        "ok": true,
+        "expected": [
+          600,
+          600
+        ],
+        "actual": [
+          600,
+          600
+        ]
+      },
+      {
+        "field": "comp.game_board.board_thickness_mm",
+        "ok": true,
+        "expected": 2.0,
+        "actual": 2.0
+      },
+      {
+        "field": "comp.game_board.edge_finish",
+        "ok": true,
+        "expected": "wrapped_edges",
+        "actual": "wrapped_edges"
+      }
+    ]
+  },
+  {
+    "id": "conf_gsm_vs_card_count",
+    "description": "граматура 300 gsm не плутати з кількістю карт 110",
+    "category": "conf",
+    "asserted": 4,
+    "correct": 4,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 110,
+        "actual": 110
+      },
+      {
+        "field": "comp.card_deck.gsm",
+        "ok": true,
+        "expected": 300,
+        "actual": 300
+      },
+      {
+        "field": "comp.card_deck.print_colors",
+        "ok": true,
+        "expected": "4+4",
+        "actual": "4+4"
+      }
+    ]
+  },
+  {
+    "id": "conf_gsm_350_cards_54",
+    "description": "350 gsm vs 54 карти — два числа поруч",
+    "category": "conf",
+    "asserted": 4,
+    "correct": 4,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 54,
+        "actual": 54
+      },
+      {
+        "field": "comp.card_deck.gsm",
+        "ok": true,
+        "expected": 350,
+        "actual": 350
+      },
+      {
+        "field": "comp.card_deck.front_finish",
+        "ok": true,
+        "expected": "matte_lamination",
+        "actual": "matte_lamination"
+      }
+    ]
+  },
+  {
+    "id": "conf_leaflet_size_vs_crease",
+    "description": "листівка 100×150 мм, з біговкою — розмір не плутати",
+    "category": "conf",
+    "asserted": 4,
+    "correct": 4,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.info_leaflet.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.info_leaflet.size_mm",
+        "ok": true,
+        "expected": [
+          100,
+          150
+        ],
+        "actual": [
+          100,
+          150
+        ]
+      },
+      {
+        "field": "comp.info_leaflet.print_colors",
+        "ok": true,
+        "expected": "4+4",
+        "actual": "4+4"
+      },
+      {
+        "field": "comp.info_leaflet.has_crease",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      }
+    ]
+  },
+  {
+    "id": "conf2_board_thickness_1_5_vs_pages_8",
+    "description": "товщина 1.5 мм у правилах 8 сторінок — не плутати",
+    "category": "conf2",
+    "asserted": 5,
+    "correct": 5,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.rulebook.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rulebook.pages",
+        "ok": true,
+        "expected": 8,
+        "actual": 8
+      },
+      {
+        "field": "comp.rulebook.binding",
+        "ok": true,
+        "expected": "saddle_stitch",
+        "actual": "saddle_stitch"
+      },
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.board_thickness_mm",
+        "ok": true,
+        "expected": 1.5,
+        "actual": 1.5
+      }
+    ]
+  },
+  {
+    "id": "conf2_deadline_vs_quantity",
+    "description": "дедлайн 30 днів не плутати з тиражем 1000",
+    "category": "conf2",
+    "asserted": 4,
+    "correct": 4,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 1000,
+        "actual": 1000
+      },
+      {
+        "field": "req.deadline_days",
+        "ok": true,
+        "expected": 30,
+        "actual": 30
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 80,
+        "actual": 80
+      }
+    ]
+  },
+  {
+    "id": "conf2_gsm_vs_quantity",
+    "description": "граматура 350 gsm не плутати з тиражем 350",
+    "category": "conf2",
+    "asserted": 3,
+    "correct": 3,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 350,
+        "actual": 350
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.gsm",
+        "ok": true,
+        "expected": 350,
+        "actual": 350
+      }
+    ]
+  },
+  {
+    "id": "conf2_card_size_width_vs_count",
+    "description": "ширина карти 63 мм не плутати з кількістю 63",
+    "category": "conf2",
+    "asserted": 4,
+    "correct": 3,
+    "passed": false,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 500,
+        "actual": 500
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 120,
+        "actual": 120
+      },
+      {
+        "field": "comp.card_deck.card_size_mm",
+        "ok": false,
+        "expected": [
+          63,
+          88
+        ],
+        "actual": [
+          88,
+          63
+        ]
+      }
+    ]
+  },
+  {
+    "id": "conf2_box_height_vs_board_thickness",
+    "description": "висота коробки 60 мм та товщина 1.75 мм — різні поля",
+    "category": "conf2",
+    "asserted": 4,
+    "correct": 4,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.size_mm",
+        "ok": true,
+        "expected": [
+          300,
+          200,
+          60
+        ],
+        "actual": [
+          300,
+          200,
+          60
+        ]
+      },
+      {
+        "field": "comp.rigid_box.board_thickness_mm",
+        "ok": true,
+        "expected": 1.75,
+        "actual": 1.75
+      },
+      {
+        "field": "comp.rigid_box.lamination",
+        "ok": true,
+        "expected": "matte",
+        "actual": "matte"
+      }
+    ]
+  },
+  {
+    "id": "conf2_leaflet_size_vs_card_size",
+    "description": "листівка 100×150 мм та карта 63×88 мм — два різних розміри",
+    "category": "conf2",
+    "asserted": 7,
+    "correct": 7,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 600,
+        "actual": 600
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 80,
+        "actual": 80
+      },
+      {
+        "field": "comp.card_deck.card_size_mm",
+        "ok": true,
+        "expected": [
+          63,
+          88
+        ],
+        "actual": [
+          63,
+          88
+        ]
+      },
+      {
+        "field": "comp.info_leaflet.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.info_leaflet.size_mm",
+        "ok": true,
+        "expected": [
+          100,
+          150
+        ],
+        "actual": [
+          100,
+          150
+        ]
+      },
+      {
+        "field": "comp.info_leaflet.has_crease",
+        "ok": true,
+        "expected": false,
+        "actual": false
+      }
+    ]
+  },
+  {
+    "id": "conf2_rulebook_size_vs_card_size",
+    "description": "правила A4 (210×297) та карти 63×88 — не плутати розміри",
+    "category": "conf2",
+    "asserted": 7,
+    "correct": 7,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 400,
+        "actual": 400
+      },
+      {
+        "field": "comp.rulebook.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rulebook.size_mm",
+        "ok": true,
+        "expected": [
+          210,
+          297
+        ],
+        "actual": [
+          210,
+          297
+        ]
+      },
+      {
+        "field": "comp.rulebook.pages",
+        "ok": true,
+        "expected": 12,
+        "actual": 12
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 96,
+        "actual": 96
+      },
+      {
+        "field": "comp.card_deck.card_size_mm",
+        "ok": true,
+        "expected": [
+          63,
+          88
+        ],
+        "actual": [
+          63,
+          88
+        ]
+      }
+    ]
+  },
+  {
+    "id": "conf2_three_components_all_sizes",
+    "description": "три компоненти з розмірами — коробка, карти, правила — не перемішати",
+    "category": "conf2",
+    "asserted": 9,
+    "correct": 9,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 1200,
+        "actual": 1200
+      },
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.size_mm",
+        "ok": true,
+        "expected": [
+          330,
+          230,
+          65
+        ],
+        "actual": [
+          330,
+          230,
+          65
+        ]
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 54,
+        "actual": 54
+      },
+      {
+        "field": "comp.card_deck.card_size_mm",
+        "ok": true,
+        "expected": [
+          88,
+          63
+        ],
+        "actual": [
+          88,
+          63
+        ]
+      },
+      {
+        "field": "comp.rulebook.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rulebook.size_mm",
+        "ok": true,
+        "expected": [
+          148,
+          210
+        ],
+        "actual": [
+          148,
+          210
+        ]
+      },
+      {
+        "field": "comp.rulebook.pages",
+        "ok": true,
+        "expected": 8,
+        "actual": 8
+      }
+    ]
+  },
+  {
+    "id": "conf3_pages_vs_thickness_vs_deadline",
+    "description": "Правила 16 стор., картон 1.5 мм, дедлайн 30 днів — три числа не плутати",
+    "category": "conf3",
+    "asserted": 6,
+    "correct": 6,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.deadline_days",
+        "ok": true,
+        "expected": 30,
+        "actual": 30
+      },
+      {
+        "field": "comp.rulebook.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rulebook.pages",
+        "ok": true,
+        "expected": 16,
+        "actual": 16
+      },
+      {
+        "field": "comp.rulebook.binding",
+        "ok": true,
+        "expected": "saddle_stitch",
+        "actual": "saddle_stitch"
+      },
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.board_thickness_mm",
+        "ok": true,
+        "expected": 1.5,
+        "actual": 1.5
+      }
+    ]
+  },
+  {
+    "id": "conf3_card_size_vs_count_vs_gsm",
+    "description": "Карти 63×88 мм, 78 штук, 300 gsm — три числа не плутати",
+    "category": "conf3",
+    "asserted": 5,
+    "correct": 5,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 600,
+        "actual": 600
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_size_mm",
+        "ok": true,
+        "expected": [
+          63,
+          88
+        ],
+        "actual": [
+          63,
+          88
+        ]
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 78,
+        "actual": 78
+      },
+      {
+        "field": "comp.card_deck.gsm",
+        "ok": true,
+        "expected": 300,
+        "actual": 300
+      }
+    ]
+  },
+  {
+    "id": "conf3_box_height_60_vs_rulebook_pages_60",
+    "description": "висота коробки 60 мм і правила 60 сторінок — різні поля",
+    "category": "conf3",
+    "asserted": 6,
+    "correct": 6,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 400,
+        "actual": 400
+      },
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.size_mm",
+        "ok": true,
+        "expected": [
+          300,
+          200,
+          60
+        ],
+        "actual": [
+          300,
+          200,
+          60
+        ]
+      },
+      {
+        "field": "comp.rulebook.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rulebook.size_mm",
+        "ok": true,
+        "expected": [
+          210,
+          297
+        ],
+        "actual": [
+          210,
+          297
+        ]
+      },
+      {
+        "field": "comp.rulebook.pages",
+        "ok": true,
+        "expected": 60,
+        "actual": 60
+      }
+    ]
+  },
+  {
+    "id": "conf3_gsm_350_vs_quantity_350",
+    "description": "граматура 350 gsm і тираж 350 — однакові числа",
+    "category": "conf3",
+    "asserted": 5,
+    "correct": 5,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 350,
+        "actual": 350
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.gsm",
+        "ok": true,
+        "expected": 350,
+        "actual": 350
+      },
+      {
+        "field": "comp.card_deck.card_size_mm",
+        "ok": true,
+        "expected": [
+          63,
+          88
+        ],
+        "actual": [
+          63,
+          88
+        ]
+      },
+      {
+        "field": "comp.card_deck.front_finish",
+        "ok": true,
+        "expected": "matte_lamination",
+        "actual": "matte_lamination"
+      }
+    ]
+  },
+  {
+    "id": "conf3_board_thickness_vs_crease_count",
+    "description": "товщина 1.75 мм і 2 згини — різні числа одного компонента",
+    "category": "conf3",
+    "asserted": 4,
+    "correct": 4,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.game_board.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.game_board.size_mm",
+        "ok": true,
+        "expected": [
+          840,
+          594
+        ],
+        "actual": [
+          840,
+          594
+        ]
+      },
+      {
+        "field": "comp.game_board.board_thickness_mm",
+        "ok": true,
+        "expected": 1.75,
+        "actual": 1.75
+      },
+      {
+        "field": "comp.game_board.lamination",
+        "ok": true,
+        "expected": "matte",
+        "actual": "matte"
+      }
+    ]
+  },
+  {
+    "id": "conf3_box_size_vs_card_size_close",
+    "description": "Коробка 63×88 (маленька) і карти 63×88 — однакові числа різних об'єктів",
+    "category": "conf3",
+    "asserted": 6,
+    "correct": 6,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 200,
+        "actual": 200
+      },
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.size_mm",
+        "ok": true,
+        "expected": [
+          63,
+          88,
+          20
+        ],
+        "actual": [
+          63,
+          88,
+          20
+        ]
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 54,
+        "actual": 54
+      },
+      {
+        "field": "comp.card_deck.card_size_mm",
+        "ok": true,
+        "expected": [
+          63,
+          88
+        ],
+        "actual": [
+          63,
+          88
+        ]
+      }
+    ]
+  },
+  {
+    "id": "conf3_five_numbers_no_confusion",
+    "description": "П'ять чисел поруч: тираж 1000, коробка 300×200×60, карти 110, gsm 300",
+    "category": "conf3",
+    "asserted": 9,
+    "correct": 9,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 1000,
+        "actual": 1000
+      },
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.size_mm",
+        "ok": true,
+        "expected": [
+          300,
+          200,
+          60
+        ],
+        "actual": [
+          300,
+          200,
+          60
+        ]
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 110,
+        "actual": 110
+      },
+      {
+        "field": "comp.card_deck.gsm",
+        "ok": true,
+        "expected": 300,
+        "actual": 300
+      },
+      {
+        "field": "comp.rulebook.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rulebook.size_mm",
+        "ok": true,
+        "expected": [
+          148,
+          210
+        ],
+        "actual": [
+          148,
+          210
+        ]
+      },
+      {
+        "field": "comp.rulebook.pages",
+        "ok": true,
+        "expected": 8,
+        "actual": 8
+      }
+    ]
+  },
+  {
+    "id": "conf3_leaflet_size_vs_rulebook_size",
+    "description": "Листівка 100×150 і правила A5 (148×210) — два розміри не плутати",
+    "category": "conf3",
+    "asserted": 7,
+    "correct": 7,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 500,
+        "actual": 500
+      },
+      {
+        "field": "comp.rulebook.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rulebook.size_mm",
+        "ok": true,
+        "expected": [
+          148,
+          210
+        ],
+        "actual": [
+          148,
+          210
+        ]
+      },
+      {
+        "field": "comp.rulebook.pages",
+        "ok": true,
+        "expected": 8,
+        "actual": 8
+      },
+      {
+        "field": "comp.info_leaflet.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.info_leaflet.size_mm",
+        "ok": true,
+        "expected": [
+          100,
+          150
+        ],
+        "actual": [
+          100,
+          150
+        ]
+      },
+      {
+        "field": "comp.info_leaflet.has_crease",
+        "ok": true,
+        "expected": false,
+        "actual": false
+      }
+    ]
+  },
+  {
+    "id": "multi_basic_turn2_box_details",
+    "description": "Turn 2: клієнт відповідає на питання про коробку — зберігаємо quantity з turn 1",
+    "category": "multi",
+    "asserted": 8,
+    "correct": 8,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 800,
+        "actual": 800
+      },
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.size_mm",
+        "ok": true,
+        "expected": [
+          280,
+          190,
+          55
+        ],
+        "actual": [
+          280,
+          190,
+          55
+        ]
+      },
+      {
+        "field": "comp.rigid_box.construction",
+        "ok": true,
+        "expected": "lid_and_base",
+        "actual": "lid_and_base"
+      },
+      {
+        "field": "comp.rigid_box.lamination",
+        "ok": true,
+        "expected": "matte",
+        "actual": "matte"
+      },
+      {
+        "field": "comp.rigid_box.board_thickness_mm",
+        "ok": true,
+        "expected": 1.75,
+        "actual": 1.75
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 60,
+        "actual": 60
+      }
+    ]
+  },
+  {
+    "id": "multi_basic_turn3_cards_details",
+    "description": "Turn 3: деталі карт — quantity і card_count з попередніх turns не губляться",
+    "category": "multi",
+    "asserted": 8,
+    "correct": 8,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 1200,
+        "actual": 1200
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 90,
+        "actual": 90
+      },
+      {
+        "field": "comp.card_deck.card_size_mm",
+        "ok": true,
+        "expected": [
+          63,
+          88
+        ],
+        "actual": [
+          63,
+          88
+        ]
+      },
+      {
+        "field": "comp.card_deck.gsm",
+        "ok": true,
+        "expected": 300,
+        "actual": 300
+      },
+      {
+        "field": "comp.card_deck.print_colors",
+        "ok": true,
+        "expected": "4+4",
+        "actual": "4+4"
+      },
+      {
+        "field": "comp.card_deck.front_finish",
+        "ok": true,
+        "expected": "matte_lamination",
+        "actual": "matte_lamination"
+      },
+      {
+        "field": "comp.card_deck.back_finish",
+        "ok": true,
+        "expected": "matte_lamination",
+        "actual": "matte_lamination"
+      }
+    ]
+  },
+  {
+    "id": "multi_rulebook_turn4",
+    "description": "Turn 4: деталі правил — всі попередні дані зберігаються",
+    "category": "multi",
+    "asserted": 7,
+    "correct": 7,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 500,
+        "actual": 500
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 120,
+        "actual": 120
+      },
+      {
+        "field": "comp.rulebook.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rulebook.size_mm",
+        "ok": true,
+        "expected": [
+          148,
+          210
+        ],
+        "actual": [
+          148,
+          210
+        ]
+      },
+      {
+        "field": "comp.rulebook.pages",
+        "ok": true,
+        "expected": 8,
+        "actual": 8
+      },
+      {
+        "field": "comp.rulebook.binding",
+        "ok": true,
+        "expected": "saddle_stitch",
+        "actual": "saddle_stitch"
+      }
+    ]
+  },
+  {
+    "id": "multi_no_re_ask",
+    "description": "Агент НЕ перепитує вже відоме — тираж 800 вже є в accumulated",
+    "category": "multi",
+    "asserted": 7,
+    "correct": 7,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 800,
+        "actual": 800
+      },
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.size_mm",
+        "ok": true,
+        "expected": [
+          320,
+          220,
+          65
+        ],
+        "actual": [
+          320,
+          220,
+          65
+        ]
+      },
+      {
+        "field": "comp.rigid_box.construction",
+        "ok": true,
+        "expected": "self_assembly",
+        "actual": "self_assembly"
+      },
+      {
+        "field": "comp.rigid_box.lamination",
+        "ok": true,
+        "expected": "matte",
+        "actual": "matte"
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 100,
+        "actual": 100
+      }
+    ]
+  },
+  {
+    "id": "multi_deadline_added_midway",
+    "description": "Дедлайн вказується в середині розмови і зберігається",
+    "category": "multi",
+    "asserted": 6,
+    "correct": 6,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 1000,
+        "actual": 1000
+      },
+      {
+        "field": "req.deadline_days",
+        "ok": true,
+        "expected": 30,
+        "actual": 30
+      },
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.size_mm",
+        "ok": true,
+        "expected": [
+          300,
+          200,
+          60
+        ],
+        "actual": [
+          300,
+          200,
+          60
+        ]
+      },
+      {
+        "field": "comp.rigid_box.construction",
+        "ok": true,
+        "expected": "lid_and_base",
+        "actual": "lid_and_base"
+      },
+      {
+        "field": "comp.rigid_box.lamination",
+        "ok": true,
+        "expected": "matte",
+        "actual": "matte"
+      }
+    ]
+  },
+  {
+    "id": "multi_game_board_added",
+    "description": "Ігрове поле додається в середині розмови",
+    "category": "multi",
+    "asserted": 4,
+    "correct": 4,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.has_additional_elements",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.game_board.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.game_board.size_mm",
+        "ok": true,
+        "expected": [
+          420,
+          297
+        ],
+        "actual": [
+          420,
+          297
+        ]
+      },
+      {
+        "field": "comp.game_board.lamination",
+        "ok": true,
+        "expected": "matte",
+        "actual": "matte"
+      }
+    ]
+  },
+  {
+    "id": "multi_components_customer_provides",
+    "description": "В середині розмови клієнт каже що комплектуючі власні",
+    "category": "multi",
+    "asserted": 2,
+    "correct": 2,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.has_game_components",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "req.customer_provides_components",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      }
+    ]
+  },
+  {
+    "id": "multi2_complete_flow_final_turn",
+    "description": "Фінальний turn повної розмови → status=complete після заповнення всіх полів",
+    "category": "multi2",
+    "asserted": 5,
+    "correct": 5,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 1000,
+        "actual": 1000
+      },
+      {
+        "field": "comp.rulebook.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rulebook.size_mm",
+        "ok": true,
+        "expected": [
+          148,
+          210
+        ],
+        "actual": [
+          148,
+          210
+        ]
+      },
+      {
+        "field": "comp.rulebook.pages",
+        "ok": true,
+        "expected": 8,
+        "actual": 8
+      },
+      {
+        "field": "comp.rulebook.binding",
+        "ok": true,
+        "expected": "saddle_stitch",
+        "actual": "saddle_stitch"
+      }
+    ]
+  },
+  {
+    "id": "multi2_expert_role_contragent",
+    "description": "Замовлення з назвою компанії — витягуємо назву гри і тираж",
+    "category": "multi2",
+    "asserted": 2,
+    "correct": 2,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 2000,
+        "actual": 2000
+      },
+      {
+        "field": "req.product_name",
+        "ok": true,
+        "expected": "Лабіринт",
+        "actual": "Лабіринт"
+      }
+    ]
+  },
+  {
+    "id": "multi2_components_catalog_then_choice",
+    "description": "Після показу каталогу клієнт обирає конкретну позицію",
+    "category": "multi2",
+    "asserted": 3,
+    "correct": 3,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.has_game_components",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 500,
+        "actual": 500
+      },
+      {
+        "field": "req.customer_provides_components",
+        "ok": true,
+        "expected": false,
+        "actual": false
+      }
+    ]
+  },
+  {
+    "id": "multi2_client_correction",
+    "description": "Клієнт виправляє раніше сказане: тираж спочатку 500, потім 800",
+    "category": "multi2",
+    "asserted": 7,
+    "correct": 7,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 800,
+        "actual": 800
+      },
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.size_mm",
+        "ok": true,
+        "expected": [
+          300,
+          200,
+          60
+        ],
+        "actual": [
+          300,
+          200,
+          60
+        ]
+      },
+      {
+        "field": "comp.rigid_box.construction",
+        "ok": true,
+        "expected": "lid_and_base",
+        "actual": "lid_and_base"
+      },
+      {
+        "field": "comp.rigid_box.lamination",
+        "ok": true,
+        "expected": "matte",
+        "actual": "matte"
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 80,
+        "actual": 80
+      }
+    ]
+  },
+  {
+    "id": "multi2_both_additional_elements",
+    "description": "Клієнт підтверджує і поле, і листівку → обидва в components",
+    "category": "multi2",
+    "asserted": 3,
+    "correct": 3,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.has_additional_elements",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.game_board.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.info_leaflet.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      }
+    ]
+  },
+  {
+    "id": "multi2_rich_first_message",
+    "description": "Всі деталі в одному довгому першому повідомленні",
+    "category": "multi2",
+    "asserted": 18,
+    "correct": 18,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 1500,
+        "actual": 1500
+      },
+      {
+        "field": "req.product_name",
+        "ok": true,
+        "expected": "Всесвіт",
+        "actual": "Всесвіт"
+      },
+      {
+        "field": "req.has_game_components",
+        "ok": true,
+        "expected": false,
+        "actual": false
+      },
+      {
+        "field": "req.has_additional_elements",
+        "ok": true,
+        "expected": false,
+        "actual": false
+      },
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.size_mm",
+        "ok": true,
+        "expected": [
+          350,
+          250,
+          75
+        ],
+        "actual": [
+          350,
+          250,
+          75
+        ]
+      },
+      {
+        "field": "comp.rigid_box.construction",
+        "ok": true,
+        "expected": "lid_and_base",
+        "actual": "lid_and_base"
+      },
+      {
+        "field": "comp.rigid_box.lamination",
+        "ok": true,
+        "expected": "matte",
+        "actual": "matte"
+      },
+      {
+        "field": "comp.rigid_box.board_thickness_mm",
+        "ok": true,
+        "expected": 1.75,
+        "actual": 1.75
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 110,
+        "actual": 110
+      },
+      {
+        "field": "comp.card_deck.card_size_mm",
+        "ok": true,
+        "expected": [
+          63,
+          88
+        ],
+        "actual": [
+          63,
+          88
+        ]
+      },
+      {
+        "field": "comp.card_deck.gsm",
+        "ok": true,
+        "expected": 300,
+        "actual": 300
+      },
+      {
+        "field": "comp.card_deck.print_colors",
+        "ok": true,
+        "expected": "4+4",
+        "actual": "4+4"
+      },
+      {
+        "field": "comp.card_deck.front_finish",
+        "ok": true,
+        "expected": "matte_lamination",
+        "actual": "matte_lamination"
+      },
+      {
+        "field": "comp.rulebook.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rulebook.pages",
+        "ok": true,
+        "expected": 16,
+        "actual": 16
+      },
+      {
+        "field": "comp.rulebook.binding",
+        "ok": true,
+        "expected": "saddle_stitch",
+        "actual": "saddle_stitch"
+      }
+    ]
+  },
+  {
+    "id": "multi2_game_board_full_details",
+    "description": "Turn з деталями ігрового поля після підтвердження його наявності",
+    "category": "multi2",
+    "asserted": 7,
+    "correct": 7,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 600,
+        "actual": 600
+      },
+      {
+        "field": "comp.game_board.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.game_board.size_mm",
+        "ok": true,
+        "expected": [
+          594,
+          420
+        ],
+        "actual": [
+          594,
+          420
+        ]
+      },
+      {
+        "field": "comp.game_board.board_thickness_mm",
+        "ok": true,
+        "expected": 1.75,
+        "actual": 1.75
+      },
+      {
+        "field": "comp.game_board.print_colors",
+        "ok": true,
+        "expected": "4+0",
+        "actual": "4+0"
+      },
+      {
+        "field": "comp.game_board.edge_finish",
+        "ok": true,
+        "expected": "wrapped_edges",
+        "actual": "wrapped_edges"
+      },
+      {
+        "field": "comp.game_board.lamination",
+        "ok": true,
+        "expected": "matte",
+        "actual": "matte"
+      }
+    ]
+  },
+  {
+    "id": "multi2_info_leaflet_full_details",
+    "description": "Turn з повними деталями інформаційної листівки",
+    "category": "multi2",
+    "asserted": 5,
+    "correct": 5,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 700,
+        "actual": 700
+      },
+      {
+        "field": "comp.info_leaflet.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.info_leaflet.size_mm",
+        "ok": true,
+        "expected": [
+          105,
+          148
+        ],
+        "actual": [
+          105,
+          148
+        ]
+      },
+      {
+        "field": "comp.info_leaflet.print_colors",
+        "ok": true,
+        "expected": "4+4",
+        "actual": "4+4"
+      },
+      {
+        "field": "comp.info_leaflet.has_crease",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      }
+    ]
+  },
+  {
+    "id": "multi3_correction_lamination",
+    "description": "Клієнт виправляє ламінацію з матової на глянцеву",
+    "category": "multi3",
+    "asserted": 4,
+    "correct": 4,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.size_mm",
+        "ok": true,
+        "expected": [
+          300,
+          200,
+          60
+        ],
+        "actual": [
+          300,
+          200,
+          60
+        ]
+      },
+      {
+        "field": "comp.rigid_box.construction",
+        "ok": true,
+        "expected": "lid_and_base",
+        "actual": "lid_and_base"
+      },
+      {
+        "field": "comp.rigid_box.lamination",
+        "ok": true,
+        "expected": "gloss",
+        "actual": "gloss"
+      }
+    ]
+  },
+  {
+    "id": "multi3_add_rulebook_midway",
+    "description": "Правила додаються в середині розмови, попередні дані зберігаються",
+    "category": "multi3",
+    "asserted": 7,
+    "correct": 7,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 600,
+        "actual": 600
+      },
+      {
+        "field": "comp.rulebook.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rulebook.size_mm",
+        "ok": true,
+        "expected": [
+          148,
+          210
+        ],
+        "actual": [
+          148,
+          210
+        ]
+      },
+      {
+        "field": "comp.rulebook.pages",
+        "ok": true,
+        "expected": 8,
+        "actual": 8
+      },
+      {
+        "field": "comp.rulebook.binding",
+        "ok": true,
+        "expected": "saddle_stitch",
+        "actual": "saddle_stitch"
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 80,
+        "actual": 80
+      }
+    ]
+  },
+  {
+    "id": "multi3_quantity_preserved_after_details",
+    "description": "Тираж зберігається після введення деталей карт",
+    "category": "multi3",
+    "asserted": 7,
+    "correct": 7,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 2000,
+        "actual": 2000
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 110,
+        "actual": 110
+      },
+      {
+        "field": "comp.card_deck.card_size_mm",
+        "ok": true,
+        "expected": [
+          63,
+          88
+        ],
+        "actual": [
+          63,
+          88
+        ]
+      },
+      {
+        "field": "comp.card_deck.gsm",
+        "ok": true,
+        "expected": 300,
+        "actual": 300
+      },
+      {
+        "field": "comp.card_deck.print_colors",
+        "ok": true,
+        "expected": "4+4",
+        "actual": "4+4"
+      },
+      {
+        "field": "comp.card_deck.front_finish",
+        "ok": true,
+        "expected": "matte_lamination",
+        "actual": "matte_lamination"
+      }
+    ]
+  },
+  {
+    "id": "multi3_no_components_confirmed",
+    "description": "Клієнт підтверджує «без комплектуючих» — зберігається в accumulated",
+    "category": "multi3",
+    "asserted": 4,
+    "correct": 4,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 300,
+        "actual": 300
+      },
+      {
+        "field": "req.has_game_components",
+        "ok": true,
+        "expected": false,
+        "actual": false
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 50,
+        "actual": 50
+      }
+    ]
+  },
+  {
+    "id": "multi3_game_board_details_turn",
+    "description": "Деталі ігрового поля в окремому turn",
+    "category": "multi3",
+    "asserted": 7,
+    "correct": 7,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 400,
+        "actual": 400
+      },
+      {
+        "field": "comp.game_board.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.game_board.size_mm",
+        "ok": true,
+        "expected": [
+          420,
+          594
+        ],
+        "actual": [
+          420,
+          594
+        ]
+      },
+      {
+        "field": "comp.game_board.board_thickness_mm",
+        "ok": true,
+        "expected": 1.75,
+        "actual": 1.75
+      },
+      {
+        "field": "comp.game_board.print_colors",
+        "ok": true,
+        "expected": "4+0",
+        "actual": "4+0"
+      },
+      {
+        "field": "comp.game_board.edge_finish",
+        "ok": true,
+        "expected": "wrapped_edges",
+        "actual": "wrapped_edges"
+      },
+      {
+        "field": "comp.game_board.lamination",
+        "ok": true,
+        "expected": "matte",
+        "actual": "matte"
+      }
+    ]
+  },
+  {
+    "id": "multi4_standalone_game_board_turn",
+    "description": "Клієнт спочатку каже «лише поле» — game_board без rigid_box",
+    "category": "multi4",
+    "asserted": 5,
+    "correct": 5,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 500,
+        "actual": 500
+      },
+      {
+        "field": "comp.game_board.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.game_board.size_mm",
+        "ok": true,
+        "expected": [
+          594,
+          420
+        ],
+        "actual": [
+          594,
+          420
+        ]
+      },
+      {
+        "field": "comp.game_board.lamination",
+        "ok": true,
+        "expected": "matte",
+        "actual": "matte"
+      },
+      {
+        "field": "comp.game_board.edge_finish",
+        "ok": true,
+        "expected": "wrapped_edges",
+        "actual": "wrapped_edges"
+      }
+    ]
+  },
+  {
+    "id": "multi4_rulebook_final_turn_a5",
+    "description": "Фінальний turn: «Правила A5, 12 стор., скоба» — all 3 fields extracted",
+    "category": "multi4",
+    "asserted": 7,
+    "correct": 7,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 600,
+        "actual": 600
+      },
+      {
+        "field": "comp.rulebook.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rulebook.size_mm",
+        "ok": true,
+        "expected": [
+          148,
+          210
+        ],
+        "actual": [
+          148,
+          210
+        ]
+      },
+      {
+        "field": "comp.rulebook.pages",
+        "ok": true,
+        "expected": 12,
+        "actual": 12
+      },
+      {
+        "field": "comp.rulebook.binding",
+        "ok": true,
+        "expected": "saddle_stitch",
+        "actual": "saddle_stitch"
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 80,
+        "actual": 80
+      }
+    ]
+  },
+  {
+    "id": "multi4_expert_full_order_one_turn",
+    "description": "Експерт вводить повне замовлення одним повідомленням за клієнта",
+    "category": "multi4",
+    "asserted": 19,
+    "correct": 19,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 1500,
+        "actual": 1500
+      },
+      {
+        "field": "req.product_name",
+        "ok": true,
+        "expected": "Арктика",
+        "actual": "Арктика"
+      },
+      {
+        "field": "req.has_game_components",
+        "ok": true,
+        "expected": false,
+        "actual": false
+      },
+      {
+        "field": "req.has_additional_elements",
+        "ok": true,
+        "expected": false,
+        "actual": false
+      },
+      {
+        "field": "req.deadline_days",
+        "ok": true,
+        "expected": 45,
+        "actual": 45
+      },
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.size_mm",
+        "ok": true,
+        "expected": [
+          350,
+          250,
+          80
+        ],
+        "actual": [
+          350,
+          250,
+          80
+        ]
+      },
+      {
+        "field": "comp.rigid_box.construction",
+        "ok": true,
+        "expected": "lid_and_base",
+        "actual": "lid_and_base"
+      },
+      {
+        "field": "comp.rigid_box.lamination",
+        "ok": true,
+        "expected": "matte",
+        "actual": "matte"
+      },
+      {
+        "field": "comp.rigid_box.board_thickness_mm",
+        "ok": true,
+        "expected": 1.75,
+        "actual": 1.75
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 90,
+        "actual": 90
+      },
+      {
+        "field": "comp.card_deck.card_size_mm",
+        "ok": true,
+        "expected": [
+          63,
+          88
+        ],
+        "actual": [
+          63,
+          88
+        ]
+      },
+      {
+        "field": "comp.card_deck.gsm",
+        "ok": true,
+        "expected": 300,
+        "actual": 300
+      },
+      {
+        "field": "comp.card_deck.print_colors",
+        "ok": true,
+        "expected": "4+4",
+        "actual": "4+4"
+      },
+      {
+        "field": "comp.rulebook.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rulebook.size_mm",
+        "ok": true,
+        "expected": [
+          148,
+          210
+        ],
+        "actual": [
+          148,
+          210
+        ]
+      },
+      {
+        "field": "comp.rulebook.pages",
+        "ok": true,
+        "expected": 8,
+        "actual": 8
+      },
+      {
+        "field": "comp.rulebook.binding",
+        "ok": true,
+        "expected": "saddle_stitch",
+        "actual": "saddle_stitch"
+      }
+    ]
+  },
+  {
+    "id": "multi4_leaflet_added_with_details",
+    "description": "Клієнт додає листівку і одразу дає деталі — все в одному turn",
+    "category": "multi4",
+    "asserted": 5,
+    "correct": 5,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.has_additional_elements",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.info_leaflet.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.info_leaflet.size_mm",
+        "ok": true,
+        "expected": [
+          100,
+          148
+        ],
+        "actual": [
+          100,
+          148
+        ]
+      },
+      {
+        "field": "comp.info_leaflet.print_colors",
+        "ok": true,
+        "expected": "4+4",
+        "actual": "4+4"
+      },
+      {
+        "field": "comp.info_leaflet.has_crease",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      }
+    ]
+  },
+  {
+    "id": "multi4_correction_card_count",
+    "description": "Клієнт виправляє кількість карт з 60 на 90",
+    "category": "multi4",
+    "asserted": 7,
+    "correct": 7,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 700,
+        "actual": 700
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 90,
+        "actual": 90
+      },
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.size_mm",
+        "ok": true,
+        "expected": [
+          320,
+          220,
+          65
+        ],
+        "actual": [
+          320,
+          220,
+          65
+        ]
+      },
+      {
+        "field": "comp.rigid_box.construction",
+        "ok": true,
+        "expected": "lid_and_base",
+        "actual": "lid_and_base"
+      },
+      {
+        "field": "comp.rigid_box.lamination",
+        "ok": true,
+        "expected": "matte",
+        "actual": "matte"
+      }
+    ]
+  },
+  {
+    "id": "multi4_four_turns_all_components",
+    "description": "Після 3 turns всі дані накопичено — 4-й turn дає правила",
+    "category": "multi4",
+    "asserted": 9,
+    "correct": 9,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 1000,
+        "actual": 1000
+      },
+      {
+        "field": "comp.rulebook.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rulebook.size_mm",
+        "ok": true,
+        "expected": [
+          210,
+          297
+        ],
+        "actual": [
+          210,
+          297
+        ]
+      },
+      {
+        "field": "comp.rulebook.pages",
+        "ok": true,
+        "expected": 16,
+        "actual": 16
+      },
+      {
+        "field": "comp.rulebook.binding",
+        "ok": true,
+        "expected": "folding",
+        "actual": "folding"
+      },
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.size_mm",
+        "ok": true,
+        "expected": [
+          330,
+          230,
+          70
+        ],
+        "actual": [
+          330,
+          230,
+          70
+        ]
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 100,
+        "actual": 100
+      }
+    ]
+  },
+  {
+    "id": "multi4_game_board_then_leaflet",
+    "description": "Спочатку підтвердили поле, потім листівку — обидва у components",
+    "category": "multi4",
+    "asserted": 7,
+    "correct": 7,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.has_additional_elements",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.game_board.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.game_board.size_mm",
+        "ok": true,
+        "expected": [
+          420,
+          297
+        ],
+        "actual": [
+          420,
+          297
+        ]
+      },
+      {
+        "field": "comp.info_leaflet.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.info_leaflet.size_mm",
+        "ok": true,
+        "expected": [
+          105,
+          148
+        ],
+        "actual": [
+          105,
+          148
+        ]
+      },
+      {
+        "field": "comp.info_leaflet.print_colors",
+        "ok": true,
+        "expected": "4+4",
+        "actual": "4+4"
+      },
+      {
+        "field": "comp.info_leaflet.has_crease",
+        "ok": true,
+        "expected": false,
+        "actual": false
+      }
+    ]
+  },
+  {
+    "id": "multi4_only_board_accumulated",
+    "description": "Клієнт уточнює деталі standalone game_board (без коробки)",
+    "category": "multi4",
+    "asserted": 5,
+    "correct": 5,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 300,
+        "actual": 300
+      },
+      {
+        "field": "comp.game_board.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.game_board.size_mm",
+        "ok": true,
+        "expected": [
+          840,
+          594
+        ],
+        "actual": [
+          840,
+          594
+        ]
+      },
+      {
+        "field": "comp.game_board.lamination",
+        "ok": true,
+        "expected": "matte",
+        "actual": "matte"
+      },
+      {
+        "field": "comp.game_board.edge_finish",
+        "ok": true,
+        "expected": "visible_board_edge",
+        "actual": "visible_board_edge"
+      }
+    ]
+  },
+  {
+    "id": "guard_off_topic_tshirt",
+    "description": "Запит на футболки — за межами профілю, агент ввічливо відмовляє",
+    "category": "guard",
+    "asserted": 2,
+    "correct": 2,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "status",
+        "ok": true,
+        "expected": "incomplete",
+        "actual": "incomplete"
+      },
+      {
+        "field": "follow_up_contains",
+        "ok": true,
+        "expected": "настільн",
+        "actual": "дякуємо за звернення! на жаль, друк на футболках не входить до нашого профілю. 😊\n\nкомпанія **dyz-art** спеціалізується н"
+      }
+    ]
+  },
+  {
+    "id": "guard_off_topic_banner",
+    "description": "Банер — за межами профілю",
+    "category": "guard",
+    "asserted": 2,
+    "correct": 2,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "status",
+        "ok": true,
+        "expected": "incomplete",
+        "actual": "incomplete"
+      },
+      {
+        "field": "follow_up_contains",
+        "ok": true,
+        "expected": "упаков",
+        "actual": "дякуємо за звернення! на жаль, виготовлення банерів не входить до нашого профілю. 🙂\n\nкомпанія **dyz-art** спеціалізуєтьс"
+      }
+    ]
+  },
+  {
+    "id": "guard_off_topic_general_printing",
+    "description": "Загальна поліграфія без прив'язки до гри",
+    "category": "guard",
+    "asserted": 2,
+    "correct": 2,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "status",
+        "ok": true,
+        "expected": "incomplete",
+        "actual": "incomplete"
+      },
+      {
+        "field": "follow_up_contains",
+        "ok": true,
+        "expected": "настільн",
+        "actual": "дякуємо за звернення! на жаль, **бланки для офісу** та **рекламні листівки загального призначення** не входять до нашого"
+      }
+    ]
+  },
+  {
+    "id": "guard_no_components_explicit",
+    "description": "«комплектуючих не треба» → has_game_components=False, не питати знову",
+    "category": "guard",
+    "asserted": 4,
+    "correct": 4,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.has_game_components",
+        "ok": true,
+        "expected": false,
+        "actual": false
+      },
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 400,
+        "actual": 400
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 60,
+        "actual": 60
+      }
+    ]
+  },
+  {
+    "id": "guard2_stickers",
+    "description": "Наклейки — не в профілі компанії",
+    "category": "guard2",
+    "asserted": 2,
+    "correct": 2,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "status",
+        "ok": true,
+        "expected": "incomplete",
+        "actual": "incomplete"
+      },
+      {
+        "field": "follow_up_contains",
+        "ok": true,
+        "expected": "настільн",
+        "actual": "дякуємо за звернення! на жаль, наклейки для ноутбуків не входять до нашого профілю.\n\nкомпанія **dyz-art** спеціалізуєтьс"
+      }
+    ]
+  },
+  {
+    "id": "guard2_books",
+    "description": "Книги — не в профілі компанії",
+    "category": "guard2",
+    "asserted": 2,
+    "correct": 2,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "status",
+        "ok": true,
+        "expected": "incomplete",
+        "actual": "incomplete"
+      },
+      {
+        "field": "follow_up_contains",
+        "ok": true,
+        "expected": "упаков",
+        "actual": "дякуємо за звернення! 🙏\n\nна жаль, видання книг не входить до нашого профілю. компанія **dyz-art** спеціалізується на **п"
+      }
+    ]
+  },
+  {
+    "id": "guard2_calendars",
+    "description": "Календарі — не в профілі компанії",
+    "category": "guard2",
+    "asserted": 1,
+    "correct": 1,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "status",
+        "ok": true,
+        "expected": "incomplete",
+        "actual": "incomplete"
+      }
+    ]
+  },
+  {
+    "id": "guard2_no_components_negation",
+    "description": "«ні, комплектуючих не треба» → has_game_components=False",
+    "category": "guard2",
+    "asserted": 1,
+    "correct": 1,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.has_game_components",
+        "ok": true,
+        "expected": false,
+        "actual": false
+      }
+    ]
+  },
+  {
+    "id": "guard2_no_additional_elements",
+    "description": "«без додаткових елементів» → has_additional_elements=False",
+    "category": "guard2",
+    "asserted": 3,
+    "correct": 2,
+    "passed": false,
+    "field_results": [
+      {
+        "field": "req.has_additional_elements",
+        "ok": true,
+        "expected": false,
+        "actual": false
+      },
+      {
+        "field": "req.has_game_components",
+        "ok": false,
+        "expected": false,
+        "actual": null
+      },
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 800,
+        "actual": 800
+      }
+    ]
+  },
+  {
+    "id": "guard3_pens",
+    "description": "Ручки з логотипом — не в профілі",
+    "category": "guard3",
+    "asserted": 2,
+    "correct": 2,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "status",
+        "ok": true,
+        "expected": "incomplete",
+        "actual": "incomplete"
+      },
+      {
+        "field": "follow_up_contains",
+        "ok": true,
+        "expected": "упаков",
+        "actual": "дякуємо за звернення! 😊\n\nна жаль, виготовлення ручок з логотипом не входить до нашого профілю. компанія **dyz-art** спец"
+      }
+    ]
+  },
+  {
+    "id": "guard3_packaging_game_ok",
+    "description": "«упаковка для настільної гри» — в профілі, не відмовляємо",
+    "category": "guard3",
+    "asserted": 3,
+    "correct": 3,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "status",
+        "ok": true,
+        "expected": "incomplete",
+        "actual": "incomplete"
+      },
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 1000,
+        "actual": 1000
+      },
+      {
+        "field": "req.product_name",
+        "ok": true,
+        "expected": "Арена",
+        "actual": "Арена"
+      }
+    ]
+  },
+  {
+    "id": "guard3_off_topic_mixed",
+    "description": "Змішаний запит: гра + банери — пояснюємо профіль",
+    "category": "guard3",
+    "asserted": 1,
+    "correct": 1,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "follow_up_contains",
+        "ok": true,
+        "expected": "упаков",
+        "actual": "дякуємо за звернення до dyz-art! 🎲\n\nщодо **банера для виставки** — на жаль, це не входить до нашого профілю. ми спеціалі"
+      }
+    ]
+  },
+  {
+    "id": "guard3_no_additional_confirmed",
+    "description": "«без ігрового поля і листівки» → has_additional_elements=False",
+    "category": "guard3",
+    "asserted": 4,
+    "correct": 4,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 500,
+        "actual": 500
+      },
+      {
+        "field": "req.has_additional_elements",
+        "ok": true,
+        "expected": false,
+        "actual": false
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 80,
+        "actual": 80
+      }
+    ]
+  },
+  {
+    "id": "guard4_magazine",
+    "description": "Журнал — не в профілі",
+    "category": "guard4",
+    "asserted": 2,
+    "correct": 2,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "status",
+        "ok": true,
+        "expected": "incomplete",
+        "actual": "incomplete"
+      },
+      {
+        "field": "follow_up_contains",
+        "ok": true,
+        "expected": "настільн",
+        "actual": "дякуємо за звернення! на жаль, компанія **dyz-art** спеціалізується виключно на **преміум-упаковці та супутній продукції"
+      }
+    ]
+  },
+  {
+    "id": "guard4_mugs",
+    "description": "Чашки з логотипом — не в профілі",
+    "category": "guard4",
+    "asserted": 2,
+    "correct": 2,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "status",
+        "ok": true,
+        "expected": "incomplete",
+        "actual": "incomplete"
+      },
+      {
+        "field": "follow_up_contains",
+        "ok": true,
+        "expected": "упаков",
+        "actual": "дякуємо за звернення! на жаль, друк на чашках не входить до нашого профілю. 🙂\n\nкомпанія **dyz-art** спеціалізується на *"
+      }
+    ]
+  },
+  {
+    "id": "guard4_brochure_only",
+    "description": "Рекламна брошура без прив'язки до гри — не в профілі",
+    "category": "guard4",
+    "asserted": 1,
+    "correct": 1,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "status",
+        "ok": true,
+        "expected": "incomplete",
+        "actual": "incomplete"
+      }
+    ]
+  },
+  {
+    "id": "guard4_medical_packaging",
+    "description": "Медична упаковка — не ігрова тематика, але слово 'упаковка'",
+    "category": "guard4",
+    "asserted": 2,
+    "correct": 2,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "status",
+        "ok": true,
+        "expected": "incomplete",
+        "actual": "incomplete"
+      },
+      {
+        "field": "follow_up_contains",
+        "ok": true,
+        "expected": "настільн",
+        "actual": "дякуємо за звернення! на жаль, компанія **dyz-art** спеціалізується виключно на **преміум-упаковці та супутній продукції"
+      }
+    ]
+  },
+  {
+    "id": "guard4_box_game_ok",
+    "description": "«коробка для настільної гри» — В профілі",
+    "category": "guard4",
+    "asserted": 3,
+    "correct": 3,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "status",
+        "ok": true,
+        "expected": "incomplete",
+        "actual": "incomplete"
+      },
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 600,
+        "actual": 600
+      },
+      {
+        "field": "req.product_name",
+        "ok": true,
+        "expected": "Воїн",
+        "actual": "Воїн"
+      }
+    ]
+  },
+  {
+    "id": "guard4_components_customer_explicit",
+    "description": "«всі комплектуючі надаємо самі» → customer_provides_components=True",
+    "category": "guard4",
+    "asserted": 3,
+    "correct": 3,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.has_game_components",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "req.customer_provides_components",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 500,
+        "actual": 500
+      }
+    ]
+  },
+  {
+    "id": "edge_only_greeting",
+    "description": "Лише привітання — агент не витягує жодних полів",
+    "category": "edge",
+    "asserted": 1,
+    "correct": 1,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "status",
+        "ok": true,
+        "expected": "incomplete",
+        "actual": "incomplete"
+      }
+    ]
+  },
+  {
+    "id": "edge_quantity_written_words",
+    "description": "тираж словами «тисяча» — може бути не розпізнано",
+    "category": "edge",
+    "asserted": 3,
+    "correct": 3,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 1000,
+        "actual": 1000
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 80,
+        "actual": 80
+      }
+    ]
+  },
+  {
+    "id": "edge_quantity_with_spaces",
+    "description": "«1 000 шт» з пробілом у числі",
+    "category": "edge",
+    "asserted": 3,
+    "correct": 3,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 1000,
+        "actual": 1000
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 110,
+        "actual": 110
+      }
+    ]
+  },
+  {
+    "id": "edge_implicit_premium",
+    "description": "«виглядало солідно, не дешево» → premium_finish=True (намір)",
+    "category": "edge",
+    "asserted": 1,
+    "correct": 1,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.premium_finish",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      }
+    ]
+  },
+  {
+    "id": "edge_print_colors_one_side",
+    "description": "«лише лице» → print_colors N+0",
+    "category": "edge",
+    "asserted": 2,
+    "correct": 2,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.print_colors",
+        "ok": true,
+        "expected": "4+0",
+        "actual": "4+0"
+      }
+    ]
+  },
+  {
+    "id": "edge_print_colors_pantone",
+    "description": "«з Pantone» → print_colors 5+0 або 6+0",
+    "category": "edge",
+    "asserted": 2,
+    "correct": 2,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "follow_up_contains",
+        "ok": true,
+        "expected": "pantone",
+        "actual": "дякую! зафіксував: колода карт, тираж **800 шт.**, лицьова сторона з pantone.\n\nуточнімо кілька деталей:\n\n**скільки кольо"
+      }
+    ]
+  },
+  {
+    "id": "edge_uv_varnish_explicit",
+    "description": "«УФ-лак на логотипі» → uv_varnish=True, uv_varnish_elements заповнено",
+    "category": "edge",
+    "asserted": 3,
+    "correct": 3,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.uv_varnish",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.lamination",
+        "ok": true,
+        "expected": "matte",
+        "actual": "matte"
+      }
+    ]
+  },
+  {
+    "id": "edge_board_casherovane",
+    "description": "«кашероване» поле → edge_finish=visible_board_edge",
+    "category": "edge",
+    "asserted": 3,
+    "correct": 3,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.game_board.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.game_board.edge_finish",
+        "ok": true,
+        "expected": "visible_board_edge",
+        "actual": "visible_board_edge"
+      },
+      {
+        "field": "comp.game_board.lamination",
+        "ok": true,
+        "expected": "matte",
+        "actual": "matte"
+      }
+    ]
+  },
+  {
+    "id": "edge_shrink_wrap_box",
+    "description": "«термопакування» коробки → shrink_wrap=True",
+    "category": "edge",
+    "asserted": 3,
+    "correct": 3,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.shrink_wrap",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.lamination",
+        "ok": true,
+        "expected": "matte",
+        "actual": "matte"
+      }
+    ]
+  },
+  {
+    "id": "edge_multiple_numbers_close",
+    "description": "декілька чисел поруч: тираж 2000, поле 840×594, товщина 1.75, карти 150",
+    "category": "edge",
+    "asserted": 7,
+    "correct": 7,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 2000,
+        "actual": 2000
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 150,
+        "actual": 150
+      },
+      {
+        "field": "comp.card_deck.card_size_mm",
+        "ok": true,
+        "expected": [
+          63,
+          88
+        ],
+        "actual": [
+          63,
+          88
+        ]
+      },
+      {
+        "field": "comp.game_board.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.game_board.size_mm",
+        "ok": true,
+        "expected": [
+          840,
+          594
+        ],
+        "actual": [
+          840,
+          594
+        ]
+      },
+      {
+        "field": "comp.game_board.board_thickness_mm",
+        "ok": true,
+        "expected": 1.75,
+        "actual": 1.75
+      }
+    ]
+  },
+  {
+    "id": "edge2_no_product_name",
+    "description": "Замовлення без назви гри — статус incomplete, питає назву",
+    "category": "edge2",
+    "asserted": 4,
+    "correct": 4,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "status",
+        "ok": true,
+        "expected": "incomplete",
+        "actual": "incomplete"
+      },
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 500,
+        "actual": 500
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 60,
+        "actual": 60
+      }
+    ]
+  },
+  {
+    "id": "edge2_only_box_no_cards",
+    "description": "Тільки коробка без карт — card_deck НЕ має з'явитися",
+    "category": "edge2",
+    "asserted": 4,
+    "correct": 4,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 200,
+        "actual": 200
+      },
+      {
+        "field": "req.product_name",
+        "ok": true,
+        "expected": "Форт",
+        "actual": "Форт"
+      },
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.size_mm",
+        "ok": true,
+        "expected": [
+          350,
+          250,
+          80
+        ],
+        "actual": [
+          350,
+          250,
+          80
+        ]
+      }
+    ]
+  },
+  {
+    "id": "edge2_only_cards_no_box",
+    "description": "Тільки карти без коробки — rigid_box НЕ має з'явитися",
+    "category": "edge2",
+    "asserted": 3,
+    "correct": 3,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 1000,
+        "actual": 1000
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 54,
+        "actual": 54
+      }
+    ]
+  },
+  {
+    "id": "edge2_all_defaults_proposed",
+    "description": "«не знаю» → агент пропонує стандарт 1.75 мм і запитує підтвердження",
+    "category": "edge2",
+    "asserted": 3,
+    "correct": 3,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.size_mm",
+        "ok": true,
+        "expected": [
+          300,
+          200,
+          60
+        ],
+        "actual": [
+          300,
+          200,
+          60
+        ]
+      },
+      {
+        "field": "follow_up_contains",
+        "ok": true,
+        "expected": "1.75",
+        "actual": "зафіксував: коробка **300×200×60 мм**. щодо товщини картону — зазвичай обирають **1.75 мм**, це стандарт для більшості н"
+      }
+    ]
+  },
+  {
+    "id": "edge2_lamination_not_specified",
+    "description": "Ламінація не вказана → агент пропонує матову",
+    "category": "edge2",
+    "asserted": 4,
+    "correct": 4,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "status",
+        "ok": true,
+        "expected": "incomplete",
+        "actual": "incomplete"
+      },
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.size_mm",
+        "ok": true,
+        "expected": [
+          280,
+          190,
+          55
+        ],
+        "actual": [
+          280,
+          190,
+          55
+        ]
+      },
+      {
+        "field": "comp.rigid_box.board_thickness_mm",
+        "ok": true,
+        "expected": 1.75,
+        "actual": 1.75
+      }
+    ]
+  },
+  {
+    "id": "edge2_mixed_ukrainian_english",
+    "description": "Мікс укр/англ: «box 300×200×60, 110 cards, 300 gsm»",
+    "category": "edge2",
+    "asserted": 6,
+    "correct": 6,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 600,
+        "actual": 600
+      },
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.size_mm",
+        "ok": true,
+        "expected": [
+          300,
+          200,
+          60
+        ],
+        "actual": [
+          300,
+          200,
+          60
+        ]
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 110,
+        "actual": 110
+      },
+      {
+        "field": "comp.card_deck.gsm",
+        "ok": true,
+        "expected": 300,
+        "actual": 300
+      }
+    ]
+  },
+  {
+    "id": "edge2_typo_quantity",
+    "description": "Опечатка: «тираж 10000» — може бути 1000 або справді 10000",
+    "category": "edge2",
+    "asserted": 3,
+    "correct": 3,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 10000,
+        "actual": 10000
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 90,
+        "actual": 90
+      }
+    ]
+  },
+  {
+    "id": "edge2_dimensions_with_x_letter",
+    "description": "Розміри через «x» латинську: 300x200x60",
+    "category": "edge2",
+    "asserted": 5,
+    "correct": 5,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 700,
+        "actual": 700
+      },
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.size_mm",
+        "ok": true,
+        "expected": [
+          300,
+          200,
+          60
+        ],
+        "actual": [
+          300,
+          200,
+          60
+        ]
+      },
+      {
+        "field": "comp.rigid_box.construction",
+        "ok": true,
+        "expected": "lid_and_base",
+        "actual": "lid_and_base"
+      },
+      {
+        "field": "comp.rigid_box.lamination",
+        "ok": true,
+        "expected": "matte",
+        "actual": "matte"
+      }
+    ]
+  },
+  {
+    "id": "edge2_components_mentioned_dice",
+    "description": "«кубики D6» → has_game_components=True, каталог не потрібен якщо вже кількість",
+    "category": "edge2",
+    "asserted": 3,
+    "correct": 3,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.has_game_components",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "req.customer_provides_components",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 500,
+        "actual": 500
+      }
+    ]
+  },
+  {
+    "id": "edge2_print_colors_symmetric_3_3",
+    "description": "«3+3» → print_colors=3+3 (симетричний трифарбовий)",
+    "category": "edge2",
+    "asserted": 3,
+    "correct": 3,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.print_colors",
+        "ok": true,
+        "expected": "3+3",
+        "actual": "3+3"
+      },
+      {
+        "field": "comp.card_deck.front_finish",
+        "ok": true,
+        "expected": "matte_lamination",
+        "actual": "matte_lamination"
+      }
+    ]
+  },
+  {
+    "id": "edge3_all_in_one_complete",
+    "description": "Всі деталі в одному повідомленні — максимум полів",
+    "category": "edge3",
+    "asserted": 19,
+    "correct": 19,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 1000,
+        "actual": 1000
+      },
+      {
+        "field": "req.product_name",
+        "ok": true,
+        "expected": "Цитадель",
+        "actual": "Цитадель"
+      },
+      {
+        "field": "req.has_game_components",
+        "ok": true,
+        "expected": false,
+        "actual": false
+      },
+      {
+        "field": "req.has_additional_elements",
+        "ok": true,
+        "expected": false,
+        "actual": false
+      },
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.size_mm",
+        "ok": true,
+        "expected": [
+          350,
+          250,
+          75
+        ],
+        "actual": [
+          350,
+          250,
+          75
+        ]
+      },
+      {
+        "field": "comp.rigid_box.construction",
+        "ok": true,
+        "expected": "lid_and_base",
+        "actual": "lid_and_base"
+      },
+      {
+        "field": "comp.rigid_box.lamination",
+        "ok": true,
+        "expected": "matte",
+        "actual": "matte"
+      },
+      {
+        "field": "comp.rigid_box.board_thickness_mm",
+        "ok": true,
+        "expected": 1.75,
+        "actual": 1.75
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 120,
+        "actual": 120
+      },
+      {
+        "field": "comp.card_deck.card_size_mm",
+        "ok": true,
+        "expected": [
+          63,
+          88
+        ],
+        "actual": [
+          63,
+          88
+        ]
+      },
+      {
+        "field": "comp.card_deck.gsm",
+        "ok": true,
+        "expected": 300,
+        "actual": 300
+      },
+      {
+        "field": "comp.card_deck.print_colors",
+        "ok": true,
+        "expected": "4+4",
+        "actual": "4+4"
+      },
+      {
+        "field": "comp.card_deck.front_finish",
+        "ok": true,
+        "expected": "matte_lamination",
+        "actual": "matte_lamination"
+      },
+      {
+        "field": "comp.rulebook.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rulebook.size_mm",
+        "ok": true,
+        "expected": [
+          148,
+          210
+        ],
+        "actual": [
+          148,
+          210
+        ]
+      },
+      {
+        "field": "comp.rulebook.pages",
+        "ok": true,
+        "expected": 12,
+        "actual": 12
+      },
+      {
+        "field": "comp.rulebook.binding",
+        "ok": true,
+        "expected": "saddle_stitch",
+        "actual": "saddle_stitch"
+      }
+    ]
+  },
+  {
+    "id": "edge3_only_rulebook",
+    "description": "Лише правила без коробки — rigid_box не додається",
+    "category": "edge3",
+    "asserted": 6,
+    "correct": 6,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 500,
+        "actual": 500
+      },
+      {
+        "field": "req.product_name",
+        "ok": true,
+        "expected": "Код",
+        "actual": "Код"
+      },
+      {
+        "field": "comp.rulebook.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rulebook.size_mm",
+        "ok": true,
+        "expected": [
+          148,
+          210
+        ],
+        "actual": [
+          148,
+          210
+        ]
+      },
+      {
+        "field": "comp.rulebook.pages",
+        "ok": true,
+        "expected": 8,
+        "actual": 8
+      },
+      {
+        "field": "comp.rulebook.binding",
+        "ok": true,
+        "expected": "folding",
+        "actual": "folding"
+      }
+    ]
+  },
+  {
+    "id": "edge3_only_game_board",
+    "description": "Лише ігрове поле — rigid_box НЕ з'являється",
+    "category": "edge3",
+    "asserted": 5,
+    "correct": 5,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 300,
+        "actual": 300
+      },
+      {
+        "field": "comp.game_board.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.game_board.size_mm",
+        "ok": true,
+        "expected": [
+          840,
+          594
+        ],
+        "actual": [
+          840,
+          594
+        ]
+      },
+      {
+        "field": "comp.game_board.edge_finish",
+        "ok": true,
+        "expected": "visible_board_edge",
+        "actual": "visible_board_edge"
+      },
+      {
+        "field": "comp.game_board.lamination",
+        "ok": true,
+        "expected": "matte",
+        "actual": "matte"
+      }
+    ]
+  },
+  {
+    "id": "edge3_pantone_one_color",
+    "description": "«1 колір Pantone» → print_colors=5+0",
+    "category": "edge3",
+    "asserted": 2,
+    "correct": 2,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.print_colors",
+        "ok": true,
+        "expected": "5+0",
+        "actual": "5+0"
+      }
+    ]
+  },
+  {
+    "id": "edge3_pantone_two_colors",
+    "description": "«2 кольори Pantone» → print_colors=6+0",
+    "category": "edge3",
+    "asserted": 2,
+    "correct": 2,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.print_colors",
+        "ok": true,
+        "expected": "6+0",
+        "actual": "6+0"
+      }
+    ]
+  },
+  {
+    "id": "edge3_board_thickness_default_proposed",
+    "description": "Не знає товщину картону → агент пропонує 1.75 мм",
+    "category": "edge3",
+    "asserted": 3,
+    "correct": 3,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.game_board.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.game_board.size_mm",
+        "ok": true,
+        "expected": [
+          420,
+          297
+        ],
+        "actual": [
+          420,
+          297
+        ]
+      },
+      {
+        "field": "follow_up_contains",
+        "ok": true,
+        "expected": "1.75",
+        "actual": "зафіксував: **ігрове поле** 420×297 мм, **матова ламінація** ✅\n\nдля ігрових полів найпоширеніший стандарт — **1.75 мм** "
+      }
+    ]
+  },
+  {
+    "id": "edge3_uv_elements",
+    "description": "«УФ-лак на логотипі» → uv_varnish=True з описом елемента",
+    "category": "edge3",
+    "asserted": 3,
+    "correct": 3,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.uv_varnish",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.lamination",
+        "ok": true,
+        "expected": "matte",
+        "actual": "matte"
+      }
+    ]
+  },
+  {
+    "id": "edge3_quantity_thousand_word",
+    "description": "«тисяча» словом → quantity=1000",
+    "category": "edge3",
+    "asserted": 4,
+    "correct": 4,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 1000,
+        "actual": 1000
+      },
+      {
+        "field": "req.product_name",
+        "ok": true,
+        "expected": "Граф",
+        "actual": "Граф"
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 80,
+        "actual": 80
+      }
+    ]
+  },
+  {
+    "id": "edge3_client_name_midsentence",
+    "description": "Ім'я в середині речення витягується",
+    "category": "edge3",
+    "asserted": 5,
+    "correct": 5,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.client_name",
+        "ok": true,
+        "expected": "Андрій",
+        "actual": "Андрій"
+      },
+      {
+        "field": "req.product_name",
+        "ok": true,
+        "expected": "Степ",
+        "actual": "Степ"
+      },
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 400,
+        "actual": 400
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 50,
+        "actual": 50
+      }
+    ]
+  },
+  {
+    "id": "edge3_multiple_components_sizes_correct",
+    "description": "Коробка, карти і правила — розміри не перемішуються",
+    "category": "edge3",
+    "asserted": 9,
+    "correct": 9,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 800,
+        "actual": 800
+      },
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.size_mm",
+        "ok": true,
+        "expected": [
+          400,
+          300,
+          80
+        ],
+        "actual": [
+          400,
+          300,
+          80
+        ]
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 54,
+        "actual": 54
+      },
+      {
+        "field": "comp.card_deck.card_size_mm",
+        "ok": true,
+        "expected": [
+          88,
+          63
+        ],
+        "actual": [
+          88,
+          63
+        ]
+      },
+      {
+        "field": "comp.rulebook.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rulebook.size_mm",
+        "ok": true,
+        "expected": [
+          148,
+          210
+        ],
+        "actual": [
+          148,
+          210
+        ]
+      },
+      {
+        "field": "comp.rulebook.pages",
+        "ok": true,
+        "expected": 16,
+        "actual": 16
+      }
+    ]
+  },
+  {
+    "id": "edge4_standalone_game_board_full",
+    "description": "Standalone game_board: rigid_box НЕ має з'явитися (FIX TEST)",
+    "category": "edge4",
+    "asserted": 5,
+    "correct": 5,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 300,
+        "actual": 300
+      },
+      {
+        "field": "comp.game_board.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.game_board.size_mm",
+        "ok": true,
+        "expected": [
+          840,
+          594
+        ],
+        "actual": [
+          840,
+          594
+        ]
+      },
+      {
+        "field": "comp.game_board.edge_finish",
+        "ok": true,
+        "expected": "visible_board_edge",
+        "actual": "visible_board_edge"
+      },
+      {
+        "field": "comp.game_board.lamination",
+        "ok": true,
+        "expected": "matte",
+        "actual": "matte"
+      }
+    ]
+  },
+  {
+    "id": "edge4_rulebook_a5_short_message",
+    "description": "«Правила A5, 8 сторінок, на скобу.» — всі 3 поля (FIX TEST)",
+    "category": "edge4",
+    "asserted": 4,
+    "correct": 4,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.rulebook.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rulebook.size_mm",
+        "ok": true,
+        "expected": [
+          148,
+          210
+        ],
+        "actual": [
+          148,
+          210
+        ]
+      },
+      {
+        "field": "comp.rulebook.pages",
+        "ok": true,
+        "expected": 8,
+        "actual": 8
+      },
+      {
+        "field": "comp.rulebook.binding",
+        "ok": true,
+        "expected": "saddle_stitch",
+        "actual": "saddle_stitch"
+      }
+    ]
+  },
+  {
+    "id": "edge4_rulebook_a4_folding_short",
+    "description": "«Правила A4, 4 сторінки, фальцювання» — 3 поля одразу (FIX TEST)",
+    "category": "edge4",
+    "asserted": 4,
+    "correct": 4,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "comp.rulebook.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rulebook.size_mm",
+        "ok": true,
+        "expected": [
+          210,
+          297
+        ],
+        "actual": [
+          210,
+          297
+        ]
+      },
+      {
+        "field": "comp.rulebook.pages",
+        "ok": true,
+        "expected": 4,
+        "actual": 4
+      },
+      {
+        "field": "comp.rulebook.binding",
+        "ok": true,
+        "expected": "folding",
+        "actual": "folding"
+      }
+    ]
+  },
+  {
+    "id": "edge4_standalone_info_leaflet",
+    "description": "Лише листівка — rigid_box і card_deck не додаються",
+    "category": "edge4",
+    "asserted": 5,
+    "correct": 5,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 3000,
+        "actual": 3000
+      },
+      {
+        "field": "comp.info_leaflet.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.info_leaflet.size_mm",
+        "ok": true,
+        "expected": [
+          148,
+          105
+        ],
+        "actual": [
+          148,
+          105
+        ]
+      },
+      {
+        "field": "comp.info_leaflet.print_colors",
+        "ok": true,
+        "expected": "4+0",
+        "actual": "4+0"
+      },
+      {
+        "field": "comp.info_leaflet.has_crease",
+        "ok": true,
+        "expected": false,
+        "actual": false
+      }
+    ]
+  },
+  {
+    "id": "edge4_standalone_rulebook_no_box",
+    "description": "Лише правила без коробки і карт",
+    "category": "edge4",
+    "asserted": 6,
+    "correct": 6,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 800,
+        "actual": 800
+      },
+      {
+        "field": "req.product_name",
+        "ok": true,
+        "expected": "Зефір",
+        "actual": "Зефір"
+      },
+      {
+        "field": "comp.rulebook.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rulebook.size_mm",
+        "ok": true,
+        "expected": [
+          210,
+          297
+        ],
+        "actual": [
+          210,
+          297
+        ]
+      },
+      {
+        "field": "comp.rulebook.pages",
+        "ok": true,
+        "expected": 8,
+        "actual": 8
+      },
+      {
+        "field": "comp.rulebook.binding",
+        "ok": true,
+        "expected": "folding",
+        "actual": "folding"
+      }
+    ]
+  },
+  {
+    "id": "edge4_empty_message",
+    "description": "Порожнє або занадто коротке повідомлення — агент питає що потрібно",
+    "category": "edge4",
+    "asserted": 1,
+    "correct": 1,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "status",
+        "ok": true,
+        "expected": "incomplete",
+        "actual": "incomplete"
+      }
+    ]
+  },
+  {
+    "id": "edge4_long_product_name",
+    "description": "Дуже довга назва гри витягується повністю",
+    "category": "edge4",
+    "asserted": 4,
+    "correct": 4,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 400,
+        "actual": 400
+      },
+      {
+        "field": "req.product_name",
+        "ok": true,
+        "expected": "Пригоди у Кристальному Лісі: Доповнення",
+        "actual": "Пригоди у Кристальному Лісі: Доповнення"
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 60,
+        "actual": 60
+      }
+    ]
+  },
+  {
+    "id": "edge4_two_quantities_take_explicit",
+    "description": "Клієнт згадує два числа «від 500 до 1000» — агент уточнює або бере конкретне",
+    "category": "edge4",
+    "asserted": 1,
+    "correct": 1,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 700,
+        "actual": 700
+      }
+    ]
+  },
+  {
+    "id": "edge4_mixed_lang_all_fields",
+    "description": "Мікс EN/UK: box 300×200×60, 90 cards, A5 rulebook 8 pages",
+    "category": "edge4",
+    "asserted": 13,
+    "correct": 13,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 500,
+        "actual": 500
+      },
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.size_mm",
+        "ok": true,
+        "expected": [
+          300,
+          200,
+          60
+        ],
+        "actual": [
+          300,
+          200,
+          60
+        ]
+      },
+      {
+        "field": "comp.rigid_box.construction",
+        "ok": true,
+        "expected": "lid_and_base",
+        "actual": "lid_and_base"
+      },
+      {
+        "field": "comp.rigid_box.lamination",
+        "ok": true,
+        "expected": "matte",
+        "actual": "matte"
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 90,
+        "actual": 90
+      },
+      {
+        "field": "comp.card_deck.card_size_mm",
+        "ok": true,
+        "expected": [
+          63,
+          88
+        ],
+        "actual": [
+          63,
+          88
+        ]
+      },
+      {
+        "field": "comp.card_deck.gsm",
+        "ok": true,
+        "expected": 300,
+        "actual": 300
+      },
+      {
+        "field": "comp.rulebook.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rulebook.size_mm",
+        "ok": true,
+        "expected": [
+          148,
+          210
+        ],
+        "actual": [
+          148,
+          210
+        ]
+      },
+      {
+        "field": "comp.rulebook.pages",
+        "ok": true,
+        "expected": 8,
+        "actual": 8
+      },
+      {
+        "field": "comp.rulebook.binding",
+        "ok": true,
+        "expected": "saddle_stitch",
+        "actual": "saddle_stitch"
+      }
+    ]
+  },
+  {
+    "id": "edge4_large_quantity_50k",
+    "description": "Дуже великий тираж 50000 — не плутати з іншими числами",
+    "category": "edge4",
+    "asserted": 3,
+    "correct": 3,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 50000,
+        "actual": 50000
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 80,
+        "actual": 80
+      }
+    ]
+  },
+  {
+    "id": "stress_all_five_components",
+    "description": "Усі 5 компонентів в одному повідомленні — максимальна складність",
+    "category": "stress",
+    "asserted": 27,
+    "correct": 27,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 1000,
+        "actual": 1000
+      },
+      {
+        "field": "req.product_name",
+        "ok": true,
+        "expected": "Галактика",
+        "actual": "Галактика"
+      },
+      {
+        "field": "req.has_game_components",
+        "ok": true,
+        "expected": false,
+        "actual": false
+      },
+      {
+        "field": "req.has_additional_elements",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "req.deadline_days",
+        "ok": true,
+        "expected": 60,
+        "actual": 60
+      },
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.size_mm",
+        "ok": true,
+        "expected": [
+          380,
+          280,
+          80
+        ],
+        "actual": [
+          380,
+          280,
+          80
+        ]
+      },
+      {
+        "field": "comp.rigid_box.construction",
+        "ok": true,
+        "expected": "lid_and_base",
+        "actual": "lid_and_base"
+      },
+      {
+        "field": "comp.rigid_box.lamination",
+        "ok": true,
+        "expected": "matte",
+        "actual": "matte"
+      },
+      {
+        "field": "comp.rigid_box.board_thickness_mm",
+        "ok": true,
+        "expected": 1.75,
+        "actual": 1.75
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 120,
+        "actual": 120
+      },
+      {
+        "field": "comp.card_deck.card_size_mm",
+        "ok": true,
+        "expected": [
+          63,
+          88
+        ],
+        "actual": [
+          63,
+          88
+        ]
+      },
+      {
+        "field": "comp.card_deck.gsm",
+        "ok": true,
+        "expected": 300,
+        "actual": 300
+      },
+      {
+        "field": "comp.card_deck.print_colors",
+        "ok": true,
+        "expected": "4+4",
+        "actual": "4+4"
+      },
+      {
+        "field": "comp.rulebook.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rulebook.size_mm",
+        "ok": true,
+        "expected": [
+          148,
+          210
+        ],
+        "actual": [
+          148,
+          210
+        ]
+      },
+      {
+        "field": "comp.rulebook.pages",
+        "ok": true,
+        "expected": 16,
+        "actual": 16
+      },
+      {
+        "field": "comp.rulebook.binding",
+        "ok": true,
+        "expected": "saddle_stitch",
+        "actual": "saddle_stitch"
+      },
+      {
+        "field": "comp.game_board.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.game_board.size_mm",
+        "ok": true,
+        "expected": [
+          594,
+          420
+        ],
+        "actual": [
+          594,
+          420
+        ]
+      },
+      {
+        "field": "comp.game_board.lamination",
+        "ok": true,
+        "expected": "matte",
+        "actual": "matte"
+      },
+      {
+        "field": "comp.game_board.edge_finish",
+        "ok": true,
+        "expected": "wrapped_edges",
+        "actual": "wrapped_edges"
+      },
+      {
+        "field": "comp.info_leaflet.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.info_leaflet.size_mm",
+        "ok": true,
+        "expected": [
+          100,
+          148
+        ],
+        "actual": [
+          100,
+          148
+        ]
+      },
+      {
+        "field": "comp.info_leaflet.print_colors",
+        "ok": true,
+        "expected": "4+4",
+        "actual": "4+4"
+      },
+      {
+        "field": "comp.info_leaflet.has_crease",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      }
+    ]
+  },
+  {
+    "id": "stress_max_box_fields",
+    "description": "Коробка з абсолютно всіма полями та комплектуючими",
+    "category": "stress",
+    "asserted": 20,
+    "correct": 20,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 500,
+        "actual": 500
+      },
+      {
+        "field": "req.product_name",
+        "ok": true,
+        "expected": "Оракул",
+        "actual": "Оракул"
+      },
+      {
+        "field": "req.has_game_components",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "req.customer_provides_components",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "req.deadline_days",
+        "ok": true,
+        "expected": 30,
+        "actual": 30
+      },
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.size_mm",
+        "ok": true,
+        "expected": [
+          300,
+          200,
+          60
+        ],
+        "actual": [
+          300,
+          200,
+          60
+        ]
+      },
+      {
+        "field": "comp.rigid_box.construction",
+        "ok": true,
+        "expected": "base_and_sleeve",
+        "actual": "base_and_sleeve"
+      },
+      {
+        "field": "comp.rigid_box.print_sides",
+        "ok": true,
+        "expected": "outside_and_inside",
+        "actual": "outside_and_inside"
+      },
+      {
+        "field": "comp.rigid_box.board_thickness_mm",
+        "ok": true,
+        "expected": 2.0,
+        "actual": 2.0
+      },
+      {
+        "field": "comp.rigid_box.lamination",
+        "ok": true,
+        "expected": "matte",
+        "actual": "matte"
+      },
+      {
+        "field": "comp.rigid_box.uv_varnish",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.shrink_wrap",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 54,
+        "actual": 54
+      },
+      {
+        "field": "comp.card_deck.card_size_mm",
+        "ok": true,
+        "expected": [
+          63,
+          88
+        ],
+        "actual": [
+          63,
+          88
+        ]
+      },
+      {
+        "field": "comp.card_deck.gsm",
+        "ok": true,
+        "expected": 350,
+        "actual": 350
+      },
+      {
+        "field": "comp.card_deck.print_colors",
+        "ok": true,
+        "expected": "4+0",
+        "actual": "4+0"
+      },
+      {
+        "field": "comp.card_deck.front_finish",
+        "ok": true,
+        "expected": "matte_lamination",
+        "actual": "matte_lamination"
+      },
+      {
+        "field": "comp.card_deck.shrink_wrap",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      }
+    ]
+  },
+  {
+    "id": "stress_redundant_info",
+    "description": "Повідомлення з повторюваною інформацією — беремо лише одне значення",
+    "category": "stress",
+    "asserted": 5,
+    "correct": 5,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 1000,
+        "actual": 1000
+      },
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.size_mm",
+        "ok": true,
+        "expected": [
+          300,
+          200,
+          60
+        ],
+        "actual": [
+          300,
+          200,
+          60
+        ]
+      },
+      {
+        "field": "comp.rigid_box.lamination",
+        "ok": true,
+        "expected": "matte",
+        "actual": "matte"
+      },
+      {
+        "field": "comp.rigid_box.board_thickness_mm",
+        "ok": true,
+        "expected": 1.75,
+        "actual": 1.75
+      }
+    ]
+  },
+  {
+    "id": "stress_three_components_all_details",
+    "description": "Коробка + карти + правила — всі деталі кожного компонента",
+    "category": "stress",
+    "asserted": 22,
+    "correct": 22,
+    "passed": true,
+    "field_results": [
+      {
+        "field": "req.quantity",
+        "ok": true,
+        "expected": 800,
+        "actual": 800
+      },
+      {
+        "field": "req.product_name",
+        "ok": true,
+        "expected": "Кристал",
+        "actual": "Кристал"
+      },
+      {
+        "field": "comp.rigid_box.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rigid_box.size_mm",
+        "ok": true,
+        "expected": [
+          320,
+          220,
+          70
+        ],
+        "actual": [
+          320,
+          220,
+          70
+        ]
+      },
+      {
+        "field": "comp.rigid_box.construction",
+        "ok": true,
+        "expected": "lid_and_base",
+        "actual": "lid_and_base"
+      },
+      {
+        "field": "comp.rigid_box.print_sides",
+        "ok": true,
+        "expected": "outside_only",
+        "actual": "outside_only"
+      },
+      {
+        "field": "comp.rigid_box.board_thickness_mm",
+        "ok": true,
+        "expected": 1.75,
+        "actual": 1.75
+      },
+      {
+        "field": "comp.rigid_box.lamination",
+        "ok": true,
+        "expected": "matte",
+        "actual": "matte"
+      },
+      {
+        "field": "comp.rigid_box.uv_varnish",
+        "ok": true,
+        "expected": false,
+        "actual": false
+      },
+      {
+        "field": "comp.rigid_box.shrink_wrap",
+        "ok": true,
+        "expected": false,
+        "actual": false
+      },
+      {
+        "field": "comp.card_deck.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.card_deck.card_count",
+        "ok": true,
+        "expected": 100,
+        "actual": 100
+      },
+      {
+        "field": "comp.card_deck.card_size_mm",
+        "ok": true,
+        "expected": [
+          63,
+          88
+        ],
+        "actual": [
+          63,
+          88
+        ]
+      },
+      {
+        "field": "comp.card_deck.gsm",
+        "ok": true,
+        "expected": 300,
+        "actual": 300
+      },
+      {
+        "field": "comp.card_deck.print_colors",
+        "ok": true,
+        "expected": "4+4",
+        "actual": "4+4"
+      },
+      {
+        "field": "comp.card_deck.front_finish",
+        "ok": true,
+        "expected": "matte_lamination",
+        "actual": "matte_lamination"
+      },
+      {
+        "field": "comp.card_deck.back_finish",
+        "ok": true,
+        "expected": "matte_lamination",
+        "actual": "matte_lamination"
+      },
+      {
+        "field": "comp.card_deck.shrink_wrap",
+        "ok": true,
+        "expected": false,
+        "actual": false
+      },
+      {
+        "field": "comp.rulebook.present",
+        "ok": true,
+        "expected": true,
+        "actual": true
+      },
+      {
+        "field": "comp.rulebook.size_mm",
+        "ok": true,
+        "expected": [
+          148,
+          210
+        ],
+        "actual": [
+          148,
+          210
+        ]
+      },
+      {
+        "field": "comp.rulebook.pages",
+        "ok": true,
+        "expected": 8,
+        "actual": 8
+      },
+      {
+        "field": "comp.rulebook.binding",
+        "ok": true,
+        "expected": "saddle_stitch",
+        "actual": "saddle_stitch"
+      }
+    ]
+  }
+]
