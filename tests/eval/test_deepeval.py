@@ -8,7 +8,7 @@ It evaluates *qualitative* aspects that rule-based checks cannot:
   - Multi-turn conversation coherence (ConversationalGEval)
 
 Run:
-    cd Savkiv_Yaryna_Thesis_2025
+    cd Savkiv_Yaryna_Thesis_2026
     deepeval test run tests/eval/test_deepeval.py
 
     # або через pytest:

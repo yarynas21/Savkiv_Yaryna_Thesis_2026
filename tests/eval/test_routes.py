@@ -11,7 +11,7 @@ Rule-based (deterministic) tests that verify:
   6. HITL mechanism — graph pauses and resumes correctly
 
 Run with:
-    cd Savkiv_Yaryna_Thesis_2025
+    cd Savkiv_Yaryna_Thesis_2026
     PYTHONPATH=backend pytest tests/eval/test_routes.py -v
 
 Results are saved to tests/eval/reports/route_results.json for citation

@@ -76,8 +76,8 @@ Multi-Agent System для автоматичної генерації техно
 ### 1. Клонування
 
 ```bash
-git clone git@github.com:yarynas21/Savkiv_Yaryna_Thesis_2025.git
-cd Savkiv_Yaryna_Thesis_2025
+git clone git@github.com:yarynas21/Savkiv_Yaryna_Thesis_2026.git
+cd Savkiv_Yaryna_Thesis_2026
 ```
 
 ### 2. Налаштування `.env`
@@ -177,7 +177,7 @@ curl -X POST http://localhost:8000/auth/token \
 ## Структура проекту
 
 ```
-Savkiv_Yaryna_Thesis_2025/
+Savkiv_Yaryna_Thesis_2026/
 ├── backend/
 │   ├── main.py
 │   ├── api/

@@ -16,7 +16,7 @@ Ground-truth source files:
   • Карти факт чи думка.xlsx                 (Наряд 20872)
 
 Run with:
-    cd Savkiv_Yaryna_Thesis_2025
+    cd Savkiv_Yaryna_Thesis_2026
     PYTHONPATH=backend pytest tests/eval/test_full_orders.py -v
 
 Results saved to tests/eval/reports/full_order_results.json

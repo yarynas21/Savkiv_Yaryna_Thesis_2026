@@ -8,7 +8,7 @@ Also includes 4 LLM-as-Judge scenarios where GPT-4.1 evaluates route quality
 for properties that rule-based checks cannot capture.
 
 Run with:
-    cd Savkiv_Yaryna_Thesis_2025
+    cd Savkiv_Yaryna_Thesis_2026
     PYTHONPATH=backend pytest tests/eval/test_routes_llm.py -v -s
 
 Results are saved to tests/eval/reports/route_llm_results.json

@@ -10,7 +10,7 @@ for 3 realistic orders and measures:
 Results saved to: tests/eval/reports/llm_benchmark.json
 
 Usage:
-    cd Savkiv_Yaryna_Thesis_2025
+    cd Savkiv_Yaryna_Thesis_2026
     PYTHONPATH=backend python tests/eval/benchmark_llm.py
 
 Requirements:

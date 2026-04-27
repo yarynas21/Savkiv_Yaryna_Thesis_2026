@@ -1,7 +1,7 @@
 """Pytest evaluation suite for the conversational extraction agent.
 
 Run:
-    cd Savkiv_Yaryna_Thesis_2025
+    cd Savkiv_Yaryna_Thesis_2026
     pytest tests/eval/test_extraction.py -v --tb=short -s
 
 After the run, charts and a JSON report are written to:
