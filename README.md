@@ -1,31 +1,28 @@
 # Dyz-Art MAS — Multi-Agent System для Виробничого Планування
 
-**Multi-Agent System для автоматичної генерації технологічних маршрутів у поліграфічній індустрії**
+Multi-Agent System для автоматичної генерації технологічних маршрутів у поліграфічній індустрії.
 
-## Опис проекту
+## Про проект
 
-Цей проект реалізує Multi-Agent System (MAS) для компанії Dyz-Art, яка спеціалізується на виробництві преміум-упаковки, коробок для настільних ігор, колод карт та правил гри. Система автоматично перетворює неструктуровані запити клієнтів у детальні технологічні маршрути виробництва та Технічні Завдання (Excel).
+Система реалізована для компанії Dyz-Art, яка виробляє преміум-упаковку, коробки для настільних ігор, колоди карт та правила гри. MAS автоматично перетворює запити клієнтів у детальні технологічні маршрути та Технічні Завдання (Excel).
 
-### Основні можливості
+Основне:
 
 - 4 LLM-агенти + Human-in-the-Loop вузол у LangGraph workflow
-- Інтерактивний діалог з клієнтом для витягування вимог
-- Автоматична генерація маршрутів на основі бази знань PostgreSQL
-- Human-in-the-Loop механізм для вирішення технічних неоднозначностей
-- Генерація Excel Work Order з детальними технологічними маршрутами
-- Калькуляція вартості для різних тиражних рівнів
-- JWT-автентифікація з рольовим доступом (admin / expert / client)
+- Діалог з клієнтом для збору вимог
+- Генерація маршрутів на основі бази знань PostgreSQL
+- Human-in-the-Loop для вирішення технічних неоднозначностей
+- Генерація Excel Work Order з деталями маршруту та калькуляцією
+- JWT-автентифікація, ролі: admin / expert / client
 
 ## Архітектура
-
-Система складається з трьох Docker-сервісів:
 
 ```
 ┌─────────────────────┐     HTTP/JSON     ┌──────────────────────────────────┐
 │  frontend/app.py    │ ────────────────► │  backend/main.py (FastAPI)       │
 │  Streamlit UI       │                   │                                  │
 │  port 8501          │ ◄──────────────── │  POST  /auth/register            │
-└─────────────────────┘   SessionState    │  POST  /auth/token               │
+└─────────────────────┘                   │  POST  /auth/token               │
                                           │  GET   /auth/me                  │
                                           │                                  │
                                           │  POST  /api/sessions             │
@@ -42,7 +39,11 @@
                                           │  POST  /api/inbox/{id}/launch    │
                                           │  GET   /api/inbox/{id}/excel     │
                                           │                                  │
-                                          │  GET   /api/admin/...            │
+                                          │  GET   /api/admin/users          │
+                                          │  GET   /api/admin/papers         │
+                                          │  GET   /api/admin/game_components│
+                                          │  GET   /api/admin/cost_rates     │
+                                          │  GET   /api/admin/llm            │
                                           │  port 8000                       │
                                           └──────────────┬───────────────────┘
                                                          │ SQLAlchemy
@@ -66,11 +67,11 @@
 
 | Граф | Призначення |
 |------|-------------|
-| `interview_graph` | Клієнт самостійно заповнює вимоги через чат |
-| `production_graph` | Технолог/Admin запускає повний пайплайн з уже зібраних даних |
+| `interview_graph` | Клієнт заповнює вимоги через чат |
+| `production_graph` | Технолог/Admin запускає повний пайплайн із зібраних даних |
 | `full_graph` | Повний пайплайн від збору вимог до генерації ТЗ (для expert) |
 
-## Швидкий старт (Docker Compose)
+## Швидкий старт
 
 ### 1. Клонування
 
@@ -85,14 +86,14 @@ cd Savkiv_Yaryna_Thesis_2025
 cp .env.example .env
 ```
 
-Відкрийте `.env` і заповніть:
+Заповніть `.env`:
 
 ```env
-# LLM Provider (оберіть один)
+# LLM (оберіть один)
 LLM_PROVIDER=openai
 OPENAI_API_KEY=sk-your-key-here
 
-# JWT (згенеруйте новий ключ!)
+# JWT
 JWT_SECRET_KEY=change-me-generate-with-secrets-token-hex-32
 
 # PostgreSQL
@@ -102,7 +103,7 @@ POSTGRES_PASSWORD=change-me-StrongDbPass-1
 DATABASE_URL=postgresql://dyzart_app:change-me-StrongDbPass-1@localhost:5432/dyzart
 ```
 
-> ⚠️ У Docker `API_BASE_URL` для frontend підставляється автоматично (`http://backend:8000`).
+> У Docker `API_BASE_URL` для frontend підставляється автоматично (`http://backend:8000`).
 
 ### 3. Запуск
 
@@ -118,21 +119,24 @@ docker compose up --build
 
 ## Автентифікація
 
-### Вхід через веб-інтерфейс
-
 Відкрийте http://localhost:8501 — з'явиться форма входу.
 
-**Дефолтні акаунти** (після першого запуску + міграцій):
+**Дефолтні акаунти** (створюються автоматично при першому запуску через `docker-entrypoint-initdb.d`):
 
 | Логін      | Пароль        | Роль   |
 |------------|---------------|--------|
 | `admin`    | `admin123`    | admin  |
-| `client`   | `operator123` | client |
+| `operator` | `operator123` | client |
 | `expert`   | `expert123`   | expert |
 
-> ⚠️ Змініть паролі перед деплоєм у продакшен!
+> Змініть паролі перед деплоєм у продакшен!
 
-Міграція `001_rename_operator_to_client.sql` перейменовує роль `operator` → `client` та оновлює CHECK-обмеження.
+Міграція `001_rename_operator_to_client.sql` змінює роль `operator` → `client` (username залишається `operator`). Міграції запускаються окремо від seeds — потрібно викликати вручну:
+
+```bash
+cd backend
+python -m db.migrate
+```
 
 ### Реєстрація нового користувача
 
@@ -142,7 +146,7 @@ curl -X POST http://localhost:8000/auth/register \
   -d '{"email":"new@example.com","username":"newuser","password":"Secure123"}'
 ```
 
-### Вхід через API (отримання токена)
+### Отримання токена
 
 ```bash
 curl -X POST http://localhost:8000/auth/token \
@@ -155,18 +159,18 @@ curl -X POST http://localhost:8000/auth/token \
 
 ## Використання
 
-### Процес роботи (client)
+### Клієнт
 
 1. Увійдіть або зареєструйтесь
 2. Введіть замовлення у чаті, наприклад:
    > *"Потрібна преміальна коробка для настільної гри тираж 1000 шт., колода 110 карт, правила. Дедлайн 30 днів"*
 3. Система задасть уточнюючі питання
-4. Після заповнення всіх полів — інтерв'ю потрапляє до inbox експерта
+4. Після заповнення — інтерв'ю потрапляє до inbox експерта
 
-### Процес роботи (expert)
+### Експерт
 
 1. Відкрийте вкладку Inbox — видно завершені клієнтські інтерв'ю
-2. Натисніть "Launch" — система запускає production_graph і формує маршрути
+2. Натисніть "Launch" — система запускає production_graph
 3. За потреби — надайте відповідь на питання валідатора (Human-in-the-Loop)
 4. Завантажте Excel через кнопку "Завантажити Технічне Завдання"
 
@@ -174,140 +178,81 @@ curl -X POST http://localhost:8000/auth/token \
 
 ```
 Savkiv_Yaryna_Thesis_2025/
-├── backend/                          # FastAPI-сервер (порт 8000)
-│   ├── main.py                       # FastAPI app + CORS + lifespan
-│   ├── entrypoint.sh                 # Docker entrypoint
-│   ├── Dockerfile
-│   ├── requirements.txt
+├── backend/
+│   ├── main.py
 │   ├── api/
-│   │   ├── routes.py                 # Legacy монолітний роутер (не активний)
-│   │   ├── schemas.py                # Legacy Pydantic-схеми
-│   │   ├── deps.py                   # Shared dependencies
-│   │   ├── routers/                  # Активні роутери (по ролях / домену)
-│   │   │   ├── sessions.py           # /api/sessions  (expert, admin)
-│   │   │   ├── interviews_client.py  # /api/interviews (client)
-│   │   │   ├── interviews_expert.py  # /api/inbox (expert, admin)
-│   │   │   ├── metrics.py            # /api/metrics/*
+│   │   ├── deps.py
+│   │   ├── routers/
+│   │   │   ├── sessions.py           # /api/sessions
+│   │   │   ├── interviews_client.py  # /api/interviews
+│   │   │   ├── interviews_expert.py  # /api/inbox
+│   │   │   ├── metrics.py            # /api/metrics
 │   │   │   ├── admin_users.py        # /api/admin/users
 │   │   │   ├── admin_papers.py       # /api/admin/papers
-│   │   │   ├── admin_components.py   # /api/admin/components
-│   │   │   ├── admin_cost_rates.py   # /api/admin/cost-rates
+│   │   │   ├── admin_components.py   # /api/admin/game_components
+│   │   │   ├── admin_cost_rates.py   # /api/admin/cost_rates
 │   │   │   └── admin_llm.py          # /api/admin/llm
-│   │   └── schemas/                  # Pydantic-схеми по домену
-│   │       ├── sessions.py
-│   │       ├── interviews.py
-│   │       └── admin.py
+│   │   └── schemas/
 │   ├── auth/
-│   │   ├── routes.py                 # /auth/register, /auth/token, /auth/me
-│   │   ├── schemas.py
-│   │   ├── utils.py                  # bcrypt + JWT
-│   │   └── dependencies.py          # get_current_user, require_role
 │   ├── db/
-│   │   ├── migrate.py                # Lightweight migration runner
-│   │   ├── migrations/               # SQL-міграції (виконуються у порядку)
-│   │   │   ├── 001_rename_operator_to_client.sql
-│   │   │   ├── 002_interview_sessions.sql
-│   │   │   ├── 003_llm_runtime_settings.sql
-│   │   │   └── 004_session_metrics_snapshots.sql
-│   │   ├── seeds/                    # Початкові дані (01–11)
-│   │   ├── connection.py             # SQLAlchemy engine
-│   │   ├── models.py                 # Legacy table-об'єкти
-│   │   ├── models/                   # Сучасні table-об'єкти по домену
-│   │   ├── repositories/             # DB-функції по домену
-│   │   └── repository.py             # get_kb_machines / materials / operations
+│   │   ├── migrate.py
+│   │   ├── migrations/
+│   │   ├── seeds/
+│   │   └── repositories/
 │   ├── agents/
-│   │   ├── registry.py               # Константи вузлів і ролей LLM
-│   │   ├── llm_factory.py            # Фабрика чат-моделей (openai/anthropic)
-│   │   ├── json_parser.py            # RobustJsonOutputParser
-│   │   ├── conversational/           # ConversationalAgent
-│   │   ├── technologist/             # TechnologistAgent
-│   │   ├── validation/               # ValidationAgent
-│   │   └── generation/               # GenerationAgent
+│   │   ├── registry.py
+│   │   ├── llm_factory.py
+│   │   ├── conversational/
+│   │   ├── technologist/
+│   │   ├── validation/
+│   │   └── generation/
 │   ├── graph/
-│   │   ├── state.py                  # ProductionState TypedDict
-│   │   ├── workflow.py               # Складання StateGraph
-│   │   ├── agent_subgraphs.py        # Підграфи кожного агента
-│   │   ├── human_review.py           # HumanReview pause-node
-│   │   └── registry.py               # Singleton-реєстр скомпільованих графів
+│   │   ├── state.py
+│   │   ├── workflow.py
+│   │   ├── human_review.py
+│   │   └── registry.py
 │   ├── services/
-│   │   ├── interview_service.py      # Логіка client-flow
-│   │   ├── production_service.py     # Логіка expert/admin-flow
-│   │   ├── metrics_service.py        # Агрегація LLM-метрик
-│   │   └── admin_service.py          # CRUD для адмін-панелі
 │   ├── tools/
-│   │   ├── excel_generator.py        # openpyxl Work Order
-│   │   ├── cost_calculator.py        # Калькуляція вартості
-│   │   ├── knife_calculator.py       # Розрахунок висічних форм
-│   │   └── llm_eval_metrics.py       # Latency/cost метрики
+│   │   ├── excel_generator.py
+│   │   ├── cost_calculator.py
+│   │   └── knife_calculator.py
 │   └── utils/
-│       └── logger.py
-├── frontend/                         # Streamlit UI (порт 8501)
+├── frontend/
 │   ├── app.py
-│   ├── api_client.py                 # HTTP-клієнт → FastAPI
-│   ├── common/                       # Спільні компоненти
-│   ├── views/                        # Окремі сторінки (client, expert, admin, auth)
-│   ├── requirements.txt
-│   └── Dockerfile
+│   ├── api_client.py
+│   ├── common/
+│   └── views/
 ├── tests/
-│   └── eval/                         # DeepEval + benchmark LLM-тести
+│   └── eval/
 ├── docker-compose.yml
-├── .env                              # Конфігурація (не комітити!)
-├── .env.example                      # Шаблон
+├── .env.example
 └── README.md
 ```
 
-## Технологічний стек
+## Стек
 
 | Шар | Технологія |
 |-----|-----------|
-| **Backend API** | FastAPI + Uvicorn |
-| **Workflow / Agents** | LangChain + LangGraph |
-| **Frontend UI** | Streamlit |
-| **База даних** | PostgreSQL 16 |
-| **ORM / SQL** | SQLAlchemy Core |
-| **Автентифікація** | JWT (python-jose) + passlib[bcrypt] |
-| **HTTP клієнт** | httpx |
-| **Excel генерація** | openpyxl |
-| **Контейнеризація** | Docker + Docker Compose |
-| **Мова** | Python 3.11 |
+| Backend API | FastAPI + Uvicorn |
+| Workflow / Agents | LangChain + LangGraph |
+| Frontend UI | Streamlit |
+| База даних | PostgreSQL 16 |
+| ORM / SQL | SQLAlchemy Core |
+| Автентифікація | JWT (python-jose) + passlib[bcrypt] |
+| HTTP клієнт | httpx |
+| Excel генерація | openpyxl |
+| Контейнеризація | Docker + Docker Compose |
+| Мова | Python 3.11 |
 
-### LLM провайдери
-
-- OpenAI GPT-4o
-- Anthropic Claude 3.5 Sonnet
+LLM провайдери: OpenAI GPT-4o, Anthropic Claude 3.5 Sonnet.
 
 ## Розробка
 
-### Зупинка і перезапуск
-
 ```bash
 docker compose down             # зупинити
-docker compose up --build       # зібрати і запустити знову
-docker compose logs -f backend  # переглядати логи бекенду
-```
-
-### Скидання бази даних
-
-```bash
-docker compose down -v          # видаляє також postgres_data volume
-docker compose up --build       # PostgreSQL ініціалізується наново
-```
-
-### Запуск міграцій вручну
-
-```bash
-cd backend
-python -m db.migrate
-```
-
-### Зміна пароля користувача через API
-
-```bash
-TOKEN=$(curl -s -X POST http://localhost:8000/auth/token \
-  -H "Content-Type: application/json" \
-  -d '{"username":"admin","password":"admin123"}' | python3 -c "import sys,json; print(json.load(sys.stdin)['access_token'])")
-
-curl -H "Authorization: Bearer $TOKEN" http://localhost:8000/auth/me
+docker compose up --build       # запустити знову
+docker compose logs -f backend  # логи бекенду
+docker compose down -v          # скинути postgres volume
 ```
 
 ### Тестування з різними LLM
@@ -317,72 +262,22 @@ LLM_PROVIDER=anthropic
 ANTHROPIC_API_KEY=sk-ant-...
 ```
 
-```bash
-docker compose down && docker compose up
-```
+### LLM метрики
 
-### LLM метрики (оцінка latency/cost)
-
-- `GET /api/sessions/{thread_id}/metrics` — метрики поточної сесії
-- `GET /api/metrics/overview` — агреговані метрики по всіх відомих сесіях
-
-### Візуалізація LangGraph workflow
-
-```bash
-python visualize_graph.py
-# → pipeline_graph.png
-```
-
-## Приклади вихідних даних
-
-### Технологічний маршрут (JSON)
-
-```json
-{
-  "component_id": "rigid_box",
-  "component_name": "Жорстка коробка",
-  "material": {
-    "cover": "coated_350",
-    "base": "grey_chipboard_2000",
-    "adhesive": "hot_melt_EVA"
-  },
-  "operations": [
-    {"step": 1, "operation_id": "prepress",        "operation_name": "Допечатна підготовка"},
-    {"step": 2, "operation_id": "offset_printing", "operation_name": "Офсетний друк", "machine": "heidelberg_sm74"}
-  ]
-}
-```
-
-### Калькуляція вартості
-
-```json
-{
-  "base_quantity": 1000,
-  "tiers": {
-    "500 шт.":   7750.0,
-    "1,000 шт.": 12300.0,
-    "2,500 шт.": 25562.5,
-    "5,000 шт.": 43125.0
-  }
-}
-```
+- `GET /api/sessions/{thread_id}/metrics` — метрики сесії
+- `GET /api/metrics/overview` — агреговані метрики
 
 ## Академічний контекст
 
 **Тема:** Development of a Multi-Agent System for Production Workflow Generation in the Printing Industry
 
-**Мета:** Автоматизувати процес генерації технологічних маршрутів та Технічних Завдань для поліграфічного підприємства Dyz-Art.
-
-## Ліцензія
-
-MIT License — див. файл [LICENSE](LICENSE)
+**Мета:** Автоматизувати генерацію технологічних маршрутів та Технічних Завдань для поліграфічного підприємства Dyz-Art.
 
 ## Автор
 
 **Yaryna Savkiv**  
 GitHub: [@yarynas21](https://github.com/yarynas21)
 
-## Подяки
+## Ліцензія
 
-- Компанія **Dyz-Art** за надання доступу до виробничих процесів
-- **LangChain** / **LangGraph** команда за потужний фреймворк
+MIT License — див. файл [LICENSE](LICENSE)

@@ -229,3 +229,7 @@ tests/eval/deepeval_analysis_executed.ipynb
 
 # system_architecture_clean.xml (local diagram scratch file)
 system_architecture_clean.xml
+
+.claude/
+
+backend/exports/
