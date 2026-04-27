@@ -4,12 +4,10 @@ LLM Factory — returns LangChain chat models based on .env and agent role.
 Supported providers:
   - openai     → ChatOpenAI (GPT-4o by default)
   - anthropic  → ChatAnthropic (claude-3-5-sonnet by default)
-  - google     → ChatGoogleGenerativeAI (gemini-1.5-pro by default)
 
 Per-role model overrides (optional; fallback to global model for provider):
   OPENAI_MODEL_CLIENT_INTERFACE, OPENAI_MODEL_TECHNOLOGIST, ...
   ANTHROPIC_MODEL_CLIENT_INTERFACE, ...
-  GOOGLE_MODEL_CLIENT_INTERFACE, ...
 """
 
 from __future__ import annotations
@@ -46,11 +44,6 @@ def _model_for_role_anthropic(role: AgentLLMRole) -> str:
     )
 
 
-def _model_for_role_google(role: AgentLLMRole) -> str:
-    suffix = _ROLE_ENV_SUFFIX[role]
-    return os.getenv(f"GOOGLE_MODEL_{suffix}") or os.getenv("GOOGLE_MODEL", "gemini-1.5-pro")
-
-
 @lru_cache(maxsize=32)
 def _build_llm(provider: str, model: str, temperature: float) -> BaseChatModel:
     """Створює один екземпляр чат-моделі (кеш за provider+model+temp)."""
@@ -71,25 +64,14 @@ def _build_llm(provider: str, model: str, temperature: float) -> BaseChatModel:
             logger.warning("ANTHROPIC_API_KEY not set in environment")
         return ChatAnthropic(model=model, temperature=temperature)
 
-    if provider in ("google", "gemini"):
-        from langchain_google_genai import ChatGoogleGenerativeAI
-
-        if not os.getenv("GOOGLE_API_KEY"):
-            logger.warning("GOOGLE_API_KEY not set in environment")
-        return ChatGoogleGenerativeAI(model=model, temperature=temperature)
-
     raise ValueError(
         f"Unknown LLM_PROVIDER='{provider}'. "
-        "Supported values: openai, anthropic, google"
+        "Supported values: openai, anthropic"
     )
 
 
 def get_llm_for_agent(role: AgentLLMRole) -> BaseChatModel:
-    """
-    Повертає чат-модель для конкретної ролі агента.
-    Опційні змінні OPENAI_MODEL_<ROLE> / ANTHROPIC_* / GOOGLE_* перевизначають модель;
-    інакше використовується глобальна модель провайдера.
-    """
+    """Повертає чат-модель для конкретної ролі агента."""
     provider = os.getenv("LLM_PROVIDER", "openai").lower().strip()
     logger.info(f"LLM for agent role={role!r}, provider={provider}")
 
@@ -97,14 +79,11 @@ def get_llm_for_agent(role: AgentLLMRole) -> BaseChatModel:
         model = _model_for_role_openai(role)
     elif provider == "anthropic":
         model = _model_for_role_anthropic(role)
-    elif provider in ("google", "gemini"):
-        provider = "google"
-        model = _model_for_role_google(role)
     else:
         logger.error(f"Unknown LLM_PROVIDER: {provider}")
         raise ValueError(
             f"Unknown LLM_PROVIDER='{provider}'. "
-            "Supported values: openai, anthropic, google"
+            "Supported values: openai, anthropic"
         )
 
     logger.info(f"Resolved model for {role!r}: {model}")
@@ -112,8 +91,5 @@ def get_llm_for_agent(role: AgentLLMRole) -> BaseChatModel:
 
 
 def get_llm() -> BaseChatModel:
-    """
-    Зворотна сумісність: модель як для агента інтерфейсу з замовником
-    (колишня поведінка єдиного get_llm()).
-    """
+    """Зворотна сумісність: повертає модель для ролі client_interface."""
     return get_llm_for_agent("client_interface")

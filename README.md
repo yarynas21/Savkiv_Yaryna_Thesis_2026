@@ -217,7 +217,7 @@ Savkiv_Yaryna_Thesis_2025/
 │   │   └── repository.py             # get_kb_machines / materials / operations
 │   ├── agents/
 │   │   ├── registry.py               # Константи вузлів і ролей LLM
-│   │   ├── llm_factory.py            # Фабрика чат-моделей (openai/anthropic/google)
+│   │   ├── llm_factory.py            # Фабрика чат-моделей (openai/anthropic)
 │   │   ├── json_parser.py            # RobustJsonOutputParser
 │   │   ├── conversational/           # ConversationalAgent
 │   │   ├── technologist/             # TechnologistAgent
@@ -275,7 +275,6 @@ Savkiv_Yaryna_Thesis_2025/
 
 - OpenAI GPT-4o
 - Anthropic Claude 3.5 Sonnet
-- Google Gemini 1.5 Pro
 
 ## Розробка
 

@@ -928,7 +928,6 @@ with col_info:
     model_map = {
         "OPENAI":    os.getenv("OPENAI_MODEL", "gpt-4o"),
         "ANTHROPIC": os.getenv("ANTHROPIC_MODEL", "claude-3-5-sonnet-20241022"),
-        "GOOGLE":    os.getenv("GOOGLE_MODEL", "gemini-1.5-pro"),
     }
     model = model_map.get(provider, "—")
     _msg_count = len(st.session_state.get("messages", []))
