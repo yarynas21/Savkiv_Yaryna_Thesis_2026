@@ -53,7 +53,7 @@ def _log_messages(messages: list) -> None:
     logger.info("────────────────────────────────────────────────────")
 
 
-def _invoke_llm(prompt, messages: list, llm) -> tuple[dict[str, Any], dict[str, Any]]:
+def _invoke_llm(prompt, messages: list, llm, ui_role_context: str | None = None) -> tuple[dict[str, Any], dict[str, Any]]:
     """Invoke the LLM chain using a three-tier fallback strategy.
 
     1. **Structured output** — attempts ``llm.with_structured_output`` with
@@ -75,6 +75,9 @@ def _invoke_llm(prompt, messages: list, llm) -> tuple[dict[str, Any], dict[str, 
           2) invoke metadata dict (tier/model/latency/token usage)
     """
     _log_messages(messages)
+    if ui_role_context:
+        from langchain_core.messages import SystemMessage as _SM
+        messages = [_SM(content=ui_role_context), *messages]
     chain_input = {"messages": messages}
     started_at = time.perf_counter()
 

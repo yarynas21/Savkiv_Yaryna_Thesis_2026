@@ -118,3 +118,18 @@ def compile_workflow(checkpointer=None):
     )
     logger.info("Workflow compiled successfully")
     return compiled
+
+
+def build_interview_graph(checkpointer=None):
+    """Compile the interview variant of the workflow (alias for compile_workflow)."""
+    return compile_workflow(checkpointer=checkpointer)
+
+
+def build_production_graph(checkpointer=None):
+    """Compile the production variant of the workflow (alias for compile_workflow)."""
+    return compile_workflow(checkpointer=checkpointer)
+
+
+def build_full_graph(checkpointer=None):
+    """Compile the full variant of the workflow (alias for compile_workflow)."""
+    return compile_workflow(checkpointer=checkpointer)

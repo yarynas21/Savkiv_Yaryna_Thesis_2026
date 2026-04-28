@@ -1,0 +1,180 @@
+{
+  "provider": "anthropic",
+  "model": "claude-sonnet-4-6",
+  "total": 26,
+  "passed": 25,
+  "failed": 1,
+  "pass_rate_pct": 96.2,
+  "results": [
+    {
+      "test_id": "llm_box_route_generated",
+      "passed": true,
+      "details": {
+        "routes_count": 1
+      }
+    },
+    {
+      "test_id": "llm_box_prepress_first",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "llm_box_has_printing",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "llm_box_has_lamination",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "llm_box_has_die_cutting",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "llm_box_packing_last",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "llm_box_offset_for_large_run",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "llm_card_route_generated",
+      "passed": true,
+      "details": {
+        "routes_count": 1
+      }
+    },
+    {
+      "test_id": "llm_card_has_card_cutting",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "llm_card_small_run_digital",
+      "passed": true,
+      "details": {
+        "ops": [
+          "prepress",
+          "sheet_format_cutting",
+          "digital_printing",
+          "lamination",
+          "card_cutting",
+          "quality_control",
+          "shrink_wrapping",
+          "shipper_packing",
+          "palletizing"
+        ]
+      }
+    },
+    {
+      "test_id": "llm_card_packing_last",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "llm_fullset_all_routed",
+      "passed": true,
+      "details": {
+        "comp_ids": [
+          "rulebook",
+          "card_deck",
+          "rigid_box"
+        ]
+      }
+    },
+    {
+      "test_id": "llm_fullset_all_prepress_first",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "llm_fullset_all_packing_last",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "llm_rulebook_route_generated",
+      "passed": true,
+      "details": {
+        "routes_count": 1
+      }
+    },
+    {
+      "test_id": "llm_rulebook_prepress_first",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "llm_rulebook_has_printing",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "llm_rulebook_packing_last",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "test_id": "judge_box_operation_order",
+      "passed": true,
+      "details": {
+        "score": 0.8999999999999998
+      }
+    },
+    {
+      "test_id": "judge_card_print_technology",
+      "passed": true,
+      "details": {
+        "score": 0.690761697653765
+      }
+    },
+    {
+      "test_id": "judge_fullset_independence",
+      "passed": true,
+      "details": {
+        "score": 0.9256831985699169
+      }
+    },
+    {
+      "test_id": "judge_knife_params_used",
+      "passed": false,
+      "details": {
+        "score": 0.12281565021609253
+      }
+    },
+    {
+      "test_id": "judge_uv_varnish_included",
+      "passed": true,
+      "details": {
+        "score": 1.0
+      }
+    },
+    {
+      "test_id": "judge_rulebook_binding_ops",
+      "passed": true,
+      "details": {
+        "score": 0.9430147348585844
+      }
+    },
+    {
+      "test_id": "judge_shrink_wrap_present",
+      "passed": true,
+      "details": {
+        "score": 1.0
+      }
+    },
+    {
+      "test_id": "judge_boundary_run_technology",
+      "passed": true,
+      "details": {
+        "score": 1.0
+      }
+    }
+  ]
+}

@@ -12,7 +12,7 @@ _SYSTEM_PROMPT = """Ти — агент-генератор документів 
 
 Поверни ТІЛЬКИ JSON (без markdown):
 {{
-  "order_number": "DYZ-2025-001",
+  "order_number": "DYZ-2026-001",
   "client": "...",
   "product": "...",
   "quantity": 1000,

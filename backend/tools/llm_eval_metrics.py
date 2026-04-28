@@ -38,10 +38,19 @@ def calculate_latency_metrics(
     }
 
 
-def calculate_cost_usd(input_tokens_total: int, output_tokens_total: int, pricing: ModelPricing) -> float:
+def calculate_cost_usd(
+    input_tokens_total: int,
+    output_tokens_total: int,
+    pricing: ModelPricing,
+    cache_read_tokens: int = 0,
+    cache_creation_tokens: int = 0,
+) -> float:
     input_cost = (input_tokens_total * pricing["input_per_1m_usd"]) / 1_000_000
     output_cost = (output_tokens_total * pricing["output_per_1m_usd"]) / 1_000_000
-    return round(input_cost + output_cost, 6)
+    # Cache read is billed at 10% of input price; cache creation at 25% extra
+    cache_read_cost = (cache_read_tokens * pricing["input_per_1m_usd"] * 0.1) / 1_000_000
+    cache_creation_cost = (cache_creation_tokens * pricing["input_per_1m_usd"] * 0.25) / 1_000_000
+    return round(input_cost + output_cost + cache_read_cost + cache_creation_cost, 6)
 
 
 def calculate_cost_from_rows(
@@ -62,3 +71,22 @@ def calculate_cost_from_rows(
 
 def gpt_4o_pricing() -> ModelPricing:
     return {"input_per_1m_usd": 5.0, "output_per_1m_usd": 15.0}
+
+
+_MODEL_PRICING: dict[str, ModelPricing] = {
+    "gpt-4o": {"input_per_1m_usd": 5.0, "output_per_1m_usd": 15.0},
+    "gpt-4o-mini": {"input_per_1m_usd": 0.15, "output_per_1m_usd": 0.60},
+    "gpt-4-turbo": {"input_per_1m_usd": 10.0, "output_per_1m_usd": 30.0},
+    "gpt-3.5-turbo": {"input_per_1m_usd": 0.5, "output_per_1m_usd": 1.5},
+    "claude-3-5-sonnet": {"input_per_1m_usd": 3.0, "output_per_1m_usd": 15.0},
+    "claude-3-5-haiku": {"input_per_1m_usd": 0.8, "output_per_1m_usd": 4.0},
+    "claude-3-opus": {"input_per_1m_usd": 15.0, "output_per_1m_usd": 75.0},
+}
+
+
+def pricing_for_model(model: str) -> ModelPricing:
+    """Return pricing for the given model name, falling back to gpt-4o rates."""
+    for key, pricing in _MODEL_PRICING.items():
+        if key in model.lower():
+            return pricing
+    return gpt_4o_pricing()

@@ -70,22 +70,37 @@ def _build_llm(provider: str, model: str, temperature: float) -> BaseChatModel:
     )
 
 
+def _get_runtime_setting() -> tuple[str, str] | None:
+    """Returns (provider, model) from DB runtime setting, or None on failure."""
+    try:
+        from services import admin_service
+        row = admin_service.get_llm_runtime_setting()
+        if row and row.get("provider") and row.get("model"):
+            return row["provider"].lower().strip(), row["model"].strip()
+    except Exception as exc:
+        logger.warning(f"Could not read LLM runtime setting from DB: {exc}")
+    return None
+
+
 def get_llm_for_agent(role: AgentLLMRole) -> BaseChatModel:
     """Повертає чат-модель для конкретної ролі агента."""
-    provider = os.getenv("LLM_PROVIDER", "openai").lower().strip()
-    logger.info(f"LLM for agent role={role!r}, provider={provider}")
-
-    if provider == "openai":
-        model = _model_for_role_openai(role)
-    elif provider == "anthropic":
-        model = _model_for_role_anthropic(role)
+    db_setting = _get_runtime_setting()
+    if db_setting:
+        provider, model = db_setting
     else:
-        logger.error(f"Unknown LLM_PROVIDER: {provider}")
-        raise ValueError(
-            f"Unknown LLM_PROVIDER='{provider}'. "
-            "Supported values: openai, anthropic"
-        )
+        provider = os.getenv("LLM_PROVIDER", "openai").lower().strip()
+        if provider == "openai":
+            model = _model_for_role_openai(role)
+        elif provider == "anthropic":
+            model = _model_for_role_anthropic(role)
+        else:
+            logger.error(f"Unknown LLM_PROVIDER: {provider}")
+            raise ValueError(
+                f"Unknown LLM_PROVIDER='{provider}'. "
+                "Supported values: openai, anthropic"
+            )
 
+    logger.info(f"LLM for agent role={role!r}, provider={provider}")
     logger.info(f"Resolved model for {role!r}: {model}")
     return _build_llm(provider, model, _TEMPERATURE)
 

@@ -4,14 +4,15 @@ Route Generation — LLM Integration Tests
 End-to-end tests that invoke the real Technologist Agent (LLM call) and
 verify the resulting production routes satisfy structural invariants.
 
-Also includes 4 LLM-as-Judge scenarios where GPT-4.1 evaluates route quality
+Also includes LLM-as-Judge scenarios where GPT-4.1 evaluates route quality
 for properties that rule-based checks cannot capture.
 
 Run with:
-    cd Savkiv_Yaryna_Thesis_2026
-    PYTHONPATH=backend pytest tests/eval/test_routes_llm.py -v -s
+    cd Savkiv_Yaryna_Thesis_2025
+    LLM_PROVIDER=openai    PYTHONPATH=backend pytest tests/eval/test_routes_llm.py -v -s
+    LLM_PROVIDER=anthropic PYTHONPATH=backend pytest tests/eval/test_routes_llm.py -v -s
 
-Results are saved to tests/eval/reports/route_llm_results.json
+Results are saved to tests/eval/reports/route_llm_results_{provider}.json
 """
 
 from __future__ import annotations
@@ -29,6 +30,25 @@ _BACKEND = Path(__file__).resolve().parents[2] / "backend"
 if str(_BACKEND) not in sys.path:
     sys.path.insert(0, str(_BACKEND))
 
+_PROVIDER = os.getenv("LLM_PROVIDER", "openai").strip().lower()
+
+# Pre-warm the import chain. agents/__init__.py → graph.workflow →
+# graph.agent_subgraphs re-enters agents.conversational mid-init, which makes
+# the very first import of agents.technologist.node fail with a partially
+# initialized module. The second attempt succeeds because Python keeps the
+# partial modules in sys.modules. Doing this at module load (before any
+# fixture runs) prevents the 7 spurious ERRORs in TestLLMRigidBoxRoute.
+try:
+    from agents.technologist.node import technologist_node as _warmup_tn  # noqa: F401
+except ImportError:
+    from agents.technologist.node import technologist_node as _warmup_tn  # noqa: F401
+
+# get_llm_for_agent prefers a provider/model row stored in the DB over
+# env vars. For multi-model benchmarking we want LLM_PROVIDER / *_MODEL
+# from the environment to win, so suppress the DB override here.
+import agents.llm_factory as _llm_factory  # noqa: E402
+_llm_factory._get_runtime_setting = lambda: None
+
 # ---------------------------------------------------------------------------
 # Report accumulator
 # ---------------------------------------------------------------------------
@@ -44,10 +64,16 @@ def pytest_sessionfinish(session, exitstatus):  # noqa: ARG001
         return
     report_dir = Path(__file__).parent / "reports"
     report_dir.mkdir(exist_ok=True)
-    out = report_dir / "route_llm_results.json"
+    out = report_dir / f"route_llm_results_{_PROVIDER}.json"
     total = len(_results)
     passed = sum(1 for r in _results if r["passed"])
     summary = {
+        "provider": _PROVIDER,
+        "model": (
+            os.getenv("OPENAI_MODEL", "gpt-4o")
+            if _PROVIDER == "openai"
+            else os.getenv("ANTHROPIC_MODEL", "claude-sonnet-4-6")
+        ),
         "total": total,
         "passed": passed,
         "failed": total - passed,
@@ -55,7 +81,7 @@ def pytest_sessionfinish(session, exitstatus):  # noqa: ARG001
         "results": _results,
     }
     out.write_text(json.dumps(summary, ensure_ascii=False, indent=2))
-    print(f"\n[route_llm_results] {passed}/{total} passed → {out}")
+    print(f"\n[route_llm_results:{_PROVIDER}] {passed}/{total} passed → {out}")
 
 
 # ---------------------------------------------------------------------------
@@ -275,6 +301,56 @@ class TestLLMFullSetRoute:
         _record("llm_fullset_all_packing_last", True)
 
 
+class TestLLMRulebookRoute:
+    """Standalone rulebook, saddle-stitch binding — LLM must include folding and stitching."""
+
+    COMPONENTS = [
+        {
+            "id": "rulebook",
+            "type": "rulebook_thin",
+            "name": "Game Rulebook",
+            "size_mm": [148, 210],
+            "pages": 16,
+            "gsm": 130,
+            "binding": "saddle_stitch",
+            "print_colors": "4+4",
+        }
+    ]
+    REQUIREMENTS = {
+        "quantity": 300,
+        "product_name": "Rulebook Only",
+        "client_name": "Test Client",
+        "deadline_days": 10,
+    }
+
+    @pytest.fixture(scope="class")
+    def routes(self):
+        return _run_technologist(self.COMPONENTS, self.REQUIREMENTS)
+
+    def test_rulebook_route_generated(self, routes):
+        assert len(routes) >= 1, "No routes generated for rulebook"
+        _record("llm_rulebook_route_generated", True, {"routes_count": len(routes)})
+
+    def test_rulebook_starts_with_prepress(self, routes):
+        route = _find_route(routes, "rulebook") or _find_route(routes, "rulebook_thin")
+        assert route is not None, "Rulebook route not found"
+        ops = _ops(route)
+        assert ops[0] == "prepress", f"First op: {ops[0]}"
+        _record("llm_rulebook_prepress_first", True)
+
+    def test_rulebook_has_printing(self, routes):
+        route = _find_route(routes, "rulebook") or _find_route(routes, "rulebook_thin")
+        has_print = _has_op(route, "offset_printing") or _has_op(route, "digital_printing")
+        assert has_print, f"No printing in: {_ops(route)}"
+        _record("llm_rulebook_has_printing", True)
+
+    def test_rulebook_ends_with_packing(self, routes):
+        route = _find_route(routes, "rulebook") or _find_route(routes, "rulebook_thin")
+        ops = _ops(route)
+        assert "shipper_packing" in ops[-2:], f"Packing not last: {ops}"
+        _record("llm_rulebook_packing_last", True)
+
+
 # ===========================================================================
 # PART 2 — LLM-as-Judge Route Quality Evaluation
 # ===========================================================================
@@ -428,3 +504,149 @@ class TestRouteJudge:
         )
         _record("judge_knife_params_used", passed, {"score": score})
         assert passed, f"Judge score {score:.2f} < 0.6 for knife params"
+
+    def test_judge_uv_varnish_included(self):
+        """Judge: when uv_varnish=True, route must include a UV varnish operation."""
+        components = [
+            {
+                "id": "rigid_box",
+                "type": "rigid_box",
+                "name": "UV Box",
+                "size_mm": [250, 180, 50],
+                "construction": "lid_and_base",
+                "material": "bookbinding_board",
+                "board_thickness_mm": 1.75,
+                "lamination": "gloss",
+                "print_sides": "outside_only",
+                "uv_varnish": True,
+                "shrink_wrap": False,
+            }
+        ]
+        requirements = {
+            "quantity": 600,
+            "product_name": "UV Game Box",
+            "client_name": "Test Client",
+            "deadline_days": 20,
+        }
+        routes = _run_technologist(components, requirements)
+        route_text = _route_to_text(routes)
+        score, passed = self._judge_score(
+            input_text="Generate a route for a rigid box with UV varnish finish (quantity 600).",
+            actual_output=route_text,
+            expected_output=(
+                "The route must include a UV varnish operation after lamination and before die cutting. "
+                "Offset printing is appropriate for 600 units. Packing is last."
+            ),
+            criteria=(
+                "Evaluate whether the route correctly includes UV varnish when it was requested. "
+                "A uv_varnish or uv_coating operation must be present. "
+                "It must appear after lamination and before die cutting. "
+                "Missing UV varnish means the LLM ignored a client requirement."
+            ),
+        )
+        _record("judge_uv_varnish_included", passed, {"score": score})
+        assert passed, f"Judge score {score:.2f} < 0.6 for UV varnish"
+
+    def test_judge_rulebook_binding_ops(self):
+        """Judge: rulebook route includes appropriate folding/binding operations for saddle stitch."""
+        routes = _run_technologist(
+            TestLLMRulebookRoute.COMPONENTS, TestLLMRulebookRoute.REQUIREMENTS
+        )
+        route_text = _route_to_text(routes)
+        score, passed = self._judge_score(
+            input_text="Generate a route for a 16-page saddle-stitch rulebook (148×210 mm, quantity 300).",
+            actual_output=route_text,
+            expected_output=(
+                "The route should include prepress, printing, folding or stitching operation "
+                "appropriate for saddle-stitch binding, cutting to final size, and packing last."
+            ),
+            criteria=(
+                "Evaluate whether the rulebook route includes operations appropriate for saddle-stitch binding. "
+                "There should be a folding or stitching step present. "
+                "Prepress must be first and packing last. "
+                "The route must not include box assembly or die cutting — those are for rigid boxes only."
+            ),
+        )
+        _record("judge_rulebook_binding_ops", passed, {"score": score})
+        assert passed, f"Judge score {score:.2f} < 0.6 for rulebook binding ops"
+
+    def test_judge_shrink_wrap_present(self):
+        """Judge: when shrink_wrap=True, route includes shrink wrapping before or instead of standard packing."""
+        components = [
+            {
+                "id": "card_deck",
+                "type": "card_deck",
+                "name": "Shrink-Wrapped Cards",
+                "card_count": 36,
+                "card_size_mm": [63, 88],
+                "gsm": 300,
+                "print_colors": "4+4",
+                "front_finish": "matte_lamination",
+                "back_finish": "matte_lamination",
+                "shrink_wrap": True,
+            }
+        ]
+        requirements = {
+            "quantity": 400,
+            "product_name": "Card Game",
+            "client_name": "Test Client",
+            "deadline_days": 14,
+        }
+        routes = _run_technologist(components, requirements)
+        route_text = _route_to_text(routes)
+        score, passed = self._judge_score(
+            input_text="Generate a route for a card deck with shrink wrap requested (quantity 400).",
+            actual_output=route_text,
+            expected_output=(
+                "The route must include a shrink wrapping or shrink_wrap operation near the end, "
+                "after card cutting. Packing or shrink wrap must be the final step."
+            ),
+            criteria=(
+                "Evaluate whether the route correctly handles the shrink wrap requirement. "
+                "A shrink_wrap or shrink_wrapping operation must appear near the end of the route. "
+                "It should come after card cutting and before or as the final packing step. "
+                "Missing shrink wrap means the LLM ignored an explicit client finishing requirement."
+            ),
+        )
+        _record("judge_shrink_wrap_present", passed, {"score": score})
+        assert passed, f"Judge score {score:.2f} < 0.6 for shrink wrap"
+
+    def test_judge_boundary_run_technology(self):
+        """Judge: quantity exactly at the 500-unit boundary uses offset printing."""
+        components = [
+            {
+                "id": "card_deck",
+                "type": "card_deck",
+                "name": "Boundary Run Cards",
+                "card_count": 54,
+                "card_size_mm": [63, 88],
+                "gsm": 300,
+                "print_colors": "4+4",
+                "front_finish": "matte_lamination",
+                "back_finish": "matte_lamination",
+            }
+        ]
+        requirements = {
+            "quantity": 500,
+            "product_name": "Boundary Game",
+            "client_name": "Test Client",
+            "deadline_days": 21,
+        }
+        routes = _run_technologist(components, requirements)
+        route_text = _route_to_text(routes)
+        score, passed = self._judge_score(
+            input_text="Generate a route for a card deck at exactly the run-size boundary (quantity 500).",
+            actual_output=route_text,
+            expected_output=(
+                "At quantity 500, offset printing is the correct choice (threshold is < 500 for digital). "
+                "The route should use offset_printing, not digital_printing."
+            ),
+            criteria=(
+                "Evaluate whether the route selects the correct printing technology at the 500-unit boundary. "
+                "The rule is: digital for quantity < 500, offset for quantity >= 500. "
+                "At exactly 500 units, offset_printing must be used. "
+                "Using digital_printing at this quantity is incorrect."
+            ),
+        )
+        _record("judge_boundary_run_technology", passed, {"score": score})
+        assert passed, f"Judge score {score:.2f} < 0.6 for boundary run technology"

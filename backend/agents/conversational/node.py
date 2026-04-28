@@ -21,6 +21,7 @@ from utils.logger import get_logger
 
 logger = get_logger(__name__)
 AGENT_NAME = "Conversational Agent"
+_AGENT_MSG_NAME = "conversational_agent"
 _GREETING_MESSAGES = {
     "привіт",
     "привіт!",
@@ -62,7 +63,7 @@ def _append_eval_row(
 def _build_tool_call(tool_name: str, prefix: str, args: dict[str, Any] | None = None) -> AIMessage:
     return AIMessage(
         content="",
-        name=AGENT_NAME,
+        name=_AGENT_MSG_NAME,
         tool_calls=[
             {
                 "name": tool_name,
@@ -326,7 +327,7 @@ def conversational_agent_node(state: ProductionState) -> dict[str, Any]:
             question = llm_question.strip() if llm_question and llm_question.strip() else _format_missing_with_catalog(missing_fields)
             if not (llm_question and llm_question.strip()):
                 logger.warning("LLM marked complete prematurely and gave no follow_up_question — Python fallback")
-            updates["messages"] = [AIMessage(content=question, name=AGENT_NAME)]
+            updates["messages"] = [AIMessage(content=question, name=_AGENT_MSG_NAME)]
             updates["client_requirements"] = merged_requirements
             updates["product_components"] = merged_components
             updates["requirements_complete"] = False
@@ -343,7 +344,7 @@ def conversational_agent_node(state: ProductionState) -> dict[str, Any]:
                         "Вимоги зафіксовані. Передаю технологу для формування маршруту.\n"
                         f"Компоненти: {', '.join(component['name'] for component in components)}"
                     ),
-                    name=AGENT_NAME,
+                    name=_AGENT_MSG_NAME,
                 )
             ]
     else:
@@ -363,7 +364,7 @@ def conversational_agent_node(state: ProductionState) -> dict[str, Any]:
             question = "Будь ласка, уточніть деталі замовлення."
             logger.warning("No follow_up_question and no missing_fields — generic fallback")
         logger.debug("Follow-up question preview: %s", question[:500])
-        updates["messages"] = [AIMessage(content=question, name=AGENT_NAME)]
+        updates["messages"] = [AIMessage(content=question, name=_AGENT_MSG_NAME)]
         updates["client_requirements"] = merged_requirements
         updates["product_components"] = merged_components
         updates["requirements_complete"] = False
@@ -393,7 +394,7 @@ def conversational_tool_response_node(state: ProductionState) -> dict[str, Any]:
 
     return {
         "current_agent": AGENT_NAME,
-        "messages": [AIMessage(content=messages[-1].content, name=AGENT_NAME)],
+        "messages": [AIMessage(content=messages[-1].content, name=_AGENT_MSG_NAME)],
         "client_requirements": {},
         "product_components": [],
     }

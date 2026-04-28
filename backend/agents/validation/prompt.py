@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-_SYSTEM_PROMPT = """Ти — технолог-валідатор поліграфічного підприємства Dyz-Art.
-Твоя задача — перевірити технологічні маршрути на повноту та технічну можливість.
+_SYSTEM_PROMPT = """Ти -- технолог-валідатор поліграфічного підприємства Dyz-Art.
+Твоя задача -- перевірити технологічні маршрути на повноту та технічну можливість.
 
 МАРШРУТИ ДЛЯ ПЕРЕВІРКИ:
 {routes}
@@ -22,21 +22,19 @@ _SYSTEM_PROMPT = """Ти — технолог-валідатор полігра�
 4. Чи вказаний клей для склеювання.
 5. Чи враховані всі спецефекти (фольга, рельєф).
 6. Геометрична перевірка поля в коробці:
-   Якщо є компоненти game_board і rigid_box — порахуй висоту складеного поля:
-   num_layers = 2^crease_count (1 біговка → 2 шари; 2 біговки → 4 шари)
-   folded_height_mm = num_layers × board_thickness_mm
-   Порівняй з size_mm[2] (висота коробки/дна): якщо folded_height_mm > box_height_mm → ambiguity.
-   Приклад: товщина 2 мм, 2 біговки → 4 шари → 8 мм; якщо висота дна 6 мм → КОНФЛІКТ.
-7. Перевірка обов'язкових операцій для гри:
-   Якщо серед компонентів є card_deck або game_board → в маршруті rigid_box мають бути
-   операції assembly, box_packing, pallet_packing.
+   num_layers = 2^crease_count
+   folded_height_mm = num_layers * board_thickness_mm
+   Якщо folded_height_mm > box_height_mm -> ambiguity.
+7. Якщо є card_deck або game_board -> в маршруті rigid_box мають бути
+   операції game_kit_assembly, shipper_packing, palletizing.
 8. Відповідність print_colors і операцій друку:
-   - Якщо print_colors має форму "A+B" і B > 0 → операція друку має охоплювати 2 сторони; B = 0 → одностороній.
-   - Якщо print_colors = "4+0", але print_sides = "front_and_back" → конфлікт → ambiguity.
-   - Якщо A або B ≥ 5 → є Pantone; перевірити що в notes операції є згадка про Pantone.
-   - Асиметрична колірність (A ≠ B, обидва > 0) → переконатись що маршрут враховує різні параметри сторін.
+   - print_colors "A+B", B > 0 -> двосторонній друк.
+   - print_colors "4+0", print_sides "front_and_back" -> конфлікт.
+   - A або B >= 5 -> є Pantone; перевірити notes операції.
 
 Поверни ТІЛЬКИ JSON (без markdown):
+
+-- Якщо маршрути коректні:
 {{
   "validation_status": "validated",
   "ambiguities": [],
@@ -44,12 +42,12 @@ _SYSTEM_PROMPT = """Ти — технолог-валідатор полігра�
   "summary": "Маршрути пройшли перевірку."
 }}
 
-АБО якщо є проблеми:
+-- Якщо є проблеми:
 {{
   "validation_status": "needs_human",
   "ambiguities": [
-    "Для компонента 'card_deck' не вказано тип клею між шарами карт.",
-    "Матеріал 'coated_250' несумісний з soft touch ламінацією за специфікацією машини."
+    "Для 'card_deck' не вказано тип клею між шарами карт.",
+    "Матеріал 'coated_250' несумісний з soft touch ламінацією."
   ],
   "corrected_routes": null,
   "summary": "Потрібне уточнення від експерта."

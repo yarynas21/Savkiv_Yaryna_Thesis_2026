@@ -13,6 +13,9 @@ from typing import Any
 
 from db.repositories import admin as admin_repo
 from db.repositories import users as users_repo
+from utils.logger import get_logger
+
+logger = get_logger(__name__)
 
 
 # game_components
@@ -113,10 +116,39 @@ _ALLOWED_GLOBAL_MODELS: dict[str, str] = {
 }
 
 
+def _validate_llm_runtime_setting(payload: dict[str, Any]) -> tuple[str, str]:
+    """Validate provider/model pair and return normalized values."""
+    provider = str(payload.get("provider", "")).strip().lower()
+    model = str(payload.get("model", "")).strip()
+
+    if provider not in _ALLOWED_GLOBAL_MODELS:
+        raise ValueError("Unsupported provider. Allowed: openai, anthropic")
+
+    expected_model = _ALLOWED_GLOBAL_MODELS[provider]
+    if model != expected_model:
+        raise ValueError(
+            f"Unsupported model for provider '{provider}'. Expected: {expected_model}"
+        )
+
+    return provider, model
+
+
 def get_llm_runtime_setting() -> dict[str, Any]:
     row = admin_repo.get_llm_runtime_setting("global")
     if row:
-        return row
+        try:
+            provider, model = _validate_llm_runtime_setting(row)
+            row["provider"] = provider
+            row["model"] = model
+            return row
+        except ValueError as exc:
+            logger.warning(
+                "Invalid LLM runtime setting in DB, falling back to default. "
+                "provider=%r model=%r error=%s",
+                row.get("provider"),
+                row.get("model"),
+                exc,
+            )
     # Safe default when DB row does not exist yet.
     return {
         "setting_key": "global",
@@ -128,14 +160,7 @@ def get_llm_runtime_setting() -> dict[str, Any]:
 
 
 def update_llm_runtime_setting(payload: dict[str, Any], *, actor_user_id: str | None = None) -> dict[str, Any]:
-    provider = str(payload.get("provider", "")).strip().lower()
-    model = str(payload.get("model", "")).strip()
-    if provider not in _ALLOWED_GLOBAL_MODELS:
-        raise ValueError("Unsupported provider. Allowed: openai, anthropic")
-
-    expected_model = _ALLOWED_GLOBAL_MODELS[provider]
-    if model != expected_model:
-        raise ValueError(f"Unsupported model for provider '{provider}'. Expected: {expected_model}")
+    provider, model = _validate_llm_runtime_setting(payload)
 
     if provider == "anthropic" and not os.getenv("ANTHROPIC_API_KEY"):
         raise ValueError(

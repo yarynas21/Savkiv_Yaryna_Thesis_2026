@@ -51,12 +51,7 @@ def generation_node(state: ProductionState) -> dict[str, Any]:
         logger.error(f"Error in GenerationAgent LLM call: {e}", exc_info=True)
         raise
 
-    # Generate Excel bytes
-    logger.info("Generating Excel file...")
-    excel_bytes = generate_work_order_excel(work_order, routes, requirements)
-    logger.info(f"Excel file generated: {len(excel_bytes)} bytes")
-
-    # Calculate cost estimates
+    # Calculate cost estimates first — passed into Excel
     quantity   = requirements.get("quantity", 1000)
     components = state.get("product_components", [])
     logger.info(f"Calculating costs for quantity: {quantity}")
@@ -67,6 +62,11 @@ def generation_node(state: ProductionState) -> dict[str, Any]:
         client_requirements=requirements,
     )
     logger.info("Cost estimates calculated")
+
+    # Generate Excel bytes (includes Наряди + Калькуляція)
+    logger.info("Generating Excel file...")
+    excel_bytes = generate_work_order_excel(work_order, routes, requirements, cost_estimates)
+    logger.info(f"Excel file generated: {len(excel_bytes)} bytes")
 
     work_order["excel_bytes"] = excel_bytes
 

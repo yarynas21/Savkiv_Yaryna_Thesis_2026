@@ -506,16 +506,14 @@ def _calc_component(
     # --- 9. Трудомісткі операції (qty / продуктивність × ставка/год) -----
     LABOUR_OPS = {
         "blank_stripping":    "Витруска",
-        "flap_gluing":        "Склейка клапана",
-        "corner_wrapping":    "Обклейка кутиків (машинна)",
-        "manual_wrapping":    "Ручна обклейка",
+        "corner_taping":      "Обклейка кутиків (машинна)",
+        "box_assembly":       "Складання коробки",
+        "quality_control":    "Контроль якості",
         "card_cutting":       "Порізка карт",
-        "card_shrink_wrap":   "Термопакування карт",
-        "shrink_wrap_packing":"Термопакування",
-        "assembly":           "Комплектування",
-        "game_kit_assembly":  "Комплектування набору",
-        "box_packing":        "Пакування в ящики",
-        "pallet_packing":     "Пакування на палету",
+        "shrink_wrapping":    "Термозбіжка / термопакування",
+        "game_kit_assembly":  "Комплектування набору гри",
+        "shipper_packing":    "Пакування в ящики",
+        "palletizing":        "Паллетування",
     }
     for op_id, label in LABOUR_OPS.items():
         if op_id in op_ids:

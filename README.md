@@ -111,6 +111,126 @@ DATABASE_URL=postgresql://dyzart_app:change-me-StrongDbPass-1@localhost:5432/dyz
 docker compose up --build
 ```
 
+## Дані БД для запуску (без пушу в git)
+
+> [!WARNING]
+> Я не пушу `backend/db/seeds` у git.  
+> Без цих даних проєкт може піднятись технічно (контейнери стартують), але
+> **функціонально не працюватиме коректно**: агенти не зможуть будувати валідні
+> маршрути, калькуляція буде неповною, а дефолтні акаунти можуть бути відсутні.
+
+Я **не пушу дані з `backend/db/seeds` у git**, бо це операційні/внутрішні дані.
+Але щоб у вас локально проєкт запустився коректно, ці seed-таблиці мають бути
+заповнені.
+
+Що саме потрібно імпортувати:
+
+- `01_machines.sql` → `machines`  
+  Довідник обладнання (друк, висічка, каширування, ламінація тощо) з технічними
+  лімітами.
+- `02_machine_constraints.sql` → `machine_constraints`  
+  Глобальні виробничі обмеження (кліше/штампи, мінімальні тиражі, ліміти формату).
+- `03_papers.sql` → `papers`  
+  Канонічні типи паперу/картону/чіпборду, які використовує MAS при виборі
+  маршруту.
+- `04_stock_items.sql` → `stock_items`  
+  Складські позиції з прив'язкою до `papers` (`paper_id`), щоб агент враховував
+  реальні матеріали.
+- `05_finishes.sql` → `finishes`  
+  Типи оздоблення (matte/gloss/soft-touch/uv/foil/embossing) і сумісності.
+- `06_adhesives.sql` → `adhesives`  
+  Клеї та їхні сценарії застосування.
+- `07_operations.sql` → `operations`  
+  Повний каталог технологічних операцій з параметрами і межами застосування.
+- `08_product_type_routes.sql` → `product_type_routes`  
+  Базові послідовності операцій для типів продуктів (`rigid_box`, `card_deck`,
+  `rulebook_*`, `game_board` тощо).
+- `09_game_components.sql` → `game_components`  
+  Закупні ігрові компоненти для розрахунку собівартості.
+- `10_cost_rates.sql` → `cost_rates`  
+  Тарифна сітка калькулятора (друк, ламінація, приладка, ручні роботи, папір).
+- `11_users.sql` → `users`  
+  Dev-користувачі для входу (`admin`, `operator`, `expert`), далі міграція
+  переводить `operator` у `client`.
+
+### Які колонки мають бути в seed-таблицях
+
+Щоб уникнути помилок під час старту, структура має відповідати `backend/db/schema.sql`:
+
+- `machines`  
+  `id`, `name`, `type`, `operation`, `max_sheet_mm`, `min_sheet_mm`, `colors`, `min_run`, `max_run`, `max_stock_gsm`, `min_stock_gsm`, `max_pages`, `min_pages`, `supported_finishes`, `notes`.
+- `machine_constraints`  
+  `key`, `value`.
+- `papers`  
+  `id`, `name`, `type`, `weight_gsm`, `compatible_with`, `typical_use`, `thickness_mm`.
+- `stock_items`  
+  `stock_no`, `name`, `for_use`, `supply_form`, `notes`, `paper_id`.
+- `finishes`  
+  `id`, `name`, `applies_to`, `compatible_adhesives`, `notes`.
+- `adhesives`  
+  `id`, `name`, `compatible_materials`, `use_case`.
+- `operations`  
+  `id`, `name`, `step`, `description`, `required_for`, `compatible_materials`, `duration_config`, `output_text`, `min_run`, `max_run`.
+- `product_type_routes`  
+  `product_type`, `sort_order`, `operation_id`.
+- `game_components`  
+  `id`, `name`, `category`, `unit`, `price_uah`, `notes`.
+- `cost_rates`  
+  `category`, `rate_key`, `value_numeric`, `unit`, `notes`.
+- `users`  
+  `email`, `username`, `password_hash`, `role` (опційно: `is_active`, якщо додаєте вручну).
+
+### Локальний запуск seed-даних
+
+- Docker init підхоплює `schema.sql` + `seeds/*.sql` тільки на **новому volume**.
+- Якщо seed-и змінились, перевідтворіть БД:
+
+```bash
+docker compose down -v
+docker compose up --build
+```
+
+- Після підняття БД обов'язково застосуйте міграції:
+
+```bash
+cd backend
+python -m db.migrate
+```
+
+Швидка перевірка після старту (опційно):
+
+```sql
+SELECT COUNT(*) FROM machines;
+SELECT COUNT(*) FROM operations;
+SELECT COUNT(*) FROM product_type_routes;
+SELECT COUNT(*) FROM papers;
+SELECT COUNT(*) FROM stock_items;
+SELECT COUNT(*) FROM cost_rates;
+SELECT COUNT(*) FROM users;
+```
+
+Мінімальні орієнтири (expected counts), щоб вважати seed-імпорт успішним:
+
+- `machines` >= 30
+- `machine_constraints` >= 10
+- `papers` >= 20
+- `stock_items` >= 90
+- `finishes` >= 6
+- `adhesives` >= 4
+- `operations` >= 30
+- `product_type_routes` >= 50
+- `game_components` >= 10
+- `cost_rates` >= 40
+- `users` >= 3
+
+### Як працювати, якщо `seeds/` не в git
+
+Рекомендований підхід для команди:
+
+1. Тримати `schema.sql` + порожні/прикладні seed-шаблони в репо.
+2. Реальні seed-дані зберігати локально або в захищеному сховищі.
+3. У `.env`/секретах передавати креденшіали і запускати імпорт локально перед стартом.
+
 | Сервіс    | URL                        |
 |-----------|----------------------------|
 | Streamlit | http://localhost:8501      |
