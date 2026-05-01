@@ -401,3 +401,4 @@ GitHub: [@yarynas21](https://github.com/yarynas21)
 ## Ліцензія
 
 MIT License — див. файл [LICENSE](LICENSE)
+
