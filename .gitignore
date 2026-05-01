@@ -217,9 +217,8 @@ visualizations/*.png
 visualizations/*.drawio
 *.png
 
-# Test eval — generated charts and partial run artifacts
-tests/eval/reports/*.png
-tests/eval/reports/*.partial.json
+# Test eval — generated reports folder (charts, JSON results)
+tests/eval/reports/
 
 # Executed notebooks (keep source, ignore versions with embedded cell output)
 tests/eval/deepeval_analysis_executed.ipynb
