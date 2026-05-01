@@ -102,7 +102,7 @@ def _knife_rigid_box(
     pk_lid_w = pk_base_w + 2 * CLEARANCE
     pk_lid_h = pk_base_h + 2 * CLEARANCE
 
-    # Coated paper (обклейка): PK blank + WRAP on each side
+    # Coated paper (wrap sheet): PK blank + WRAP on each side
     c_base_w = pk_base_w + 2 * WRAP
     c_base_h = pk_base_h + 2 * WRAP
     c_lid_w  = pk_lid_w  + 2 * WRAP

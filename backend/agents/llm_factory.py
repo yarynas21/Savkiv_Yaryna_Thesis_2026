@@ -46,7 +46,7 @@ def _model_for_role_anthropic(role: AgentLLMRole) -> str:
 
 @lru_cache(maxsize=32)
 def _build_llm(provider: str, model: str, temperature: float) -> BaseChatModel:
-    """Створює один екземпляр чат-моделі (кеш за provider+model+temp)."""
+    """Creates a single chat-model instance (cached by provider+model+temp)."""
     provider = provider.lower().strip()
     logger.debug(f"Building LLM: provider={provider}, model={model}")
 
@@ -83,7 +83,7 @@ def _get_runtime_setting() -> tuple[str, str] | None:
 
 
 def get_llm_for_agent(role: AgentLLMRole) -> BaseChatModel:
-    """Повертає чат-модель для конкретної ролі агента."""
+    """Returns a chat model for a specific agent role."""
     db_setting = _get_runtime_setting()
     if db_setting:
         provider, model = db_setting
@@ -106,5 +106,5 @@ def get_llm_for_agent(role: AgentLLMRole) -> BaseChatModel:
 
 
 def get_llm() -> BaseChatModel:
-    """Зворотна сумісність: повертає модель для ролі client_interface."""
+    """Backward compatibility: returns the model for the client_interface role."""
     return get_llm_for_agent("client_interface")

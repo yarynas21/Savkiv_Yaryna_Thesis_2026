@@ -65,7 +65,7 @@ def _cell(ws, row: int, col: int, value: Any, font=None, fill=None,
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Sheet: Наряд per component
+# Sheet: Work Order per component
 # ─────────────────────────────────────────────────────────────────────────────
 
 _SECTION_MAP: dict[str, str] = {
@@ -237,7 +237,7 @@ def _add_narid_sheet(
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Sheet: Калькуляція
+# Sheet: Cost Calculation
 # ─────────────────────────────────────────────────────────────────────────────
 
 def _fill_cost_sheet(
@@ -520,7 +520,7 @@ def generate_work_order_excel(
         _add_narid_sheet(wb, route, work_order, requirements)
 
     # -----------------------------------------------------------------------
-    # Sheet last: Калькуляція
+    # Sheet last: Cost Calculation
     # -----------------------------------------------------------------------
     ws_cost = wb.create_sheet("Калькуляція")
     if cost_estimates:

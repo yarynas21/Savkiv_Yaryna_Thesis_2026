@@ -28,12 +28,12 @@ from utils.logger import get_logger
 
 logger = get_logger(__name__)
 
-# Дефолти з db/seeds/10_cost_rates.sql (без дублювання чисел у Python)
+# Defaults from db/seeds/10_cost_rates.sql (avoids duplicating numbers in Python)
 
 _COST_RATES_SEED_SQL = (
     Path(__file__).resolve().parent.parent / "db" / "seeds" / "10_cost_rates.sql"
 )
-# Рядки сиду: ('category', 'rate_key', <number>, …
+# Seed rows: ('category', 'rate_key', <number>, …
 _COST_RATE_TUPLE_RE = re.compile(
     r"\(\s*'(?P<cat>[a-z0-9_]+)'\s*,\s*'(?P<key>[^']+)'\s*,\s*(?P<val>\d+(?:\.\d+)?)\b",
     re.MULTILINE,
@@ -43,7 +43,7 @@ _seed_rates_cache: dict[str, Any] | None = None
 
 
 def _minimal_rates_fallback() -> dict[str, Any]:
-    """Якщо seeds/10_cost_rates.sql відсутній або не парситься — щоб не падати."""
+    """Fallback used when seeds/10_cost_rates.sql is missing or cannot be parsed."""
     return {
         "global": {"default_margin": 1.10, "hourly_rate_uah": 300.0},
         "paper_kg": {"_default": 75.0},
@@ -55,7 +55,7 @@ def _minimal_rates_fallback() -> dict[str, Any]:
 
 
 def _default_rates_from_seed_sql() -> dict[str, Any]:
-    """Побудувати вкладений dict з INSERT-рядків ``seeds/10_cost_rates.sql``."""
+    """Build a nested dict from the INSERT rows of ``seeds/10_cost_rates.sql``."""
     if not _COST_RATES_SEED_SQL.is_file():
         logger.warning(
             "cost_rates seed SQL not found at %s — using minimal fallback",
@@ -80,7 +80,7 @@ def _default_rates_from_seed_sql() -> dict[str, Any]:
 
 
 def _default_rates_template() -> dict[str, Any]:
-    """Один раз парсимо сид; далі deepcopy у ``_load_merged_rates``."""
+    """Parse the seed once; subsequently deepcopy it inside ``_load_merged_rates``."""
     global _seed_rates_cache
     if _seed_rates_cache is None:
         _seed_rates_cache = _default_rates_from_seed_sql()
@@ -88,7 +88,7 @@ def _default_rates_template() -> dict[str, Any]:
 
 
 def _load_papers_gsm_map() -> dict[str, int]:
-    """Завантажити {paper_id: weight_gsm} з таблиці papers; fallback — порожній dict."""
+    """Load {paper_id: weight_gsm} from the papers table; falls back to an empty dict."""
     try:
         from db.repository import get_kb_materials
 
@@ -104,7 +104,7 @@ def _load_papers_gsm_map() -> dict[str, int]:
 
 
 def _load_merged_rates() -> dict[str, Any]:
-    """Deep-copy defaults (з 006 SQL) і накладання рядків з ``cost_rates`` у БД."""
+    """Deep-copy the defaults (from seed SQL) and overlay rows from the ``cost_rates`` DB table."""
     merged = copy.deepcopy(_default_rates_template())
     try:
         from db.repository import get_cost_rates_by_category
@@ -120,7 +120,7 @@ def _load_merged_rates() -> dict[str, Any]:
         if isinstance(patch, dict) and isinstance(merged[cat], dict):
             merged[cat].update({k: float(v) for k, v in patch.items()})
 
-    # Додаємо gsm з таблиці papers (перекриває fallback-значення)
+    # Add gsm from the papers table (overrides fallback values)
     db_gsm = _load_papers_gsm_map()
     if db_gsm:
         merged.setdefault("papers_gsm", {}).update(db_gsm)
@@ -158,7 +158,7 @@ def _productivity(op_id: str, rates: dict[str, Any]) -> float:
     return float(p.get(op_id, p.get("_default", 500.0)))
 
 
-# Допоміжні функції
+# Helper functions
 
 def _parse_print_colors(print_colors: str | None) -> tuple[int, int]:
     """'4+0' → (4, 0); '5+0' → (5, 0); None → (4, 0)."""
@@ -174,13 +174,13 @@ def _parse_print_colors(print_colors: str | None) -> tuple[int, int]:
 
 
 def _sheet_area_m2(size_mm: list[int | float]) -> float:
-    """Площа аркуша з 15 мм запасом на кожну сторону."""
+    """Sheet area with a 15 mm margin on each side."""
     w = (size_mm[0] + 30) / 1000
     h = (size_mm[1] + 30) / 1000
     return round(w * h, 6)
 
 
-# Закупні комплектуючі (catalog + notes parsing)
+# Purchased components (catalog + notes parsing)
 
 
 def _parse_qty_from_text(text: str) -> int | None:
@@ -311,7 +311,7 @@ def _calc_game_components_from_requirements(
     }
 
 
-# Розрахунок для одного компонента
+# Calculation for a single component
 
 def _calc_component(
     route: dict,
@@ -320,20 +320,20 @@ def _calc_component(
     rates: dict[str, Any],
 ) -> dict[str, Any]:
     """
-    Повертає рядкову калькуляцію (line_items) для одного компонента.
+    Returns the line-item cost breakdown for a single component.
     """
     comp    = component or {}
     ops     = route.get("operations", [])
     op_ids  = {op.get("operation_id", "") for op in ops}
     mat     = route.get("material", {})
 
-    # --- Базові параметри ------------------------------------------------
+    # --- Base parameters -------------------------------------------------
     size_mm = comp.get("size_mm") or [200, 200]
     gsm     = comp.get("gsm") or 300
     paper_id = mat.get("cover") or mat.get("paper_id")
 
     pcs_per_sheet = comp.get("pcs_per_sheet", 1)
-    # для кришка+дно на одному аркуші → 2
+    # for lid+base on one sheet → 2
     if comp.get("construction") in ("lid_and_base",):
         pcs_per_sheet = 2
 
@@ -342,7 +342,7 @@ def _calc_component(
     price_kg    = _paper_price(paper_id, rates)
     gsm_kg      = gsm / 1000.0
 
-    # Приладка: береться максимальна серед операцій що є
+    # Makeready: take the maximum across all present operations
     priladka = max(
         (_makeready(op.get("operation_id", ""), rates) for op in ops),
         default=_makeready("_default", rates),
@@ -351,7 +351,7 @@ def _calc_component(
 
     line_items: list[dict] = []
 
-    # --- 1. Папір --------------------------------------------------------
+    # --- 1. Paper --------------------------------------------------------
     weight_kg   = sheets_total * area_m2 * gsm_kg
     paper_cost  = round(weight_kg * price_kg, 2)
     line_items.append({
@@ -361,7 +361,7 @@ def _calc_component(
         "total":  paper_cost,
     })
 
-    # --- 2. Флатування (якщо є в маршруті) --------------------------------
+    # --- 2. Flatting (if present in the route) ----------------------------
     if "flatting" in op_ids:
         flat_kg_rate = _global_rate(rates, "flatting_rate_per_kg")
         flat_cost = round(weight_kg * flat_kg_rate, 2)
@@ -372,9 +372,9 @@ def _calc_component(
             "total": flat_cost,
         })
 
-    # --- 3. Друк ---------------------------------------------------------
+    # --- 3. Printing -----------------------------------------------------
     print_colors_str = comp.get("print_colors")
-    # також перевіряємо параметри операції
+    # also check operation-level parameters
     for op in ops:
         if op.get("operation_id") in ("offset_printing", "digital_printing"):
             print_colors_str = print_colors_str or op.get("parameters", {}).get("colors")
@@ -385,7 +385,7 @@ def _calc_component(
     has_pantone  = front_colors >= 5 or back_colors >= 5
 
     if "offset_printing" in op_ids:
-        # Кількість реальних CMYK прогонів (не рахуємо 5й/6й як Pantone тут — нижче)
+        # Number of actual CMYK passes (5th/6th not counted as Pantone here — handled below)
         cmyk_colors = min(front_colors, 4) + min(back_colors, 4)
         offset_rate = _global_rate(rates, "offset_rate_per_color")
         print_cost  = round(cmyk_colors * offset_rate, 2)
@@ -416,7 +416,7 @@ def _calc_component(
             "total": print_cost,
         })
 
-    # --- 4. Ламінація ----------------------------------------------------
+    # --- 4. Lamination ---------------------------------------------------
     lam_type = comp.get("lamination")
     if not lam_type:
         for op in ops:
@@ -435,7 +435,7 @@ def _calc_component(
             "total": lam_cost,
         })
 
-    # --- 5. УФ-лакування -------------------------------------------------
+    # --- 5. UV varnishing ------------------------------------------------
     if "uv_varnishing" in op_ids:
         uv_area = sheets_total * area_m2
         uv_m2 = _global_rate(rates, "uv_rate_m2")
@@ -447,7 +447,7 @@ def _calc_component(
             "total": uv_cost,
         })
 
-    # --- 6. Каширування --------------------------------------------------
+    # --- 6. Chipboard laminating (kashirovanie) ---------------------------
     if "chipboard_laminating" in op_ids:
         base_paper_id = mat.get("base")
         base_price    = _paper_price(base_paper_id, rates)
@@ -470,7 +470,7 @@ def _calc_component(
             "total": kash_cost,
         })
 
-    # --- 7. Висічка ------------------------------------------------------
+    # --- 7. Die cutting --------------------------------------------------
     if "die_cutting" in op_ids:
         v_setup = _global_rate(rates, "vysichka_setup_uah")
         v_sheet = _global_rate(rates, "vysichka_rate_per_sheet")
@@ -482,7 +482,7 @@ def _calc_component(
             "total": vys_cost,
         })
 
-    # --- 8. Рицовка (creasing) -------------------------------------------
+    # --- 8. Creasing (scoring) -------------------------------------------
     if "creasing" in op_ids:
         for op in ops:
             if op.get("operation_id") == "creasing":
@@ -503,7 +503,7 @@ def _calc_component(
             "total": cr_cost,
         })
 
-    # --- 9. Трудомісткі операції (qty / продуктивність × ставка/год) -----
+    # --- 9. Labour-intensive operations (qty / productivity × hourly rate) ----
     LABOUR_OPS = {
         "blank_stripping":    "Витруска",
         "corner_taping":      "Обклейка кутиків (машинна)",
@@ -536,7 +536,7 @@ def _calc_component(
     }
 
 
-# Публічна функція (зворотно сумісна з generation/node.py)
+# Public function (backward-compatible with generation/node.py)
 
 def calculate_costs(
     routes: list[dict],
@@ -600,12 +600,12 @@ def calculate_costs(
         f"До оплати: {total_payment} грн"
     )
 
-    # --- tiers (для сумісності з generation/node.py) ----------------------
+    # --- tiers (for compatibility with generation/node.py) ----------------
     tiers: dict[str, float] = {}
     v_setup_tier = _global_rate(rates, "vysichka_setup_uah")
     c_setup_tier = _global_rate(rates, "creasing_setup_uah")
     for qty in sorted({base_quantity, 500, 1_000, 2_500, 5_000}):
-        # Пропорційне масштабування (тільки змінні витрати; приладка — фіксована)
+        # Proportional scaling (variable costs only; makeready is fixed)
         fixed   = sum(
             v_setup_tier + c_setup_tier
             for b in breakdown

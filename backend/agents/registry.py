@@ -22,7 +22,7 @@ AgentGraphNodeId = Literal[
     "human_review",
 ]
 
-# Ролі, для яких створюється окремий екземпляр LLM
+# Roles for which a separate LLM instance is created
 AgentLLMRole = Literal[
     "client_interface",
     "conversational_agent",
@@ -90,5 +90,5 @@ AGENTS: Mapping[str, AgentInfo] = {
     ),
 }
 
-# Зручний кортеж ідентифікаторів для ітерацій / перевірок
+# Convenient tuple of identifiers for iterations / lookups
 AGENT_GRAPH_NODE_IDS: tuple[str, ...] = tuple(AGENTS.keys())

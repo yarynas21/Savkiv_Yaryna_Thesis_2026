@@ -42,7 +42,7 @@ def technologist_node(state: ProductionState) -> dict[str, Any]:
 
     llm = get_llm_for_agent("technologist")
 
-    # Trim KB to avoid huge prompts — send only relevant sections
+    # Trim the KB to avoid huge prompts — send only relevant sections
     kb_summary = {
         "operations_by_type": _KB["operations"].get("product_type_routes", {}),
         "materials_list": [
